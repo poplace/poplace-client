@@ -1,30 +1,45 @@
-import React from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
 
 import ModalContainer from "./shared/ModalContainer";
 
 const NotViewedInfoModal = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
   return (
-    <ModalContainer>
-      <View style={styles.container}>
-        <Text style={styles.titleImoji}>🤧</Text>
-        <Text style={styles.titleText}>
-          더 이상 정보를{"\n"}조회할 수 없어요 {":("}
-        </Text>
-        <Text style={styles.subTitle}>{"큐***님이 남기고 간 흔적들"}</Text>
-        <View style={styles.tagContainer}>
-          <Text style={styles.tag}>#노을이예뻐</Text>
-          <Text style={styles.tag}>#여기개좋음</Text>
-          <Text style={styles.tag}>#여기개좋음</Text>
+    <Modal
+      visible={isVisible}
+      transparent={true}
+      onRequestClose={() => setIsVisible((state) => !state)}
+    >
+      <ModalContainer>
+        <View style={styles.container}>
+          <Text style={styles.titleImoji}>🤧</Text>
+          <Text style={styles.titleText}>
+            더 이상 정보를{"\n"}조회할 수 없어요 {":("}
+          </Text>
+          <Text style={styles.subTitle}>{"큐***님이 남기고 간 흔적들"}</Text>
+          <View style={styles.tagContainer}>
+            <Text style={styles.tag}>#노을이예뻐</Text>
+            <Text style={styles.tag}>#여기개좋음</Text>
+            <Text style={styles.tag}>#여기개좋음</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setIsVisible((state) => !state)}
+          >
+            <Image source={require("../assets/closeButton.png")} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => console.log("엑스버튼")}
-        >
-          <Image source={require("../assets/closeButton.png")} />
-        </TouchableOpacity>
-      </View>
-    </ModalContainer>
+      </ModalContainer>
+    </Modal>
   );
 };
 

@@ -1,18 +1,12 @@
 import React from "react";
-import { View, Modal, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 const ModalContainer = ({ children }) => {
   return (
-    <Modal
-      visible={true}
-      transparent={true}
-      onRequestClose={() => console.log("뒤로가기")}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalBackgroud} />
-        {children}
-      </View>
-    </Modal>
+    <View style={styles.modalContainer}>
+      <View style={styles.modalBackgroud} />
+      {children}
+    </View>
   );
 };
 

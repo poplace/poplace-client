@@ -1,32 +1,47 @@
-import React from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
 
 import ModalContainer from "./shared/ModalContainer";
 
 const WithdrawalModal = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
   return (
-    <ModalContainer>
-      <View style={styles.container}>
-        <Text style={styles.titleImoji}>⚠️</Text>
-        <Text style={styles.titleText}>정말로{"\n"}탈퇴하시겠어요?</Text>
-        <Text style={styles.subTitle}>
-          지금까지 생성한 핀이 모두 삭제됩니다.
-        </Text>
-        <TouchableOpacity
-          style={styles.withdrawalButton}
-          activeOpacity={0.5}
-          onPress={() => console.log("탈퇴하기")}
-        >
-          <Text style={styles.withdrawalText}>탈퇴하기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => console.log("엑스버튼")}
-        >
-          <Image source={require("../assets/closeButton.png")} />
-        </TouchableOpacity>
-      </View>
-    </ModalContainer>
+    <Modal
+      visible={isVisible}
+      transparent={true}
+      onRequestClose={() => setIsVisible((state) => !state)}
+    >
+      <ModalContainer>
+        <View style={styles.container}>
+          <Text style={styles.titleImoji}>⚠️</Text>
+          <Text style={styles.titleText}>정말로{"\n"}탈퇴하시겠어요?</Text>
+          <Text style={styles.subTitle}>
+            지금까지 생성한 핀이 모두 삭제됩니다.
+          </Text>
+          <TouchableOpacity
+            style={styles.withdrawalButton}
+            activeOpacity={0.5}
+            onPress={() => console.log("탈퇴하기")}
+          >
+            <Text style={styles.withdrawalText}>탈퇴하기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setIsVisible((state) => !state)}
+          >
+            <Image source={require("../assets/closeButton.png")} />
+          </TouchableOpacity>
+        </View>
+      </ModalContainer>
+    </Modal>
   );
 };
 

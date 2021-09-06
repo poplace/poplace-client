@@ -1,13 +1,16 @@
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./src/features/store";
+import { NavigationContainer } from "@react-navigation/native";
 
-import LoginScreen from "./src/screens/LoginScreen";
+import AppNavigation from "./src/navigations/AppNavigation";
+import store from "./src/features/store";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <LoginScreen />
+      <NavigationContainer>
+        <AppNavigation />
+      </NavigationContainer>
     </Provider>
   );
 }

@@ -10,8 +10,7 @@ export default function NewAccount() {
   const [profileImageUri, setProfileImageUri] = useState("");
 
   const openImagePickerAsync = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");

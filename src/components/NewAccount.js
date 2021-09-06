@@ -1,9 +1,14 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+import Button from "./shared/Button";
+
 export default function NewAccount() {
+  const [hasProfile, setHasProfie] = useState(false);
+  const [profileImageUri, setProfileImageUri] = useState("");
+
   const openImagePickerAsync = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -15,28 +20,53 @@ export default function NewAccount() {
     }
 
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
+
+    if (pickerResult.uri) {
+      setProfileImageUri(pickerResult.uri);
+      setHasProfie(true);
+    }
+  };
+
+  const handleSkipButton = () => {
+    console.log("건너뛰기");
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.addingProfileStroke}>
-        <TouchableOpacity onPress={openImagePickerAsync} activeOpacity={1}>
-          <View style={styles.addingProfile}>
-            <Feather name="plus" size={80} color="white" />
-          </View>
-        </TouchableOpacity>
+    <>
+      <View style={styles.profileContainer}>
+        <View style={styles.addingProfileStroke}>
+          <TouchableOpacity onPress={openImagePickerAsync} activeOpacity={1}>
+            {hasProfile ? (
+              <Image
+                style={styles.addingProfile}
+                source={{
+                  uri: profileImageUri,
+                }}
+              />
+            ) : (
+              <View style={styles.addingProfile}>
+                <Feather name="plus" size={80} color="white" />
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>프로필 이미지를{"\n"}넣어주세요</Text>
       </View>
-      <Text style={styles.title}>프로필 이미지를{"\n"}넣어주세요</Text>
-    </View>
+      <View style={styles.nextButtonContainer}>
+        <Text style={styles.skipButton} onPress={handleSkipButton}>
+          건너뛰기
+        </Text>
+        <Button text="다음" />
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  profileContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    top: "20%",
   },
   addingProfile: {
     position: "relative",
@@ -60,8 +90,16 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "700",
     textAlign: "center",
+  },
+  nextButtonContainer: {
+    alignItems: "center",
+    bottom: "7%",
+  },
+  skipButton: {
+    fontSize: 16,
+    color: "#766162",
   },
 });

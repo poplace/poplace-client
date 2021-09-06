@@ -15,7 +15,7 @@ export default async function loginWithGoogle() {
       return { user: { email } };
     }
 
-    return { isLogin: false };
+    return { cancelled: true };
   } catch (err) {
     alert(err.message);
   }

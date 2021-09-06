@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
+import { signinUser, selectUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 
 export default function LoginScreen() {
+  const userInfo = useSelector(selectUser);
+  const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleErrorMessage = (message) => {
@@ -19,6 +23,9 @@ export default function LoginScreen() {
         handleErrorMessage(ERROR_MESSAGE.cancelLogin);
       }
 
+      const user = result.user;
+
+      dispatch(signinUser(user));
       handleErrorMessage("");
     } catch (err) {
       alert(err.message);

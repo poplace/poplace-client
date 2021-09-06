@@ -1,19 +1,42 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-// import { Svg } from 'react-native-svg'
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+
+import loginWithGoogle from "../utils/loginWithGoogle";
+import { ERROR_MESSAGE } from "../constants/screens";
 
 export default function LoginScreen() {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleErrorMessage = (message) => {
+    setErrorMessage(message);
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await loginWithGoogle();
+
+      if (!result.user) {
+        handleErrorMessage(ERROR_MESSAGE.cancelLogin);
+      }
+
+      handleErrorMessage("");
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.Poplace}>
-        Poplace
+      <Text style={styles.splashImage}>
+        Popplace
       </Text>
-      <TouchableOpacity onPress={() => alert("login")} style={styles.button}>
+      <Text style={styles.errorMessage}>{errorMessage}</Text>
+      <TouchableOpacity onPress={() => handleGoogleLogin()} style={styles.button}>
         <Text style={styles.buttonText}>signin with Google</Text>
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -21,30 +44,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  Poplace: {
+  splashImage: {
     marginTop: "6%",
     width: "76%",
     height: "60%",
     borderWidth: 1,
-    color: '#000000',
-    fontFamily: 'Roboto, sans-serif',
+    color: "#000000",
     fontSize: 34,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   button: {
-    marginTop: "13%",
+    marginTop: "10%",
     width: "76%",
     height: "10.8%",
-    borderColor: '#f78582',
-    backgroundColor: '#f78582',
+    borderColor: "#f78582",
+    backgroundColor: "#f78582",
     borderRadius: 32,
   },
   buttonText: {
-    color: 'white',
-    fontFamily: 'Roboto, sans-serif',
+    color: "white",
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: "700",
     lineHeight: 65,
-    textAlign: 'center',
+    textAlign: "center",
   },
+  errorMessage: {
+    marginTop: "5%",
+    color: "red",
+    fontSize: 15,
+  }
 });

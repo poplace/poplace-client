@@ -12,13 +12,16 @@ import ModalContainer from "./shared/ModalContainer";
 
 const WithdrawalModal = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const handleModal = () => {
+    setIsVisible((state) => !state);
+  };
+
+  const handleWithdrawal = () => {
+    console.log("탈퇴하기");
+  };
 
   return (
-    <Modal
-      visible={isVisible}
-      transparent={true}
-      onRequestClose={() => setIsVisible((state) => !state)}
-    >
+    <Modal visible={isVisible} transparent={true} onRequestClose={handleModal}>
       <ModalContainer>
         <View style={styles.container}>
           <Text style={styles.titleImoji}>⚠️</Text>
@@ -29,14 +32,11 @@ const WithdrawalModal = () => {
           <TouchableOpacity
             style={styles.withdrawalButton}
             activeOpacity={0.5}
-            onPress={() => console.log("탈퇴하기")}
+            onPress={handleWithdrawal}
           >
             <Text style={styles.withdrawalText}>탈퇴하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setIsVisible((state) => !state)}
-          >
+          <TouchableOpacity style={styles.closeButton} onPress={handleModal}>
             <Image source={require("../assets/closeButton.png")} />
           </TouchableOpacity>
         </View>

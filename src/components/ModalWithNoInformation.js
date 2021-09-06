@@ -10,15 +10,14 @@ import {
 
 import ModalContainer from "./shared/ModalContainer";
 
-const NotViewedInfoModal = () => {
+const ModalWithNoInformation = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const handleModal = () => {
+    setIsVisible((state) => !state);
+  };
 
   return (
-    <Modal
-      visible={isVisible}
-      transparent={true}
-      onRequestClose={() => setIsVisible((state) => !state)}
-    >
+    <Modal visible={isVisible} transparent={true} onRequestClose={handleModal}>
       <ModalContainer>
         <View style={styles.container}>
           <Text style={styles.titleImoji}>🤧</Text>
@@ -31,10 +30,7 @@ const NotViewedInfoModal = () => {
             <Text style={styles.tag}>#여기개좋음</Text>
             <Text style={styles.tag}>#여기개좋음</Text>
           </View>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setIsVisible((state) => !state)}
-          >
+          <TouchableOpacity style={styles.closeButton} onPress={handleModal}>
             <Image source={require("../assets/closeButton.png")} />
           </TouchableOpacity>
         </View>
@@ -97,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotViewedInfoModal;
+export default ModalWithNoInformation;

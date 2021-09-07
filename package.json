@@ -24,6 +24,10 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-dotenv": "^3.2.0",
     "react-native-safe-area-context": "3.2.0",
+<<<<<<< HEAD
+=======
+    "react-native-screens": "~3.4.0",
+>>>>>>> e039c84133ec6827ab8ba0f8d9be6054c7f186b5
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
     "redux-logger": "^3.0.6"

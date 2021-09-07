@@ -28,6 +28,7 @@ module.exports = {
     quotes: ["warn", "double"],
     semi: ["warn", "always"],
     curly: ["warn", "all"],
+    "react/display-name": "off",
     "no-var": "error",
     "prettier/prettier": "warn",
     "eol-last": ["warn", "always"],

@@ -3,7 +3,7 @@ import logger from "redux-logger";
 
 import userReducer from "./userSlice";
 
-export default store =  configureStore({
+export store = configureStore({
   reducer: {
     user: userReducer,
   },

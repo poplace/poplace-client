@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import * as SecureStore from "expo-secure-store";
 
 import { signinUser, selectUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 
-export default function LoginScreen() {
-  const userInfo = useSelector(selectUser);
+export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,6 +17,8 @@ export default function LoginScreen() {
 
   const handleGoogleLogin = async () => {
     try {
+      await SecureStore.deleteItemAsync("token");
+
       const result = await loginWithGoogle();
 
       if (!result.user) {
@@ -27,6 +29,8 @@ export default function LoginScreen() {
 
       dispatch(signinUser(user));
       handleErrorMessage("");
+
+      navigation.navigate("bottom");
     } catch (err) {
       alert(err.message);
     }
@@ -79,5 +83,5 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     color: "red",
     fontSize: 15,
-  }
+  },
 });

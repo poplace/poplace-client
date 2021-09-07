@@ -1,14 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as SecureStore from "expo-secure-store";
+import { API_SERVER_URL } from "@env";
 
 export const signinUser = createAsyncThunk(
   "user/signinUserStatus",
   async (user) => {
     const { email } = user;
+    const body = { email };
+    const result = await axios.post(
+      `${API_SERVER_URL}/users/login`,
+      body
+    );
+
+    const { token, isOriginalMember, image, pushAlarmStatus, nickName } = result;
+    await SecureStore.setItemAsync("token", token);
 
     return {
       info: {
         email,
+        // nickname,
+        // image,
+        // isOriginalMember,
+        // pushAlarmStatus,
       }
     };
   }
@@ -17,6 +30,10 @@ export const signinUser = createAsyncThunk(
 const initialState = {
   info: {
     email: null,
+    // image: null,
+    // nickname: null,
+    // pushAlarmStatus: null,
+    // isOriginalMember: null,
   },
   status: "idle",
   error: null,

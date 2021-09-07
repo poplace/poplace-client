@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import Button from "./shared/Button";
+import { addImage } from "../features/userSlice";
 
 export default function NewProfileImage({ navigation }) {
   const [hasProfile, setHasProfile] = useState(false);
   const [profileImageUri, setProfileImageUri] = useState("");
+  const dispatch = useDispatch();
 
   async function openImagePickerAsync() {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -26,6 +29,7 @@ export default function NewProfileImage({ navigation }) {
     });
 
     if (pickerResult.uri) {
+      dispatch(addImage(pickerResult.uri));
       setProfileImageUri(pickerResult.uri);
       setHasProfile(true);
     }

@@ -6,7 +6,7 @@ import Button from "./shared/Button";
 import generateNickname from "../utils/nicknameGenerator";
 
 export default function NewNickname() {
-  const [state, setState] = useState("");
+  const [nickname, setNickname] = useState("");
   const [recommendedNickname, setRecommendedNickname] = useState("");
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function NewNickname() {
   }, []);
 
   function clearText() {
-    setState("");
+    setNickname("");
   }
 
   return (
@@ -23,8 +23,8 @@ export default function NewNickname() {
         <View style={styles.textContainer}>
           <TextInput
             style={styles.textInput}
-            onChangeText={(e) => setState(e)}
-            value={state}
+            onChangeText={(e) => setNickname(e)}
+            value={nickname}
             placeholder={recommendedNickname}
             clearButtonMode="always"
           />
@@ -35,7 +35,7 @@ export default function NewNickname() {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button text="완료" />
+        <Button text="완료" nickname={nickname} recommendedNickname={recommendedNickname} />
       </View>
     </>
   );

@@ -1,17 +1,16 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default function Button({ text }) {
-  const handleNextButton = () => {
-    console.log("다음화면");
-  };
+export default function Button({ text, navigation }) {
+  function handleNextButton() {
+    if (text === "다음") {
+      navigation.navigate("NewNickname");
+    }
+  }
 
   return (
-    <TouchableOpacity
-      style={styles.button}
-      activeOpacity={0.8}
-      onPress={handleNextButton}
-    >
+    <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={handleNextButton}>
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   );

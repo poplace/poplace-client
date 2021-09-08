@@ -7,12 +7,12 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
   },
-  // middleware: (getDefaultMiddleware) => {
-  //   if (process.env.NODE_ENV !== "production") {
-  //     return getDefaultMiddleware().concat(logger);
-  //   }
+  middleware: (getDefaultMiddleware) => {
+    if (process.env.NODE_ENV !== "production") {
+      return getDefaultMiddleware().concat(logger);
+    }
 
-  //   return getDefaultMiddleware();
-  // },
+    return getDefaultMiddleware();
+  },
   devTools: process.env.NODE_ENV !== "production",
 });

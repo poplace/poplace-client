@@ -1,13 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React from "react";
+import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
 
-import AppNavigation from './src/navigations/AppNavigation';
+import AppNavigation from "./src/navigations/AppNavigation";
+import { store } from "./src/features/store";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AppNavigation />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppNavigation />
+      </NavigationContainer>
+    </Provider>
   );
 }

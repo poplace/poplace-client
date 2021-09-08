@@ -22,9 +22,7 @@ export default function BottomTabNavigation() {
         name="Main"
         component={Main}
         options={{
-          tabBarIcon: () => (
-            <Ionicons name="home-outline" size={32} color="white" />
-          ),
+          tabBarIcon: () => <Ionicons name="home-outline" size={32} color="white" />,
         }}
       />
       <Tab.Screen
@@ -39,9 +37,7 @@ export default function BottomTabNavigation() {
         name="MyPage"
         component={MyPage}
         options={{
-          tabBarIcon: () => (
-            <Ionicons name="person-outline" size={32} color="white" />
-          ),
+          tabBarIcon: () => <Ionicons name="person-outline" size={32} color="white" />,
         }}
       />
     </Tab.Navigator>

@@ -1,14 +1,12 @@
-import { View } from "react-native";
 import React from "react";
+import { View } from "react-native";
 
 import GoogleMap from "../components/GoogleMap";
 
-const Main = () => {
+export default function Main({ navigation }) {
   return (
     <View>
       <GoogleMap />
     </View>
   );
-};
-
-export default Main;
+}

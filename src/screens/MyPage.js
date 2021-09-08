@@ -1,8 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 
-const MyPage = () => {
+export default function MyPage({ navigation }) {
   return <Text>this is MyPage</Text>;
-};
-
-export default MyPage;
+}

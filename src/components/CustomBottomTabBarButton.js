@@ -3,11 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function CustomBottomTabBarButton({ children, onPress }) {
   return (
-    <TouchableOpacity
-      style={styles.CustomTabBar}
-      activeOpacity={1}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.CustomTabBar} activeOpacity={1} onPress={onPress}>
       <View style={styles.CustomTabBarCircle}>{children}</View>
     </TouchableOpacity>
   );

@@ -11,10 +11,7 @@ export default function CustomPin({ pinsData }) {
       }}
     >
       <View style={styles.pin}>
-        <Image
-          source={require("../assets/favicon.png")}
-          style={styles.profileImage}
-        />
+        <Image source={require("../assets/favicon.png")} style={styles.profileImage} />
       </View>
     </Marker>
   );

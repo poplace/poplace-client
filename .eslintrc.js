@@ -30,10 +30,10 @@ module.exports = {
     curly: ["warn", "all"],
     "react/display-name": "off",
     "no-var": "error",
-    "prettier/prettier": "warn",
+    "prettier/prettier": ["warn", { printWidth: 100 }],
     "eol-last": ["warn", "always"],
     "arrow-parens": ["warn", "always"],
-    "func-style": ["warn", "expression"],
+    "func-style": ["warn", "declaration"],
     "comma-dangle": ["warn", "always-multiline"],
     "linebreak-style": ["warn", "unix"],
     "no-unused-vars": [

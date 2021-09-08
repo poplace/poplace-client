@@ -1,24 +1,17 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
 
 import ModalContainer from "./shared/ModalContainer";
 
-const WithdrawalModal = () => {
+function WithdrawalModal() {
   const [isVisible, setIsVisible] = useState(true);
-  const handleModal = () => {
+  function handleModal() {
     setIsVisible((state) => !state);
-  };
+  }
 
-  const handleWithdrawal = () => {
+  function handleWithdrawal() {
     console.log("탈퇴하기");
-  };
+  }
 
   return (
     <Modal visible={isVisible} transparent={true} onRequestClose={handleModal}>
@@ -26,9 +19,7 @@ const WithdrawalModal = () => {
         <View style={styles.container}>
           <Text style={styles.titleImoji}>⚠️</Text>
           <Text style={styles.titleText}>정말로{"\n"}탈퇴하시겠어요?</Text>
-          <Text style={styles.subTitle}>
-            지금까지 생성한 핀이 모두 삭제됩니다.
-          </Text>
+          <Text style={styles.subTitle}>지금까지 생성한 핀이 모두 삭제됩니다.</Text>
           <TouchableOpacity
             style={styles.withdrawalButton}
             activeOpacity={0.5}
@@ -43,7 +34,7 @@ const WithdrawalModal = () => {
       </ModalContainer>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

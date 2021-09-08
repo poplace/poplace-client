@@ -11,11 +11,11 @@ export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleErrorMessage = (message) => {
+  function handleErrorMessage(message) {
     setErrorMessage(message);
-  };
+  }
 
-  const handleGoogleLogin = async () => {
+  async function handleGoogleLogin() {
     try {
       await SecureStore.deleteItemAsync("token");
 
@@ -38,9 +38,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.splashImage}>
-        Popplace
-      </Text>
+      <Text style={styles.splashImage}>Popplace</Text>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
       <TouchableOpacity onPress={() => handleGoogleLogin()} style={styles.button}>
         <Text style={styles.buttonText}>signin with Google</Text>

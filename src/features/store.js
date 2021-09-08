@@ -3,7 +3,7 @@ import logger from "redux-logger";
 
 import userReducer from "./userSlice";
 
-export store = configureStore({
+export const store = configureStore({
   reducer: {
     user: userReducer,
   },

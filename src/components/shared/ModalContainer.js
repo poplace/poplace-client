@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-const ModalContainer = ({ children }) => {
+function ModalContainer({ children }) {
   return (
     <View style={styles.modalContainer}>
       <View style={styles.modalBackgroud} />
       {children}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   modalContainer: {

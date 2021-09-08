@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
 
 import ModalContainer from "./shared/ModalContainer";
 
-const ModalWithNoInformation = () => {
+function ModalWithNoInformation() {
   const [isVisible, setIsVisible] = useState(true);
-  const handleModal = () => {
+
+  function handleModal() {
     setIsVisible((state) => !state);
-  };
+  }
 
   return (
     <Modal visible={isVisible} transparent={true} onRequestClose={handleModal}>
@@ -37,7 +31,7 @@ const ModalWithNoInformation = () => {
       </ModalContainer>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

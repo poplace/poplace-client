@@ -10,7 +10,11 @@ export default function AppNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="login" component={LoginScreen} />
-      <Stack.Screen options={{ headerShown: false }} name="bottom" component={BottomTabNavigation} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="bottom"
+        component={BottomTabNavigation}
+      />
     </Stack.Navigator>
   );
 }

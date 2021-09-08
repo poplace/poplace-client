@@ -1,15 +1,18 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import BottomTabNavigation from './BottomTabNavigation';
+import BottomTabNavigation from "./BottomTabNavigation.js";
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
-
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{headerShown: false}} name='bottom' component={BottomTabNavigation} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="bottom"
+        component={BottomTabNavigation}
+      />
     </Stack.Navigator>
   );
 };

@@ -5,7 +5,7 @@ export default function CustomBottomTabBarButton({ children, onPress }) {
   return (
     <TouchableOpacity
       style={styles.CustomTabBar}
-      activeOpacity={0.8}
+      activeOpacity={1}
       onPress={onPress}
     >
       <View style={styles.CustomTabBarCircle}>{children}</View>

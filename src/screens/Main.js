@@ -1,8 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { View } from "react-native";
+import React from "react";
 
-const Main = ({ navigation }) => {
-  return <Text>this is Main Page</Text>;
-}
+import GoogleMap from "../components/GoogleMap";
+
+const Main = () => {
+  return (
+    <View>
+      <GoogleMap />
+    </View>
+  );
+};
 
 export default Main;

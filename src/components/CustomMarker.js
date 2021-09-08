@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Marker } from "react-native-maps";
 
-export default function CustomPin() {
+export default function CustomPin({ pinsData }) {
   return (
     <Marker
       coordinate={{

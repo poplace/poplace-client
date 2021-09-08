@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
       dispatch(signinUser(user));
       handleErrorMessage("");
 
-      navigation.navigate("bottom");
+      navigation.replace("newAccount");
     } catch (err) {
       alert(err.message);
     }

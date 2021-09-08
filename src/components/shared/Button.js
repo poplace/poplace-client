@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { addNickname, selectUser } from "../../features/userSlice";
-import { API_SERVER_URL } from "@env";
+import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
 import axios from "axios";
 
 export default function Button({ text, nickname, recommendedNickname, navigation }) {
@@ -11,27 +11,33 @@ export default function Button({ text, nickname, recommendedNickname, navigation
 
   async function handleNextButton() {
     if (text === "다음") {
-      navigation.navigate("NewNickname");
+      navigation.navigate("newNickname");
     } else {
       const finalNickname = nickname || recommendedNickname;
+      const image = info.image || DEFAULT_IMAGE;
 
       dispatch(addNickname(finalNickname));
 
       const photo = {
-        uri: info.image,
-        name: "new-photo.jpg",
+        uri: image,
+        name: `new-photo.${image.split(".").pop()}`,
         type: "multipart/form-data",
       };
 
       const data = new FormData();
       data.append("photo", photo);
 
-      const result = await axios.post(`${API_SERVER_URL}/users/signup`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(result);
+      try {
+        await axios({
+          method: "post",
+          url: `${API_SERVER_URL}/users/signup`,
+          data,
+        });
+
+        navigation.replace("bottom");
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 

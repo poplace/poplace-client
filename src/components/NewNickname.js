@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import Button from "./shared/Button";
 import generateNickname from "../utils/nicknameGenerator";
 
-export default function NewNickname() {
+export default function NewNickname({ navigation }) {
   const [nickname, setNickname] = useState("");
   const [recommendedNickname, setRecommendedNickname] = useState("");
 
@@ -35,7 +35,12 @@ export default function NewNickname() {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button text="완료" nickname={nickname} recommendedNickname={recommendedNickname} />
+        <Button
+          text="완료"
+          nickname={nickname}
+          recommendedNickname={recommendedNickname}
+          navigation={navigation}
+        />
       </View>
     </>
   );

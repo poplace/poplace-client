@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import Button from "./shared/Button";
-import { addImage, selectUser } from "../features/userSlice";
+import { addImage } from "../features/userSlice";
 
 export default function NewProfileImage({ navigation }) {
   const [hasProfile, setHasProfile] = useState(false);

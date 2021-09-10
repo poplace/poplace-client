@@ -92,7 +92,7 @@ export default function NewPin({ navigation }) {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
       <View style={styles.addingImageContainer}>
         <View style={styles.addingImageStroke}>
           <TouchableOpacity

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Button } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -10,6 +9,7 @@ import Textarea from "react-native-textarea";
 import TagInput from "react-native-tags-input";
 import axios from "axios";
 
+import { selectUser } from "../features/userSlice";
 import validateTag from "../utils/validateTag";
 import validatePinData from "../utils/validatePinData";
 

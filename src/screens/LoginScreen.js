@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.splashImage}>Popplace</Text>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
-      <TouchableOpacity onPress={() => handleGoogleLogin()} style={styles.button}>
+      <TouchableOpacity onPress={handleGoogleLogin} style={styles.button}>
         <Text style={styles.buttonText}>signin with Google</Text>
       </TouchableOpacity>
     </View>

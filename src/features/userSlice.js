@@ -5,9 +5,16 @@ import { API_SERVER_URL } from "@env";
 
 export const signinUser = createAsyncThunk("user/signinUserStatus", async (user) => {
   const { email } = user;
-  const body = { email };
 
-  const response = await axios.post(`${API_SERVER_URL}/users/login`, body);
+  const response = await axios.post(
+    `${API_SERVER_URL}/users/login`,
+    { email },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
   const { token, isOriginalMember, image, pushAlarmStatus, nickname } = response.data;
 
@@ -26,11 +33,12 @@ export const signinUser = createAsyncThunk("user/signinUserStatus", async (user)
 
 const initialState = {
   info: {
+    id: null,
     email: null,
-    image: null,
     nickname: null,
-    pushAlarmStatus: null,
+    image: null,
     isOriginalMember: null,
+    pushAlarmStatus: null,
   },
   status: "idle",
   error: null,
@@ -64,15 +72,13 @@ const userSlice = createSlice({
     },
     [signinUser.fulfilled]: (state, action) => {
       if (state.status === "pending") {
-        state.info = action.payload;
-        state.status = "idle";
+        state.info = action.payload.info;
+        state.status = "success";
       }
     },
     [signinUser.rejected]: (state, action) => {
-      if (state.status === "pending") {
-        state.error = action.error;
-        state.status = "idle";
-      }
+      state.error = action.error;
+      state.status = "failed";
     },
   },
 });

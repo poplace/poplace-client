@@ -31,7 +31,6 @@ export default function Button({ text, nickname, recommendedNickname, navigation
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(result);
     }
   }
 

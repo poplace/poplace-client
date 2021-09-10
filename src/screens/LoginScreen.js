@@ -36,10 +36,6 @@ export default function LoginScreen({ navigation }) {
       dispatch(signinUser(user));
       handleErrorMessage("");
 
-<<<<<<< HEAD
-=======
-      navigation.replace("newAccount");
->>>>>>> 1bd9fd6396380fa27209db6d8e8e82730ba4676f
     } catch (err) {
       alert(err.message);
     }

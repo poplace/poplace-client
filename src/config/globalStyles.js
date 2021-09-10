@@ -18,5 +18,6 @@ export const color = {
   poplacelightColor: "#766162",
   poplaceRedColor: "#f78582",
   poplaceWhiteColor: "#ffffff",
+  poplaceLightGrayColor: "#F2efef",
   poplaceGrayColor: "gray",
 };

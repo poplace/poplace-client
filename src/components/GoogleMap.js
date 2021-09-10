@@ -4,7 +4,7 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
 
-import CustomPin from "./CustomMarker";
+import CustomPin from "./CustomPin";
 
 import mock from "../../test.json";
 

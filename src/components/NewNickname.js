@@ -15,7 +15,7 @@ export default function NewNickname({ navigation }) {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  const info = useSelector(selectUser);
+  const { image, email } = useSelector(selectUser);
 
   useEffect(() => {
     setRecommendedNickname(generateNickname());
@@ -27,45 +27,42 @@ export default function NewNickname({ navigation }) {
 
   async function fetchProfile() {
     const finalNickname = nickname || recommendedNickname;
-    const image = info.image || DEFAULT_IMAGE;
+    const finalImage = image || DEFAULT_IMAGE;
 
     dispatch(addNickname(finalNickname));
-    dispatch(addImage(image));
+    dispatch(addImage(finalImage));
 
     const photo = {
-      uri: image,
-      name: `new-photo.${image.split(".").pop()}`,
+      uri: finalImage,
+      name: `new-photo.${finalImage.split(".").pop()}`,
       type: "multipart/form-data",
     };
 
     const data = new FormData();
+
     data.append("photo", photo);
-    data.append("email", info.email);
+    data.append("email", email);
+    data.append("nickname", finalNickname);
 
     try {
-      const nicknameResult = await axios.post(
+      const result = await axios.post(
         `${API_SERVER_URL}/users/signup`,
-        {
-          email: info.email,
-          nickname: finalNickname,
-        },
+        data,
         {
           validateStatus: (status) => status < 500,
         },
         {
           headers: {
             "Content-Type": "application/json",
-          },
-        },
+          }
+        }
       );
 
-      if (nicknameResult.data.code === 400) {
+      if (result.data.code === 400) {
         setIsError(true);
-        setErrorMessage(nicknameResult.data.message);
+        setErrorMessage(result.data.message);
         return;
       }
-
-      await axios.post(`${API_SERVER_URL}/users/signup`, data);
 
       navigation.replace("bottom");
     } catch (err) {

@@ -24,13 +24,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerText: {
-    color: color.poplaceDarkColor,
+    color: color.poplaceDark,
     fontSize: moderateScale(16),
     fontWeight: "700",
   },
   subText: {
     fontSize: moderateScale(12),
     marginLeft: "3%",
-    color: color.poplaceGrayColor,
+    color: color.poplaceGray,
   },
 });

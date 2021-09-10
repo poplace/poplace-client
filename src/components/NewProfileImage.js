@@ -2,35 +2,22 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 
 import Button from "./shared/Button";
-import { addImage, selectUser } from "../features/userSlice";
+import openImagePicker from "../api/openImagePicker";
+import { addImage } from "../features/userSlice";
 
 export default function NewProfileImage({ navigation }) {
-  const [hasProfile, setHasProfile] = useState(false);
   const [profileImageUri, setProfileImageUri] = useState("");
+  const [hasProfile, setHasProfile] = useState(false);
   const dispatch = useDispatch();
 
-  async function openImagePickerAsync() {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  async function handleImagePicker() {
+    const imageResult = await openImagePicker();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-
-      return;
-    }
-
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-
-    if (pickerResult.uri) {
-      dispatch(addImage(pickerResult.uri));
-      setProfileImageUri(pickerResult.uri);
+    if (imageResult) {
+      dispatch(addImage(imageResult));
+      setProfileImageUri(imageResult);
       setHasProfile(true);
     }
   }
@@ -47,7 +34,7 @@ export default function NewProfileImage({ navigation }) {
     <>
       <View style={styles.profileContainer}>
         <View style={styles.addingProfileStroke}>
-          <TouchableOpacity onPress={openImagePickerAsync} activeOpacity={1}>
+          <TouchableOpacity onPress={handleImagePicker} activeOpacity={1}>
             {hasProfile ? (
               <Image
                 style={styles.addingProfile}

@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Alert,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { StyleSheet, View, Dimensions, Alert, TouchableOpacity, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
@@ -13,12 +6,12 @@ import axios from "axios";
 
 import CustomPin from "./CustomMarker";
 
-import mock from "../../mock.json";
+import mock from "../../test.json";
 
 export default function GoogleMap() {
   const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
-  const [pinsData, setPinsData] = useState({});
+  const [pinsData, setPinsData] = useState([]);
   let mapViewCoordinate = {};
 
   useEffect(() => {
@@ -38,7 +31,6 @@ export default function GoogleMap() {
       const {
         coords: { longitude, latitude },
       } = currentLocation;
-      console.log(longitude, latitude);
 
       setLocation({
         latitudeDelta: 0.015,
@@ -50,12 +42,19 @@ export default function GoogleMap() {
   }, [isLocationServiceEnable]);
 
   useEffect(() => {
-    // RequestPinsData(); 서버가 완성되면 이것으로할것!
-    setPinsData(mock);
-  }, []);
+    if (location !== null) {
+      setPinsData(mock);
+      //지금은 이건데 나중에 서버랑 데이터 베이스랑 연결되면
+      //RequestPinsData(location);
+    }
+  }, [location]);
 
-  const RequestPinsData = async () => {
-    const { longitude, latitude } = location;
+  function handleGetPinsData() {
+    RequestPinsData(mapViewCoordinate);
+  }
+
+  async function RequestPinsData(nowCoordinate) {
+    const { longitude, latitude } = nowCoordinate;
 
     try {
       const pinData = await axios({
@@ -83,9 +82,10 @@ export default function GoogleMap() {
           mapViewCoordinate = e;
         }}
       >
-        <CustomPin pinsData />
+        <CustomPin pinsData={pinsData} />
       </MapView>
       <TouchableOpacity style={styles.getPinDataButton}>
+        {/* {  현재는 서버가 구현되지 않았지만 서버가 구현되면, touchableopacity onpress 넣기} */}
         <Text>현재 위치에서 다시 검색</Text>
       </TouchableOpacity>
     </View>

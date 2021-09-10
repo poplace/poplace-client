@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import { signinUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
+import { selectUser } from "../features/userSlice";
 
 export default function LoginScreen({ navigation }) {
+  const userInfo = useSelector(selectUser);
+  const isSuccess = useSelector((state) => state.user.status === "success");
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
+
+  if (isSuccess) {
+    navigation.replace("bottom");
+  }
 
   function handleErrorMessage(message) {
     setErrorMessage(message);
@@ -22,7 +29,7 @@ export default function LoginScreen({ navigation }) {
       const result = await loginWithGoogle();
 
       if (!result.user) {
-        handleErrorMessage(ERROR_MESSAGE.cancelLogin);
+        return handleErrorMessage(ERROR_MESSAGE.cancelLogin);
       }
 
       const user = result.user;
@@ -30,7 +37,6 @@ export default function LoginScreen({ navigation }) {
       dispatch(signinUser(user));
       handleErrorMessage("");
 
-      navigation.replace("newAccount");
     } catch (err) {
       alert(err.message);
     }

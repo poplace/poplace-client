@@ -22,6 +22,7 @@ export const signinUser = createAsyncThunk("user/signinUserStatus", async (user)
 
   return {
     info: {
+      id,
       email,
       nickname,
       image,

@@ -1,5 +1,6 @@
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import React from "react";
+import { Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
@@ -26,18 +27,36 @@ export default function BottomTabNavigation() {
         }}
       />
       <Tab.Screen
-        name="NewPin"
+        name="핀 생성하기"
         component={NewPin}
         options={{
           tabBarIcon: () => <AntDesign name="plus" size={32} color="white" />,
           tabBarButton: (props) => <CustomBottomTabBarButton {...props} />,
+          headerLeft: () => (
+            <Button title="뒤로"/>
+          ),
         }}
       />
       <Tab.Screen
         name="MyPage"
         component={MyPage}
         options={{
-          tabBarIcon: () => <Ionicons name="person-outline" size={32} color="white" />,
+          tabBarIcon: () => <Ionicons name="person-outline" size={32} />,
+          title: "마이페이지",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: "#453536",
+            textAlign: "center",
+            fontWeight: "700",
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.settingContainer}
+              activeOpacity={1}
+              onPress={() => console.log("설정페이지로..")}>
+              <Ionicons name="settings-sharp" size={26} color="#766162" />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -51,4 +70,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
+  settingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    right: "10%",
+  }
 });

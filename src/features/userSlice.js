@@ -5,16 +5,18 @@ import { API_SERVER_URL } from "@env";
 
 export const signinUser = createAsyncThunk("user/signinUserStatus", async (user) => {
   const { email } = user;
-  const response = await axios.post(`${API_SERVER_URL}/users/login`,
+
+  const response = await axios.post(
+    `${API_SERVER_URL}/users/login`,
     { email },
     {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-    }
+    },
   );
 
-  const { id, token, nickname, image, pushAlarmStatus, isOriginalMember } = response.data;
+  const { token, isOriginalMember, image, pushAlarmStatus, nickname } = response.data;
 
   await SecureStore.setItemAsync("token", token);
 

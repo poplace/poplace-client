@@ -106,7 +106,7 @@ export default function NewPin({ navigation }) {
         </View>
       </View>
       <Button
-        title="dd"
+        title="완료"
         onPress={handleSubmitdata}
       />
       <View style={styles.tagContainer}>

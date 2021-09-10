@@ -1,5 +1,5 @@
 import { StyleSheet, View, Dimensions, Alert, TouchableOpacity, Text } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
@@ -12,7 +12,7 @@ export default function GoogleMap() {
   const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
   const [pinsData, setPinsData] = useState([]);
-  let mapViewCoordinate = {};
+  const mapViewCoordinateRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -50,7 +50,11 @@ export default function GoogleMap() {
   }, [location]);
 
   function handleGetPinsData() {
-    RequestPinsData(mapViewCoordinate);
+    RequestPinsData(mapViewCoordinateRef.current);
+  }
+
+  function handleMapViewCoordinate(e) {
+    mapViewCoordinateRef.current = e;
   }
 
   async function RequestPinsData(nowCoordinate) {
@@ -78,14 +82,12 @@ export default function GoogleMap() {
         loadingEnabled={true}
         region={location}
         showsUserLocation
-        onRegionChangeComplete={(e) => {
-          mapViewCoordinate = e;
-        }}
+        onRegionChangeComplete={handleMapViewCoordinate}
       >
         <CustomPin pinsData={pinsData} />
       </MapView>
       <TouchableOpacity style={styles.getPinDataButton}>
-        {/* {  현재는 서버가 구현되지 않았지만 서버가 구현되면, touchableopacity onpress 넣기} */}
+        {/* {  현재는 서버가 구현되지 않았지만 서버가 구현되면,  onpress에 handleGetPinsData넣기} */}
         <Text>현재 위치에서 다시 검색</Text>
       </TouchableOpacity>
     </View>

@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import Button from "./shared/Button";
-import { addImage } from "../features/userSlice";
+import { addImage, selectUser } from "../features/userSlice";
 
 export default function NewProfileImage({ navigation }) {
   const [hasProfile, setHasProfile] = useState(false);
@@ -39,6 +39,10 @@ export default function NewProfileImage({ navigation }) {
     navigation.navigate("NewNickname");
   }
 
+  function handleNext() {
+    navigation.navigate("newNickname");
+  }
+
   return (
     <>
       <View style={styles.profileContainer}>
@@ -64,7 +68,7 @@ export default function NewProfileImage({ navigation }) {
         <Text style={styles.skipButton} onPress={handleSkipButton}>
           건너뛰기
         </Text>
-        <Button text="다음" navigation={navigation} />
+        <Button text="다음" handleButton={handleNext} />
       </View>
     </>
   );

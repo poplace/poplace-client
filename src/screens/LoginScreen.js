@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-import { signinUser, selectUser } from "../features/userSlice";
+import { signinUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 
@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
       dispatch(signinUser(user));
       handleErrorMessage("");
 
-      navigation.navigate("bottom");
+      navigation.replace("newAccount");
     } catch (err) {
       alert(err.message);
     }

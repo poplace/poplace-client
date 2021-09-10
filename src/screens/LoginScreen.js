@@ -8,8 +8,14 @@ import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 
 export default function LoginScreen({ navigation }) {
+  const userInfo = useSelector(selectUser);
+  const isSuccess = useSelector((state) => state.user.status === "success");
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
+
+  if (isSuccess) {
+    navigation.replace("bottom");
+  }
 
   function handleErrorMessage(message) {
     setErrorMessage(message);
@@ -22,7 +28,7 @@ export default function LoginScreen({ navigation }) {
       const result = await loginWithGoogle();
 
       if (!result.user) {
-        handleErrorMessage(ERROR_MESSAGE.cancelLogin);
+        return handleErrorMessage(ERROR_MESSAGE.cancelLogin);
       }
 
       const user = result.user;
@@ -30,7 +36,6 @@ export default function LoginScreen({ navigation }) {
       dispatch(signinUser(user));
       handleErrorMessage("");
 
-      navigation.replace("newAccount");
     } catch (err) {
       alert(err.message);
     }

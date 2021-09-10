@@ -43,12 +43,14 @@ export default function NewNickname({ navigation }) {
 
     data.append("photo", photo);
     data.append("email", email);
-    data.append("nickname", finalNickname);
 
     try {
-      const result = await axios.post(
-        `${API_SERVER_URL_HOME}/users/signup`,
-        data,
+      const nicknameResult = await axios.post(
+        `${API_SERVER_URL}/users/signup`,
+        {
+          email,
+          nickname: finalNickname,
+        },
         {
           validateStatus: (status) => status < 500,
         },

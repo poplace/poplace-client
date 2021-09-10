@@ -1,10 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+
 import { selectUser } from "../features/userSlice";
+import { width, height, color, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
+import { DEFAULT_IMAGE } from "@env";
 
 export default function MyPage({ navigation }) {
   const info = useSelector(selectUser);
+
+  console.log(width, height)
 
   return (
     <View style={styles.container}>
@@ -14,44 +19,44 @@ export default function MyPage({ navigation }) {
             <Image
               style={styles.profile}
               source={{
-                uri: info.image,
+                uri: info.image || DEFAULT_IMAGE,
               }}
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.title}>{info.nickname}</Text>
+        <Text style={styles.title}>정적인아이디</Text>
       </View>
       <View style={styles.listContainer}>
         <View style={styles.myPinsContainer}>
           <Text style={styles.myPinsText}>내가 생성한 핀</Text>
-          <Text style={styles.moreText}>더보기 {">"}</Text>
+          <Text style={styles.moreText} onPress={() => console.log("더보기..")}>더보기 {">"}</Text>
         </View>
 
         <ScrollView horizontal style={styles.pinsListContainer}>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
         </ScrollView>
 
         <View style={styles.myPinsContainer}>
           <Text style={styles.myPinsText}>내가 생성한 핀</Text>
-          <Text style={styles.moreText}>더보기 {">"}</Text>
+          <Text style={styles.moreText} onPress={() => console.log("더보기..")}>더보기 {">"}</Text>
         </View>
 
         <ScrollView horizontal style={styles.pinsListContainer}>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠임..")}>
+          <TouchableOpacity style={styles.pins} activeOpacity={1} onPress={() => console.log("콘텐츠..")}>
             <Text>여기가 콘텐츠</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -63,27 +68,26 @@ export default function MyPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: color.poplaceWhiteColor,
   },
   profileContainer: {
-    flex: 1,
     alignItems: "center",
     top: "5%",
   },
   profile: {
     position: "relative",
-    width: 130,
-    height: 130,
+    width: horizontalScale(80),
+    height: verticalScale(80),
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
   },
   profileStroke: {
     marginBottom: 20,
-    width: 140,
-    height: 140,
+    width: horizontalScale(90),
+    height: verticalScale(90),
     borderRadius: 100,
-    backgroundColor: "#ffffff",
+    backgroundColor: color.poplaceWhiteColor,
     alignItems: "center",
     justifyContent: "center",
     shadowOpacity: 0.27,
@@ -91,36 +95,43 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   title: {
-    color: "#453536",
-    fontSize: 24,
+    color: color.poplaceDarkColor,
+    fontSize: moderateScale(16),
     fontWeight: "700",
     textAlign: "center",
   },
   listContainer: {
-    height: "60%",
+    height: verticalScale(340),
     paddingLeft: "7%",
+    bottom: "1%",
   },
   myPinsContainer: {
+    top: "14%",
     alignItems: "center",
     flexDirection: "row",
   },
   myPinsText: {
-    color: "#453536",
-    fontSize: 18,
+    color: color.poplaceDarkColor,
+    fontSize: moderateScale(16),
     fontWeight: "700",
   },
   moreText: {
+    fontSize: moderateScale(12),
     marginLeft: "3%",
-    color: "gray"
+    color: color.poplaceGrayColor,
   },
   pinsListContainer: {
-    marginVertical: "7%",
+    top: "10%",
+    marginTop: "5%",
+    padding: "1%",
+    width: "100%",
+    backgroundColor: "red",
   },
   pins: {
     justifyContent: "space-between",
-    marginRight: 20,
-    width: 130,
-    height: 130,
+    marginRight: moderateScale(12),
+    width: horizontalScale(120),
+    height: verticalScale(120),
     borderRadius: 15,
     backgroundColor: "blue",
   },

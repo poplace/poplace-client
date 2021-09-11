@@ -47,8 +47,11 @@ export default function NewNickname({ navigation }) {
 
     try {
       const result = await axios.post(
-        `${API_SERVER_URL_HOME}/users/signup`,
-        data,
+        `${API_SERVER_URL}/users/signup`,
+        {
+          email,
+          nickname: finalNickname,
+        },
         {
           validateStatus: (status) => status < 500,
         },
@@ -83,7 +86,7 @@ export default function NewNickname({ navigation }) {
             clearButtonMode="always"
           />
           <TouchableOpacity style={styles.xButton} onPress={clearText}>
-            <Feather name="x" size={12} color={color.poplaceDarkColor} />
+            <Feather name="x" size={12} color={color.poplaceDark} />
           </TouchableOpacity>
         </View>
         <View style={errorStyles.errorContainer}>

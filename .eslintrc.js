@@ -29,7 +29,7 @@ module.exports = {
     semi: ["warn", "always"],
     curly: ["warn", "all"],
     "no-var": "error",
-    "prettier/prettier": ["warn", { printWidth: 100 }],
+    "prettier/prettier": ["warn", { printWidth: 100, trailingComma: "all" }],
     "eol-last": ["warn", "always"],
     "arrow-parens": ["warn", "always"],
     "func-style": ["warn", "declaration"],

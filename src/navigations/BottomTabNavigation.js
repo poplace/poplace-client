@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-native";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -20,9 +21,12 @@ export default function BottomTabNavigation() {
         }}
       />
       <Tab.Screen
-        name="NewPin"
+        name="핀 생성하기"
         component={NewPin}
         options={{
+          headerLeft: () => (
+            <Button title="뒤로"/>
+          ),
           tabBarIcon: () => <AntDesign name="plus" size={32} />,
         }}
       />

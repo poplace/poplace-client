@@ -9,19 +9,15 @@ export const signinUser = createAsyncThunk("user/signinUserStatus", async (user)
   const response = await axios.post(
     `${API_SERVER_URL}/users/login`,
     { email },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
   );
 
-  const { token, isOriginalMember, image, pushAlarmStatus, nickname } = response.data;
+  const { token, isOriginalMember, image, pushAlarmStatus, nickname, id } = response.data;
 
   await SecureStore.setItemAsync("token", token);
 
   return {
     info: {
+      id,
       email,
       nickname,
       image,

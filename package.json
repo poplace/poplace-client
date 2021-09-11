@@ -15,8 +15,11 @@
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.21.4",
+    "esrecurse": "^4.3.0",
     "expo": "~42.0.1",
     "expo-google-app-auth": "^8.2.2",
+    "expo-image-picker": "~10.2.2",
+    "expo-location": "^12.1.2",
     "expo-secure-store": "^10.2.0",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
@@ -26,11 +29,13 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-svg": "^12.1.1",
+    "react-native-tag-autocomplete": "^1.0.22",
+    "react-native-tags-input": "^1.0.10",
+    "react-native-textarea": "^1.0.4",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "expo-image-picker": "~10.2.2"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

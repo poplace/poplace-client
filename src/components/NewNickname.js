@@ -48,6 +48,7 @@ export default function NewNickname({ navigation }) {
     try {
       const result = await axios.post(
         `${API_SERVER_URL}/users/signup`,
+        data,
         {
           email,
           nickname: finalNickname,
@@ -58,8 +59,8 @@ export default function NewNickname({ navigation }) {
         {
           headers: {
             "Content-Type": "application/json",
-          }
-        }
+          },
+        },
       );
 
       if (result.data.code === 400) {
@@ -95,10 +96,7 @@ export default function NewNickname({ navigation }) {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button
-          text="완료"
-          handleButton={fetchProfile}
-        />
+        <Button text="완료" handleButton={fetchProfile} />
       </View>
     </>
   );

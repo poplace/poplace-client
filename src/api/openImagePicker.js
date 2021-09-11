@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 
 import { ERROR_MESSAGE } from "../constants/screens";
@@ -20,7 +19,7 @@ export default async function openImagePicker() {
   });
 
   if (pickerResult.uri) {
-    return pickerResult.uri
+    return pickerResult.uri;
   }
 
   return false;

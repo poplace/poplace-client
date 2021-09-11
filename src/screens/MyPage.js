@@ -7,26 +7,31 @@ import { color, verticalScale } from "../config/globalStyles";
 import MyPinList from "../components/shared/MyPinList";
 import MyPageProfile from "../components/MyPageProfile";
 import { API_SERVER_URL } from "@env";
+import { selectUser } from "../features/userSlice";
 
 export default function MyPage({ navigation }) {
+  const email = useSelector(selectUser).email;
+
   useEffect(() => {
     async function fetchMyPage() {
       try {
-        const result = await axios.get(`${API_SERVER_URL}/pins`, {
-          params: {
-            email: "onea8906@gmail.com",
+        const result = await axios.get(
+          `${API_SERVER_URL}/pins`,
+          {
+            params: {
+              email,
+            },
+            validateStatus: (state) => state < 500,
           },
-          validateStatus: (state) => state < 500,
-        }, {
-          "Content-Type": "application/json",
-        });
+          {
+            "Content-Type": "application/json",
+          },
+        );
 
         if (result.data.code === 400) {
           console.log(result.data.message);
           return;
         }
-        console.log(result.data);
-
       } catch (err) {
         console.log(err);
       }

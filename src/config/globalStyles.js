@@ -14,10 +14,12 @@ const moderateScale = (size) => scale * (size * height / 700);
 export { moderateScale, verticalScale, horizontalScale };
 
 export const color = {
-  poplaceDarkColor: "#453536",
-  poplacelightColor: "#766162",
-  poplaceRedColor: "#f78582",
-  poplaceWhiteColor: "#ffffff",
-  poplaceLightGrayColor: "#F2efef",
-  poplaceGrayColor: "gray",
+  poplaceDark: "#453536",
+  poplaceLight: "#766162",
+  poplaceRed: "#f78582",
+  poplaceErrorRed: "#fe4e4e",
+  poplaceWhite: "#ffffff",
+  poplaceLightGray: "#F2efef",
+  poplaceMiddle: "#eaeaea",
+  poplaceGray: "gray",
 };

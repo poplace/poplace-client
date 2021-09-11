@@ -1,8 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
+import { View } from "react-native";
+
+import GoogleMap from "../components/GoogleMap";
+import SlideModal from "../components/slideModal"
 
 export default function Main({ navigation }) {
   return (
-    <Text>this is Main Page</Text>
+    <View>
+      <GoogleMap />
+      <SlideModal />
+    </View>
   );
 }

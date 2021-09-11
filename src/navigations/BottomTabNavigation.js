@@ -41,7 +41,7 @@ export default function BottomTabNavigation() {
         name="MyPage"
         component={MyPage}
         options={{
-          tabBarIcon: () => <Ionicons name="person-outline" size={32} />,
+          tabBarIcon: () => <Ionicons name="person-outline" size={32} color="white" />,
           title: "마이페이지",
           headerTitleAlign: "center",
           headerTitleStyle: {

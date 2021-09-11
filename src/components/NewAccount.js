@@ -9,7 +9,11 @@ const Stack = createNativeStackNavigator();
 export default function NewAccount() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="newProfileImage" component={NewProfileImage} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="newProfileImage"
+        component={NewProfileImage}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="newNickname" component={NewNickname} />
     </Stack.Navigator>
   );

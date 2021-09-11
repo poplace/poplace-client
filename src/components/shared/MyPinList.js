@@ -4,15 +4,17 @@ import { color, moderateScale } from "../../config/globalStyles";
 
 import MyPinListPreview from "../shared/MyPinListPreview";
 
-export default function MyPinList({ title }) {
+export default function MyPinList({ title, pins }) {
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.headerText}>{title}</Text>
-        <Text style={styles.subText} onPress={() => console.log("더보기..")}>더보기 {">"}</Text>
+        <Text style={styles.subText} onPress={() => console.log("더보기..")}>
+          더보기 {">"}
+        </Text>
       </View>
 
-      <MyPinListPreview />
+      <MyPinListPreview pins={pins} />
     </>
   );
 }

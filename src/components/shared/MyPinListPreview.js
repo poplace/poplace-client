@@ -1,26 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-import { verticalScale, horizontalScale, moderateScale } from "../../config/globalStyles";
-import data from "../../mocks/myPinListPreview.json";
+import { color, verticalScale, horizontalScale, moderateScale } from "../../config/globalStyles";
 
-export default function MyPinListPreview() {
+export default function MyPinListPreview({ pins }) {
   return (
     <ScrollView horizontal style={styles.container}>
-      {data.map((img) => {
-        return (
-          <TouchableOpacity
-            key={img.split(".").join("").slice(-20)}
-            activeOpacity={1}
-            onPress={() => console.log("콘텐츠..")}>
-            <Image
-              style={styles.pins}
-              source={{
-                uri: img,
-              }} />
-          </TouchableOpacity>
-        );
-      })}
+      {pins ?
+        pins.map((pin) => {
+          return (
+            <TouchableOpacity
+              key={pin.image[0].split(".").join("").slice(-20)}
+              activeOpacity={1}
+              onPress={() => console.log("콘텐츠..")}>
+              <Image style={styles.pins} source={{ uri: pin.image[0] }} />
+            </TouchableOpacity>
+          )
+        }) :
+        <View style={styles.pins}>
+          <FontAwesome5 name="mountain" size={60} color={color.poplaceGray} />
+        </View>
+      }
     </ScrollView>
   );
 }
@@ -36,6 +37,9 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(12),
     width: horizontalScale(120),
     height: verticalScale(120),
+    backgroundColor: color.poplaceMiddleGray,
     borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

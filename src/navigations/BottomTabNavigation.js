@@ -33,7 +33,7 @@ export default function BottomTabNavigation() {
           tabBarIcon: () => <AntDesign name="plus" size={32} color="white" />,
           tabBarButton: (props) => <CustomBottomTabBarButton {...props} />,
           headerLeft: () => (
-            <Button title="뒤로"/>
+            <Button title="뒤로" />
           ),
         }}
       />

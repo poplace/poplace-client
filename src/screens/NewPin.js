@@ -60,10 +60,6 @@ export default function NewPin({ navigation }) {
         ...data,
         creator: id,
         coords: [longitude, latitude],
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        },
       });
     } catch (err) {
       console.log(err);

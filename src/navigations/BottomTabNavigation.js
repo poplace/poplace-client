@@ -6,6 +6,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Main from "../screens/Main";
 import MyPage from "../screens/MyPage";
 import NewPin from "../screens/NewPin";
+import DetailPin from "../screens/DetailPin";
 
 const Tab = createBottomTabNavigator();
 

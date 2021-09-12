@@ -1,9 +1,58 @@
-import React, { useEffect } from 'react'
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function DetailPin() {
+import getDate from "../utils/getDate";
+import { selectUser } from "../features/userSlice";
+import { color } from "../config/globalStyles";
+
+export default function DetailPin({ navigation, route }) {
+  const { id } = useSelector(selectUser);
+  const { image, tags, createdAt, savedAt, text, creator, savedUser } = route.params.data;
+  const isCreator = id === creator;
+  const isSavedUser = id === savedUser;
+  const [remainTime, setRemainTime] = useState(null);
+
   useEffect(() => {
+    const id = setInterval(() => {
+      if (isCreator && savedAt) {
+        const timeInfo = getDate(savedAt);
 
+        if (!timeInfo) {
+          return setRemainTime(null);
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      if (isCreator && !savedAt) {
+        const timeInfo = getDate(createdAt);
+
+        if (!timeInfo) {
+          return setRemainTime(null);
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      if (isSavedUser) {
+        const timeInfo = getDate(savedAt);
+
+        if (!timeInfo) {
+          return navigation.navigate("Main");
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      const timeInfo = getDate(createdAt);
+
+      setRemainTime(timeInfo);
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
   }, []);
 
   return (
@@ -11,21 +60,25 @@ export default function DetailPin() {
       <Image
         style={styles.image}
         source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
+          uri: image,
         }}
       />
       <View style={styles.timeContainer}>
         <View style={styles.time}>
-          <Text>남은시간: 20시간 12분</Text>
+          <Text style={styles.timeText}>남은시간: {remainTime}</Text>
         </View>
-        <TouchableOpacity text="저장하기" style={styles.button}>
-          <Text style={styles.buttonText}>저장하기</Text>
-        </TouchableOpacity>
+        {!isCreator && !isSavedUser &&
+          <TouchableOpacity text="저장하기" style={styles.button}>
+            <Text style={styles.buttonText}>저장하기</Text>
+          </TouchableOpacity>
+        }
       </View>
       <View style={styles.tagContainer}></View>
-      <Text style={styles.tag}>#노을이예뻐</Text>
+      {tags.map((tag) => {
+        <Text style={styles.tag}>#{tag}</Text>
+      })}
       <View style={styles.textContainer}>
-        <Text>dd</Text>
+        <Text style={styles.text}>{text}</Text>
       </View>
     </View>
   )
@@ -48,36 +101,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "80%",
-    borderColor: 
+    borderColor: color.poplaceGrayColor,
     borderBottomWidth: 1,
   },
   time: {
     justifyContent: "center",
   },
+  timeText: {
+    color: color.poplacelightColor,
+  },
   button: {
-    backgroundColor: "#f78582",
+    backgroundColor: color.poplaceRedColor,
     borderRadius: 15,
     marginHorizontal: 5,
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
   buttonText: {
-    color: "#ffffff",
+    color: color.poplaceWhiteColor,
   },
   textContainer: {
     flex: 0.8,
     width: "80%",
   },
+  text: {
+    color: color.poplacelightColor,
+  },
   tagContainer: {
     flexWrap: "wrap",
     marginTop: 10,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   tag: {
-    color: "#ffffff",
+    color: color.poplaceWhiteColor,
     fontWeight: "700",
-    backgroundColor: "#f78582",
+    backgroundColor: color.poplaceRedColor,
     borderRadius: 15,
     marginHorizontal: 5,
     paddingVertical: 5,

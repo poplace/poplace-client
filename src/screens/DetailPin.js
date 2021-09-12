@@ -5,12 +5,22 @@ import { useSelector, useDispatch } from "react-redux";
 import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
+import savePinData from "../api/savePinData";
 
 export default function DetailPin({ navigation, route }) {
-  const { id } = useSelector(selectUser);
-  const { image, tags, createdAt, savedAt, text, creator, savedUser } = route.params.data;
-  const isCreator = id === creator;
-  const isSavedUser = id === savedUser;
+  const { id: userId } = useSelector(selectUser);
+  const {
+    pinId,
+    image,
+    tags,
+    createdAt,
+    savedAt,
+    text,
+    creator,
+    savedUser,
+  } = route.params.data;
+  const isCreator = userId === creator;
+  const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);
 
   useEffect(() => {
@@ -55,6 +65,19 @@ export default function DetailPin({ navigation, route }) {
     };
   }, []);
 
+  async function handleSavePin() {
+    try {
+      const result = await savePinData(pinId);
+
+      if (result.success === "ok") {
+        alert("핀이 저장 되었습니다!");
+        return navigation.replace("Main");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -68,7 +91,11 @@ export default function DetailPin({ navigation, route }) {
           <Text style={styles.timeText}>남은시간: {remainTime}</Text>
         </View>
         {!isCreator && !isSavedUser &&
-          <TouchableOpacity text="저장하기" style={styles.button}>
+          <TouchableOpacity
+            text="저장하기"
+            style={styles.button}
+            onPress={handleSavePin}
+          >
             <Text style={styles.buttonText}>저장하기</Text>
           </TouchableOpacity>
         }

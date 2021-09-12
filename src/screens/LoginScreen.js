@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
@@ -45,7 +45,7 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.splashImage}>Popplace</Text>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
-      <TouchableOpacity onPress={() => handleGoogleLogin()} style={styles.button}>
+      <TouchableOpacity onPress={handleGoogleLogin} style={styles.button}>
         <Text style={styles.buttonText}>signin with Google</Text>
       </TouchableOpacity>
     </View>

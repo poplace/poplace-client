@@ -10,11 +10,11 @@ export default function NewAccount() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="newProfileImage"
+        name="NewProfileImage"
         component={NewProfileImage}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="newNickname" component={NewNickname} />
+      <Stack.Screen name="NewNickname" component={NewNickname} />
     </Stack.Navigator>
   );
 }

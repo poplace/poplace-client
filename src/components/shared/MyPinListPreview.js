@@ -5,9 +5,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { color, verticalScale, horizontalScale, moderateScale } from "../../config/globalStyles";
 
 export default function MyPinListPreview({ pins }) {
+  const hasPins = Boolean(pins.length);
+
   return (
     <ScrollView horizontal style={styles.container}>
-      {pins ?
+      {hasPins ?
         pins.map((pin) => {
           return (
             <TouchableOpacity

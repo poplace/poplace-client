@@ -40,12 +40,10 @@ const pinsListSlice = createSlice({
       }
     },
     [getPinsList.fulfilled]: (state, action) => {
-      // if (state.status === "pending") {
-      //   // state.pinsList = action.payload.pinsList;
-      //   console.log('this is', action.payload.pinsList.length);
-      //   state.status = "success";
-      // }
-      state.pinsList = action.payload.pinsList;
+      if (state.status === "pending") {
+        state.pinsList = action.payload.pinsList;
+        state.status = "success";
+      }
     },
     [getPinsList.rejected]: (state, action) => {
       state.error = action.error;

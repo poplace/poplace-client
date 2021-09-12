@@ -8,6 +8,7 @@ import axios from "axios";
 import Button from "./shared/Button";
 import generateNickname from "../utils/nicknameGenerator";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
+import { color } from "../config/globalStyles";
 
 export default function NewNickname({ navigation }) {
   const [nickname, setNickname] = useState("");
@@ -39,12 +40,15 @@ export default function NewNickname({ navigation }) {
     };
 
     const data = new FormData();
+
     data.append("photo", photo);
     data.append("email", email);
+    data.append("nickname", finalNickname);
 
     try {
-      const nicknameResult = await axios.post(
+      const result = await axios.post(
         `${API_SERVER_URL}/users/signup`,
+        data,
         {
           email,
           nickname: finalNickname,
@@ -59,15 +63,13 @@ export default function NewNickname({ navigation }) {
         },
       );
 
-      if (nicknameResult.data.code === 400) {
+      if (result.data.code === 400) {
         setIsError(true);
-        setErrorMessage(nicknameResult.data.message);
+        setErrorMessage(result.data.message);
         return;
       }
 
-      await axios.post(`${API_SERVER_URL}/users/signup`, data);
-
-      navigation.replace("bottom");
+      navigation.replace("Bottom");
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +87,7 @@ export default function NewNickname({ navigation }) {
             clearButtonMode="always"
           />
           <TouchableOpacity style={styles.xButton} onPress={clearText}>
-            <Feather name="x" size={12} color="#453536" />
+            <Feather name="x" size={12} color={color.poplaceDark} />
           </TouchableOpacity>
         </View>
         <View style={errorStyles.errorContainer}>
@@ -94,10 +96,7 @@ export default function NewNickname({ navigation }) {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button
-          text="완료"
-          handleButton={fetchProfile}
-        />
+        <Button text="완료" handleButton={fetchProfile} />
       </View>
     </>
   );
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     fontSize: 20,
-    borderColor: "gray",
+    borderColor: color.poplaceGray,
     borderBottomWidth: 1,
   },
   textContainer: {
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 50,
     right: 10,
-    backgroundColor: "#EAEAEA",
+    backgroundColor: color.poplaceMiddleGray,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     fontSize: 16,
-    color: "#766162",
+    color: color.poplaceLight,
   },
 });
 
@@ -149,11 +148,11 @@ const errorStyles = StyleSheet.create({
   textInput: {
     height: 40,
     fontSize: 20,
-    borderColor: "#fe4e4e",
+    borderColor: color.poplaceErrorRed,
     borderBottomWidth: 1,
   },
   errorText: {
     textAlign: "left",
-    color: "#fe4e4e"
+    color: color.poplaceErrorRed,
   },
 });

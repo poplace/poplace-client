@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { color } from "../config/globalStyles";
 
 import ModalContainer from "./shared/ModalContainer";
 
-function WithdrawalModal() {
+export default function WithdrawalModal() {
   const [isVisible, setIsVisible] = useState(true);
   function handleModal() {
     setIsVisible((state) => !state);
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "70%",
     height: "45%",
-    backgroundColor: "#ffffff",
+    backgroundColor: color.poplaceWhite,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -61,14 +62,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   subTitle: {
-    color: "#766162",
+    color: color.poplaceLight,
     marginTop: 15,
     marginBottom: 5,
     textAlign: "center",
     fontSize: 12,
   },
   withdrawalText: {
-    color: "#ffffff",
+    color: color.poplaceWhite,
     fontSize: 18,
     fontWeight: "700",
   },
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 30,
-    backgroundColor: "#f78582",
+    backgroundColor: color.poplaceRed,
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 4,
@@ -88,5 +89,3 @@ const styles = StyleSheet.create({
     right: 10,
   },
 });
-
-export default WithdrawalModal;

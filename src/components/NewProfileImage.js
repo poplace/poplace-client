@@ -6,6 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import Button from "./shared/Button";
 import openImagePicker from "../api/openImagePicker";
 import { addImage } from "../features/userSlice";
+import { color } from "../config/globalStyles";
 
 export default function NewProfileImage({ navigation }) {
   const [profileImageUri, setProfileImageUri] = useState("");
@@ -27,7 +28,7 @@ export default function NewProfileImage({ navigation }) {
   }
 
   function handleNext() {
-    navigation.navigate("newNickname");
+    navigation.navigate("NewNickname");
   }
 
   return (
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 100,
-    backgroundColor: "#766162",
+    backgroundColor: color.poplaceLight,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "#ffffff",
+    backgroundColor: color.poplaceWhite,
     alignItems: "center",
     justifyContent: "center",
     shadowOpacity: 0.27,
@@ -99,6 +100,6 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     fontSize: 16,
-    color: "#766162",
+    color: color.poplaceLight,
   },
 });

@@ -1,44 +1,52 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { API_SERVER_URL } from "@env";
+import axios from "axios";
 
-import { DEFAULT_IMAGE } from "@env";
+import { useSelector } from "react-redux";
+import { color, verticalScale } from "../config/globalStyles";
+import { selectUser } from "../features/userSlice";
 import MyPinList from "../components/shared/MyPinList";
-import { selectUser, addImage } from "../features/userSlice";
-import openImagePicker from "../api/openImagePicker";
-import { color, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
+import MyPageProfile from "../components/MyPageProfile";
 
 export default function MyPage({ navigation }) {
-  const info = useSelector(selectUser);
-  const dispatch = useDispatch();
+  const [myCreatedPins, setMyCreatedPins] = useState([]);
+  const [mySavedPins, setMySavedPins] = useState([]);
+  const { email } = useSelector(selectUser);
 
-  async function changeImagePicker() {
-    const imageResult = await openImagePicker();
+  useEffect(() => {
+    async function fetchMyPins() {
+      try {
+        const response = await axios.get(`${API_SERVER_URL}/pins`, {
+          params: {
+            email,
+          },
+          validateStatus: (state) => state < 500,
+        });
 
-    if (imageResult) {
-      dispatch(addImage(imageResult));
+        if (response.data.code === 400) {
+          console.log(response.data.code);
+          return;
+        }
+
+        const { myCreatedPins, mySavedPins } = response.data;
+
+        setMyCreatedPins(myCreatedPins);
+        setMySavedPins(mySavedPins);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }
+
+    fetchMyPins();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
-        <View style={styles.profileStroke}>
-          <TouchableOpacity onPress={changeImagePicker} activeOpacity={1}>
-            <Image
-              style={styles.profile}
-              source={{
-                uri: info.image || DEFAULT_IMAGE,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.title}>정적인아이디</Text>
-        <View style={styles.titleUnderLine}></View>
-      </View>
+      <MyPageProfile />
       <View style={styles.listContainer}>
-        <MyPinList title="내가 생성한 핀" />
-        <MyPinList title="내가 저장한 핀" />
+        <MyPinList title="내가 생성한 핀" pins={myCreatedPins} navigation={navigation} />
+        <MyPinList title="내가 저장한 핀" pins={mySavedPins} navigation={navigation} />
       </View>
     </View>
   );
@@ -47,44 +55,7 @@ export default function MyPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.poplaceWhiteColor,
-  },
-  profileContainer: {
-    alignItems: "center",
-    top: "5%",
-  },
-  profile: {
-    position: "relative",
-    width: horizontalScale(80),
-    height: verticalScale(80),
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  profileStroke: {
-    marginBottom: 20,
-    width: horizontalScale(85),
-    height: verticalScale(85),
-    borderRadius: 100,
-    backgroundColor: color.poplaceWhiteColor,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  title: {
-    color: color.poplaceDarkColor,
-    fontSize: moderateScale(16),
-    fontWeight: "700",
-    textAlign: "center",
-  },
-  titleUnderLine: {
-    marginVertical: "2%",
-    top: "5%",
-    width: "85%",
-    borderBottomWidth: 1,
-    borderColor: color.poplaceLightGrayColor,
+    backgroundColor: color.poplaceWhite,
   },
   listContainer: {
     height: verticalScale(340),

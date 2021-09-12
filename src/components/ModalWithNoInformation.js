@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { color } from "../config/globalStyles";
 
 import ModalContainer from "./shared/ModalContainer";
 
-function ModalWithNoInformation() {
+export default function ModalWithNoInformation() {
   const [isVisible, setIsVisible] = useState(true);
 
   function handleModal() {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "70%",
     height: "45%",
-    backgroundColor: "#ffffff",
+    backgroundColor: color.poplaceWhite,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   subTitle: {
-    color: "#766162",
+    color: color.poplaceLight,
     marginTop: 15,
     marginBottom: 5,
     textAlign: "center",
@@ -71,9 +72,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   tag: {
-    color: "#ffffff",
+    color: color.poplaceWhite,
     fontWeight: "700",
-    backgroundColor: "#f78582",
+    backgroundColor: color.poplaceRed,
     borderRadius: 15,
     marginHorizontal: 5,
     marginBottom: 5,
@@ -86,5 +87,3 @@ const styles = StyleSheet.create({
     right: 10,
   },
 });
-
-export default ModalWithNoInformation;

@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 
 import { verticalScale, horizontalScale, moderateScale } from "../../config/globalStyles";
-import data from "../../mock.json";
+import data from "../../mocks/myPinListPreview.json";
 
 export default function MyPinListPreview() {
   return (

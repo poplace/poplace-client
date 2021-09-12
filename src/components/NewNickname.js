@@ -50,13 +50,17 @@ export default function NewNickname({ navigation }) {
         `${API_SERVER_URL}/users/signup`,
         data,
         {
+          email,
+          nickname: finalNickname,
+        },
+        {
           validateStatus: (status) => status < 500,
         },
         {
           headers: {
             "Content-Type": "application/json",
-          }
-        }
+          },
+        },
       );
 
       if (result.data.code === 400) {
@@ -83,7 +87,7 @@ export default function NewNickname({ navigation }) {
             clearButtonMode="always"
           />
           <TouchableOpacity style={styles.xButton} onPress={clearText}>
-            <Feather name="x" size={12} color={color.poplaceDarkColor} />
+            <Feather name="x" size={12} color={color.poplaceDark} />
           </TouchableOpacity>
         </View>
         <View style={errorStyles.errorContainer}>
@@ -92,10 +96,7 @@ export default function NewNickname({ navigation }) {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button
-          text="완료"
-          handleButton={fetchProfile}
-        />
+        <Button text="완료" handleButton={fetchProfile} />
       </View>
     </>
   );

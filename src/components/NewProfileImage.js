@@ -28,7 +28,7 @@ export default function NewProfileImage({ navigation }) {
   }
 
   function handleNext() {
-    navigation.navigate("newNickname");
+    navigation.navigate("NewNickname");
   }
 
   return (

@@ -20,6 +20,6 @@ export const color = {
   poplaceErrorRed: "#fe4e4e",
   poplaceWhite: "#ffffff",
   poplaceLightGray: "#F2efef",
-  poplaceMiddle: "#eaeaea",
+  poplaceMiddleGray: "#eaeaea",
   poplaceGray: "gray",
 };

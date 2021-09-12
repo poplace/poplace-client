@@ -17,10 +17,11 @@ export default function CustomPin({ pinsData }) {
   return (
     <>
       {pinsData.map((pin, index) => {
-        const { location: { latitude, longitude }} = pin;
+        const {
+          location: { latitude, longitude },
+        } = pin;
 
         return (
-          //현재는 key로 index를 넣어주고 있지만 서버에서 pin data를 받아오면 pin Object _id로 넣어줄것
           <View key={index}>
             <Marker
               key={index}

@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Marker } from "react-native-maps";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { turnOnOffModal } from "../features/modalVisibleSlice";
-import { addCurrentPin } from "../features/pinSlice";
+import { addCurrentPin } from "../features/currentPinSlice";
+import { selectPinsList } from "../features/pinsListSlice";
 
-export default function CustomPin({ pinsData }) {
+export default function CustomPin() {
   const dispatch = useDispatch();
+  const pinsList = useSelector(selectPinsList);
 
   function handlePopSlideModal(pin) {
     dispatch(turnOnOffModal());
@@ -16,11 +18,10 @@ export default function CustomPin({ pinsData }) {
 
   return (
     <>
-      {pinsData.map((pin, index) => {
+      {pinsList.map((pin, index) => {
         const { location: { latitude, longitude }} = pin;
 
         return (
-          //현재는 key로 index를 넣어주고 있지만 서버에서 pin data를 받아오면 pin Object _id로 넣어줄것
           <View key={index}>
             <Marker
               key={index}

@@ -15,5 +15,5 @@ web-build/
 #env
 .env
 
-# app.json
+#app.json
 app.json

@@ -65,7 +65,7 @@ export default function NewNickname({ navigation }) {
         return;
       }
 
-      navigation.replace("bottom");
+      navigation.replace("Bottom");
     } catch (err) {
       console.log(err);
     }

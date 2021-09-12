@@ -29,7 +29,9 @@ export default function DetailPin({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          return setRemainTime(null);
+          setRemainTime(null);
+
+          return navigation.goBack();
         }
 
         return setRemainTime(timeInfo);
@@ -39,7 +41,9 @@ export default function DetailPin({ navigation, route }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          return setRemainTime(null);
+          setRemainTime(null);
+
+          return navigation.goBack();
         }
 
         return setRemainTime(timeInfo);
@@ -49,7 +53,7 @@ export default function DetailPin({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          return navigation.navigate("Main");
+          return navigation.goBack();
         }
 
         return setRemainTime(timeInfo);

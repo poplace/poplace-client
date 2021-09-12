@@ -3,7 +3,6 @@ import axios from "axios";
 import { API_SERVER_URL } from "@env";
 
 export const getPinsList = createAsyncThunk("pin/getPinsList", async (location) => {
-  console.log(111, location);
   const response = await axios.get(`${API_SERVER_URL}/pins`, { params: location });
 
   return response.data;
@@ -19,10 +18,11 @@ const initialState = {
         calculated: null,
       },
       image: [],
-      position: {},
+      position: {
+        coordinates: [null, null],
+      },
       tag: [],
       text: null,
-      updatedAt: null,
     },
   ],
   status: "idle",
@@ -40,10 +40,12 @@ const pinsListSlice = createSlice({
       }
     },
     [getPinsList.fulfilled]: (state, action) => {
-      if (state.status === "pending") {
-        state.pinsList = action.payload.pinsList;
-        state.status = "success";
-      }
+      // if (state.status === "pending") {
+      //   // state.pinsList = action.payload.pinsList;
+      //   console.log('this is', action.payload.pinsList.length);
+      //   state.status = "success";
+      // }
+      state.pinsList = action.payload.pinsList;
     },
     [getPinsList.rejected]: (state, action) => {
       state.error = action.error;

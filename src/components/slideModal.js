@@ -4,7 +4,7 @@ import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectModalOn } from "../features/modalVisibleSlice";
-import { selectCurrentPin } from "../features/pinSlice";
+import { selectCurrentPin } from "../features/currentPinSlice";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 
 export default function SlideModal() {
@@ -15,11 +15,6 @@ export default function SlideModal() {
   function handleModalVisible() {
     dispatch(turnOnOffModal());
   }
-
-  //이미지를 보여줘야 한다.
-  //남은시간 현재 시간이랑 계산 해서 보여줘야 한다
-  //태그를 보여줘야 한다
-  //텍스트를 보여줘야 한다
 
   return (
     <View style={styles.modalContainer}>

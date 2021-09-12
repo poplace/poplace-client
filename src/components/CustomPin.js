@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Marker } from "react-native-maps";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { turnOnOffModal } from "../features/modalVisibleSlice";
-import { addCurrentPin } from "../features/pinSlice";
+import { addCurrentPin } from "../features/currentPinSlice";
+import { selectPinsList } from "../features/pinsListSlice";
 
-export default function CustomPin({ pinsData }) {
+export default function CustomPin() {
   const dispatch = useDispatch();
+  const { pinsList } = useSelector(selectPinsList);
 
   function handlePopSlideModal(pin) {
     dispatch(turnOnOffModal());
@@ -15,37 +17,40 @@ export default function CustomPin({ pinsData }) {
   }
 
   return (
-    <>
-      {pinsData.map((pin, index) => {
-        const {
-          location: { latitude, longitude },
-        } = pin;
+    <View>
+      {pinsList.map((pin) => {
+        if (pin._id) {
+          const [longitude, latitude] = pin.position.coordinates;
+          const imgUri = pin.image[0];
 
-        return (
-          <View key={index}>
-            <Marker
-              key={index}
-              coordinate={{ latitude, longitude }}
-              style={styles.pinContainer}
-              onPress={() => handlePopSlideModal(pin)}
-            >
-              <View style={styles.pin}>
-                <Image source={require("../assets/favicon.png")} style={styles.profileImage} />
-              </View>
-            </Marker>
-          </View>
-        );
+          return (
+            <View key={pin._id}>
+              <Marker
+                key={pin._id}
+                coordinate={{ longitude, latitude }}
+                style={styles.pinContainer}
+                onPress={() => handlePopSlideModal(pin)}
+              >
+                <View style={styles.pin}>
+                  <Image source={{ uri: imgUri }} style={styles.pinImage} />
+                </View>
+              </Marker>
+            </View>
+          );
+        }
       })}
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   pinContainer: {
+    flex: 1,
     width: 60,
     height: 60,
   },
   pin: {
+    position: "relative",
     width: 50,
     height: 50,
     backgroundColor: "#F78582",
@@ -55,10 +60,14 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     transform: [{ rotate: "315deg" }],
   },
-  profileImage: {
-    width: 35,
-    height: 35,
-    marginTop: 7,
-    marginLeft: 7,
+  pinImage: {
+    width: 38,
+    height: 38,
+    marginTop: 6,
+    marginLeft: 5.7,
+    borderRadius: 100,
+    borderWidth: 1.5,
+    borderColor: "white",
+    transform: [{ rotate: "405deg" }],
   },
 });

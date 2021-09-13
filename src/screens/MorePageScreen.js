@@ -16,7 +16,10 @@ export default function MorePageScreen({ route }) {
 
   function renderItem(pinData) {
     dispatch(addCurrentPin(pinData));
-    return <MorePageCard />;
+    return <MorePageCard title={title} />;
+
+    if (pinData.active) {
+    }
   }
 
   const { title } = route.params;

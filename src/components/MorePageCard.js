@@ -1,12 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
+import getDate from "../utils/getDate";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
 import { selectCurrentPin } from "../features/currentPinSlice";
 
-export default function MorePageCard() {
-  const pinData = useSelector(selectCurrentPin);
+export default function MorePageCard({ title }) {
+  const {
+    pinId,
+    image,
+    tags,
+    createdAt,
+    savedAt,
+    text,
+    creator,
+    savedUser,
+  } = useSelector(selectCurrentPin);
+  const [remainTime, setRemainTime] = useState(null);
+  const isCreatedPins = title === "내가 생성한 핀";
+  const isSavedPins = title === "내가 저장한 핀";
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (isCreatedPins) {
+        const timeInfo = getDate(createdAt);
+
+        if (!timeInfo) {
+          setRemainTime(null);
+
+          return navigation.goBack();
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      if (isCreator && !savedAt) {
+        const timeInfo = getDate(createdAt);
+
+        if (!timeInfo) {
+          setRemainTime(null);
+
+          return navigation.goBack();
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      if (isSavedUser) {
+        const timeInfo = getDate(savedAt);
+
+        if (!timeInfo) {
+          return navigation.goBack();
+        }
+
+        return setRemainTime(timeInfo);
+      }
+
+      const timeInfo = getDate(createdAt);
+
+      setRemainTime(timeInfo);
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   return (
     <TouchableOpacity

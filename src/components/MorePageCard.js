@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
 
 export default function MorePageCard({ pinsData }) {
 
   return (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
+      activeOpacity={1}
       onPress={() => { console.log("상세페이지로..") }}>
       <View style={styles.container}>
         <View style={styles.listContainer}>
@@ -29,7 +30,7 @@ export default function MorePageCard({ pinsData }) {
           </View>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 
@@ -43,8 +44,8 @@ const styles = StyleSheet.create({
     backgroundColor: color.poplaceWhite,
     borderRadius: 15,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 8,
     paddingHorizontal: horizontalScale(10),
     marginVertical: verticalScale(6),
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
     height: verticalScale(80),
     width: horizontalScale(80),
     borderRadius: 25,
-    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },

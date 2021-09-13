@@ -7,7 +7,7 @@ import { selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 
-export default function DetailPin({ navigation, route }) {
+export default function DetailPinScreen({ navigation, route }) {
   const { id: userId } = useSelector(selectUser);
   const {
     pinId,
@@ -75,7 +75,7 @@ export default function DetailPin({ navigation, route }) {
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");
-        return navigation.replace("Main");
+        return navigation.replace("HomeScreen");
       }
     } catch (err) {
       console.log(err);
@@ -105,9 +105,7 @@ export default function DetailPin({ navigation, route }) {
         }
       </View>
       <View style={styles.tagContainer}></View>
-      {tags.map((tag) => {
-        <Text style={styles.tag}>#{tag}</Text>
-      })}
+      {tags.map((tag) => <Text style={styles.tag}>#{tag}</Text>)}
       <View style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>
       </View>

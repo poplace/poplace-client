@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 
 export default function CustomBottomTabBarButton({ children, onPress }) {
   return (
@@ -16,9 +17,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   CustomTabBarCircle: {
-    width: 75,
-    height: 75,
-    borderRadius: 35,
-    backgroundColor: "#766162",
+    width: horizontalScale(90),
+    height: verticalScale(90),
+    borderRadius: moderateScale(100),
+    backgroundColor: color.poplaceLight,
   },
 });

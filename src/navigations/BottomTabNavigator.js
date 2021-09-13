@@ -1,35 +1,38 @@
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import React from "react";
 import { Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
-import Main from "../screens/Main";
-import MyPage from "../screens/MyPage";
-import NewPin from "../screens/NewPin";
+import HomeScreen from "../screens/HomeScreen";
+import MyPageScreen from "../screens/MyPageScreen";
+import NewPinScreen from "../screens/NewPinScreen";
 import CustomBottomTabBarButton from "../components/CustomBottomTabBarButton";
+import { color, verticalScale } from "../config/globalStyles";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigation() {
+export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
-        name="Main"
-        component={Main}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           tabBarIcon: () => <Ionicons name="home-outline" size={32} color="white" />,
         }}
       />
       <Tab.Screen
         name="핀 생성하기"
-        component={NewPin}
+        component={NewPinScreen}
         options={{
+          headerShown: true,
           tabBarIcon: () => <AntDesign name="plus" size={32} color="white" />,
           tabBarButton: (props) => <CustomBottomTabBarButton {...props} />,
           headerLeft: () => (
@@ -38,9 +41,10 @@ export default function BottomTabNavigation() {
         }}
       />
       <Tab.Screen
-        name="MyPage"
-        component={MyPage}
+        name="MyPageScreen"
+        component={MyPageScreen}
         options={{
+          headerShown: true,
           tabBarIcon: () => <Ionicons name="person-outline" size={32} color="white" />,
           title: "마이페이지",
           headerTitleAlign: "center",
@@ -65,10 +69,12 @@ export default function BottomTabNavigation() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 70,
-    backgroundColor: "#F78582",
+    position: "absolute",
+    height: verticalScale(70),
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    backgroundColor: color.poplaceRed,
+    borderTopWidth: 0,
   },
   settingContainer: {
     flex: 1,

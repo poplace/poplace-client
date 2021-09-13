@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { color } from "../../config/globalStyles";
+import { color, horizontalScale, verticalScale } from "../../config/globalStyles";
 
-export default function Button({ text, handleButton }) {
+export default function CustomButton({ text, handleButton }) {
   return (
     <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={handleButton}>
       <Text style={styles.buttonText}>{text}</Text>
@@ -12,14 +12,18 @@ export default function Button({ text, handleButton }) {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 15,
-    paddingHorizontal: "30%",
-    paddingVertical: "2.5%",
+    paddingHorizontal: horizontalScale(60),
+    paddingVertical: verticalScale(8),
     borderRadius: 50,
     backgroundColor: color.poplaceRed,
+    shadowColor: color.poplaceGray,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 4,
+    shadowRadius: 4.65,
+    elevation: 3,
   },
   buttonText: {
     color: color.poplaceWhite,

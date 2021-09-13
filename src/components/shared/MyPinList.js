@@ -7,7 +7,7 @@ import MyPinListPreview from "../shared/MyPinListPreview";
 export default function MyPinList({ title, pins, navigation }) {
 
   function showMyPinDetail() {
-    console.log("더보기로 이동..");
+    navigation.navigate("더보기");
   }
 
   return (

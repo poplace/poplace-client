@@ -72,7 +72,7 @@ export default function DetailPinScreen({ navigation }) {
 
   async function handleSavePin() {
     try {
-      const result = await savePinData(pinId);
+      const result = await savePinData(pinId, userId);
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");

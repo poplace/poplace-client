@@ -16,6 +16,7 @@ export default function CustomPin() {
     dispatch(addCurrentPin(pin));
   }
 
+  console.log("😍", pinsList, pinsList.length);
   return (
     <View>
       {pinsList.map((pin) => {

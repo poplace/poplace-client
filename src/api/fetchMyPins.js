@@ -24,8 +24,6 @@ export default async function fetchMyPins(userId, email) {
     const { myCreatedPins, mySavedPins } = response.data;
 
     return { myCreatedPins, mySavedPins };
-    // setMyCreatedPins(myCreatedPins);
-    // setMySavedPins(mySavedPins);
   } catch (err) {
     console.log(err);
   }

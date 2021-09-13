@@ -24,7 +24,6 @@ export default function MorePageScreen({ route }) {
   useEffect(() => {
     async function getMyPins() {
       try {
-
         const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
         if (title === "내가 생성한 핀") {

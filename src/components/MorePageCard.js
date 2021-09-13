@@ -8,8 +8,6 @@ import { selectCurrentPin } from "../features/currentPinSlice";
 export default function MorePageCard() {
   const pinData = useSelector(selectCurrentPin);
 
-  console.log("4367238462", pinData);
-
   return (
     <TouchableOpacity
       activeOpacity={1}

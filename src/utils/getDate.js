@@ -9,7 +9,7 @@ export default function getDate(time) {
   const currentTime = dayjs(new Date());
 
   const difference = currentTime.diff(targetTime);
-  const remainTime = 86400000 - difference;
+  const remainTime = DAY - difference;
 
   if (remainTime <= 0) {
     return false;

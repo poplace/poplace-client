@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-import Button from "./shared/Button";
+import Button from "../components/shared/Button";
 import openImagePicker from "../api/openImagePicker";
 import { addImage } from "../features/userSlice";
 import { color } from "../config/globalStyles";
 
-export default function NewProfileImage({ navigation }) {
+export default function NewProfileImageScreen({ navigation }) {
   const [profileImageUri, setProfileImageUri] = useState("");
   const [hasProfile, setHasProfile] = useState(false);
   const dispatch = useDispatch();
@@ -24,11 +24,11 @@ export default function NewProfileImage({ navigation }) {
   }
 
   function handleSkipButton() {
-    navigation.navigate("NewNickname");
+    navigation.navigate("NewNicknameScreen");
   }
 
   function handleNext() {
-    navigation.navigate("NewNickname");
+    navigation.navigate("NewNicknameScreen");
   }
 
   return (

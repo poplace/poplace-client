@@ -5,12 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
 import axios from "axios";
 
-import Button from "./shared/Button";
+import Button from "../components/shared/Button";
 import generateNickname from "../utils/nicknameGenerator";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
 
-export default function NewNickname({ navigation }) {
+export default function NewNicknameScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
   const [recommendedNickname, setRecommendedNickname] = useState("");
   const [isError, setIsError] = useState(false);
@@ -69,7 +69,7 @@ export default function NewNickname({ navigation }) {
         return;
       }
 
-      navigation.replace("Bottom");
+      navigation.replace("MainNavigator");
     } catch (err) {
       console.log(err);
     }

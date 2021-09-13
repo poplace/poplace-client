@@ -13,7 +13,7 @@ import validateTag from "../utils/validateTag";
 import validatePinData from "../utils/validatePinData";
 import openImagePicker from "../api/openImagePicker";
 
-export default function NewPin({ navigation }) {
+export default function NewPinScreen({ navigation }) {
   const { id } = useSelector(selectUser);
   const [tags, setTags] = useState({
     tag: "",

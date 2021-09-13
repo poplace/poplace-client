@@ -9,7 +9,7 @@ import { selectUser } from "../features/userSlice";
 import MyPinList from "../components/shared/MyPinList";
 import MyPageProfile from "../components/MyPageProfile";
 
-export default function MyPage({ navigation }) {
+export default function MyPageScreen({ navigation }) {
   const [myCreatedPins, setMyCreatedPins] = useState([]);
   const [mySavedPins, setMySavedPins] = useState([]);
   const { email } = useSelector(selectUser);

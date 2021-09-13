@@ -5,7 +5,7 @@ import { color, verticalScale } from "../config/globalStyles";
 import MorePageCard from "../components/MorePageCard";
 import data from "../components/mock/pinsMockData.json"
 
-export default function MorePage() {
+export default function MorePageCreen() {
   function renderItem(data) {
     return <MorePageCard pinsData={data} />;
   }

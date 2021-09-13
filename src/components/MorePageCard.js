@@ -1,9 +1,14 @@
 import React from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
+import { selectCurrentPin } from "../features/currentPinSlice";
 
-export default function MorePageCard({ pinsData }) {
+export default function MorePageCard() {
+  const pinData = useSelector(selectCurrentPin);
+
+  console.log("4367238462", pinData);
 
   return (
     <TouchableOpacity
@@ -13,19 +18,19 @@ export default function MorePageCard({ pinsData }) {
         <View style={styles.listContainer}>
           <Image
             style={styles.previewContainer}
-            source={{ uri: pinsData.item.image[0] }}
+            source={{ uri: pinData.item.image[0] }}
           />
           <View style={styles.textContainer}>
             <Text style={styles.timeText}>
-              남은시간: {pinsData.item.remain}
+              남은시간: {pinData.item.remain}
             </Text>
             <View style={styles.bodyContainer}>
-              {pinsData.item.tags.map((tag) => {
+              {pinData.item.tags.map((tag) => {
                 return <Text style={styles.tagsText}>{tag}</Text>
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{pinsData.item.text.slice(0, 15) + "..."}</Text>
+              <Text style={styles.text}>{pinData.item.text.slice(0, 15) + "..."}</Text>
             </View>
           </View>
         </View>

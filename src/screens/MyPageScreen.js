@@ -45,8 +45,16 @@ export default function MyPageScreen({ navigation }) {
     <View style={styles.container}>
       <MyPageProfile />
       <View style={styles.listContainer}>
-        <MyPinList title="내가 생성한 핀" pins={myCreatedPins} navigation={navigation} />
-        <MyPinList title="내가 저장한 핀" pins={mySavedPins} navigation={navigation} />
+        <MyPinList
+          title="내가 생성한 핀"
+          pins={myCreatedPins}
+          navigation={navigation}
+        />
+        <MyPinList
+          title="내가 저장한 핀"
+          pins={mySavedPins}
+          navigation={navigation}
+        />
       </View>
     </View>
   );

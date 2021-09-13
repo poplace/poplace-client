@@ -5,7 +5,7 @@ const initialState = {
   creator: null,
   image: [],
   text: null,
-  tag: [],
+  tags: [],
   savedUser: null,
   createdAt: null,
   saveAt: null,

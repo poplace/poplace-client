@@ -13,7 +13,7 @@ export default function DetailPinScreen({ navigation }) {
   const {
     pinId,
     image,
-    tag: tags,
+    tags,
     createdAt,
     savedAt,
     text,

@@ -5,9 +5,8 @@ import { color, moderateScale } from "../../config/globalStyles";
 import MyPinListPreview from "../shared/MyPinListPreview";
 
 export default function MyPinList({ title, pins, navigation }) {
-
   function showMyPinDetail() {
-    navigation.navigate("더보기");
+    navigation.navigate("더보기", { title });
   }
 
   return (

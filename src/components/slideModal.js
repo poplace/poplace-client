@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectModalOn } from "../features/modalVisibleSlice";
 import { selectCurrentPin } from "../features/currentPinSlice";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
+import MorePageCard from "../components/MorePageCard";
 
 export default function SlideModal() {
   const dispatch = useDispatch();
@@ -25,9 +26,7 @@ export default function SlideModal() {
         onBackButtonPress={handleModalVisible}
         onBackdropPress={handleModalVisible}
       >
-        <View style={styles.modal}>
-          <Text>{JSON.stringify(currentPinInfo)}</Text>
-        </View>
+        <MorePageCard />
       </Modal>
     </View>
   );

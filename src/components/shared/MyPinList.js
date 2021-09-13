@@ -18,7 +18,7 @@ export default function MyPinList({ title, pins, navigation }) {
           더보기 {">"}
         </Text>
       </View>
-      <MyPinListPreview pins={pins} />
+      <MyPinListPreview pins={pins} navigation={navigation}/>
     </>
   );
 }

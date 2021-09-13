@@ -3,9 +3,17 @@ import { StyleSheet, View, Image, TouchableOpacity, ScrollView } from "react-nat
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import { color, verticalScale, horizontalScale, moderateScale } from "../../config/globalStyles";
+import { useDispatch } from "react-redux";
+import { addCurrentPin } from "../../features/currentPinSlice";
 
-export default function MyPinListPreview({ pins }) {
+export default function MyPinListPreview({ navigation, pins }) {
   const hasPins = Boolean(pins.length);
+  const dispatch = useDispatch();
+
+  function handleClickDetailPin(pin) {
+    dispatch(addCurrentPin(pin));
+    navigation.navigate("상세페이지");
+  }
 
   return (
     <ScrollView horizontal style={styles.container}>
@@ -15,7 +23,7 @@ export default function MyPinListPreview({ pins }) {
             <TouchableOpacity
               key={pin.image[0].split(".").join("").slice(-20)}
               activeOpacity={1}
-              onPress={() => console.log("콘텐츠..")}>
+              onPress={() => handleClickDetailPin(pin)}>
               <Image style={styles.pins} source={{ uri: pin.image[0] }} />
             </TouchableOpacity>
           )

@@ -6,19 +6,21 @@ import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
+import { selectCurrentPin } from '../features/currentPinSlice';
 
-export default function DetailPinScreen({ navigation, route }) {
+export default function DetailPinScreen({ navigation }) {
   const { id: userId } = useSelector(selectUser);
   const {
     pinId,
     image,
-    tags,
+    tag: tags,
     createdAt,
     savedAt,
     text,
     creator,
     savedUser,
-  } = route.params.data;
+  } = useSelector(selectCurrentPin);
+  console.log("❤️🔕", image);
   const isCreator = userId === creator;
   const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);
@@ -87,7 +89,7 @@ export default function DetailPinScreen({ navigation, route }) {
       <Image
         style={styles.image}
         source={{
-          uri: image,
+          uri: image[0],
         }}
       />
       <View style={styles.timeContainer}>

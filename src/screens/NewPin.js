@@ -56,15 +56,19 @@ export default function NewPin({ navigation }) {
         coords: { longitude, latitude },
       } = currentLocation;
 
-      await axios.post(`${API_SERVER_URL}/pins`, {
-        ...data,
-        creator: id,
-        coords: [longitude, latitude],
-      }, {
-        headers: {
-          "Content-Type": "application/json"
+      await axios.post(
+        `${API_SERVER_URL}/pins`,
+        {
+          ...data,
+          creator: id,
+          coords: [longitude, latitude],
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
     } catch (err) {
       console.log(err);
     }
@@ -92,7 +96,7 @@ export default function NewPin({ navigation }) {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
       <View style={styles.addingImageContainer}>
         <View style={styles.addingImageStroke}>
           <TouchableOpacity
@@ -105,10 +109,7 @@ export default function NewPin({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-      <Button
-        title="완료"
-        onPress={handleSubmitdata}
-      />
+      <Button title="완료" onPress={handleSubmitdata} />
       <View style={styles.tagContainer}>
         <Text style={styles.tagTitle}>#tag</Text>
         <TagInput
@@ -116,7 +117,7 @@ export default function NewPin({ navigation }) {
           updateState={handleUpdateTag}
           placeholder="태그를 입력하고 enter를 눌러주세요"
           tags={tags}
-          keysForTag={'enter'}
+          keysForTag={"enter"}
         />
       </View>
       <View style={styles.textContainer}>
@@ -183,5 +184,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: "200%",
     borderColor: "#766162",
-  }
+  },
 });

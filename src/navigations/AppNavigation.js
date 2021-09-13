@@ -3,8 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import BottomTabNavigation from "./BottomTabNavigation";
 import LoginScreen from "../screens/LoginScreen";
-import Main from "../screens/Main";
+import MainScreen from "../screens/MainScreen";
 import NewAccount from "../components/NewAccount";
+import SettingScreen from "../screens/SettingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function AppNavigation() {
         name="bottom"
         component={BottomTabNavigation}
       />
+      <Stack.Screen name="설정페이지" component={SettingScreen} />
     </Stack.Navigator>
   );
 }

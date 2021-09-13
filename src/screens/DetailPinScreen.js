@@ -27,7 +27,7 @@ export default function DetailPinScreen({ navigation }) {
   useEffect(() => {
     const id = setInterval(() => {
       if (isCreator && savedAt) {
-        const timeInfo = getDate(savedAt);
+        const timeInfo = getDate(savedAt.toISOString());
 
         if (!timeInfo) {
           setRemainTime(null);
@@ -38,8 +38,8 @@ export default function DetailPinScreen({ navigation }) {
         return setRemainTime(timeInfo);
       }
 
-      if (isCreator && !savedAt) {
-        const timeInfo = getDate(createdAt);
+      if (isCreator && !savedAt.toISOString()) {
+        const timeInfo = getDate(createdAt.toISOString());
 
         if (!timeInfo) {
           setRemainTime(null);
@@ -51,7 +51,7 @@ export default function DetailPinScreen({ navigation }) {
       }
 
       if (isSavedUser) {
-        const timeInfo = getDate(savedAt);
+        const timeInfo = getDate(savedAt.toISOString());
 
         if (!timeInfo) {
           return navigation.goBack();
@@ -60,7 +60,7 @@ export default function DetailPinScreen({ navigation }) {
         return setRemainTime(timeInfo);
       }
 
-      const timeInfo = getDate(createdAt);
+      const timeInfo = getDate(createdAt.toISOString());
 
       setRemainTime(timeInfo);
     }, 1000);

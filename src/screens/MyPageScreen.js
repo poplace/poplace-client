@@ -12,12 +12,12 @@ import MyPageProfile from "../components/MyPageProfile";
 export default function MyPageScreen({ navigation }) {
   const [myCreatedPins, setMyCreatedPins] = useState([]);
   const [mySavedPins, setMySavedPins] = useState([]);
-  const { email } = useSelector(selectUser);
+  const { id: userId, email } = useSelector(selectUser);
 
   useEffect(() => {
     async function fetchMyPins() {
       try {
-        const response = await axios.get(`${API_SERVER_URL}/pins`, {
+        const response = await axios.get(`${API_SERVER_URL}/pins/${userId}`, {
           params: {
             email,
           },

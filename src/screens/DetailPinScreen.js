@@ -20,7 +20,6 @@ export default function DetailPinScreen({ navigation }) {
     creator,
     savedUser,
   } = useSelector(selectCurrentPin);
-  console.log("❤️🔕", image);
   const isCreator = userId === creator;
   const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);

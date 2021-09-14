@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import getDate from "../utils/getDate";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
-import { selectCurrentPin } from "../features/currentPinSlice";
+import { addCurrentPin, selectCurrentPin } from "../features/currentPinSlice";
+import { MESSAGE } from "../constants/shared";
 
-export default function MorePageCard({ title }) {
+export default function MorePageCard({ navigation, pinData, title }) {
   const {
-    pinId,
     image,
     tags,
     createdAt,
     savedAt,
     text,
-    creator,
-    savedUser,
-  } = useSelector(selectCurrentPin);
+  } = pinData;
+  const [isVisible, setIsVisible] = useState(true);
   const [remainTime, setRemainTime] = useState(null);
   const isCreatedPins = title === "내가 생성한 핀";
   const isSavedPins = title === "내가 저장한 핀";
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -27,39 +27,24 @@ export default function MorePageCard({ title }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          setRemainTime(null);
-
-          return navigation.goBack();
+          setRemainTime(MESSAGE.pinTimeOver);
+          return;
         }
 
-        return setRemainTime(timeInfo);
+        return setRemainTime(`남은시간 ${timeInfo}`);
       }
 
-      if (isCreator && !savedAt) {
-        const timeInfo = getDate(createdAt);
-
-        if (!timeInfo) {
-          setRemainTime(null);
-
-          return navigation.goBack();
-        }
-
-        return setRemainTime(timeInfo);
-      }
-
-      if (isSavedUser) {
+      if (isSavedPins) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          return navigation.goBack();
+          setRemainTime(MESSAGE.pinTimeOver);
+          setIsVisible(false);
+          return;
         }
 
-        return setRemainTime(timeInfo);
+        return setRemainTime(`남은시간 ${timeInfo}`);
       }
-
-      const timeInfo = getDate(createdAt);
-
-      setRemainTime(timeInfo);
     }, 1000);
 
     return () => {
@@ -67,27 +52,36 @@ export default function MorePageCard({ title }) {
     };
   }, []);
 
+  function showMyPinDetail() {
+    dispatch(addCurrentPin(pinData));
+    navigation.navigate("상세페이지", { title });
+  }
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => { console.log("상세페이지로..") }}>
+      onPress={showMyPinDetail}>
       <View style={styles.container}>
         <View style={styles.listContainer}>
           <Image
             style={styles.previewContainer}
-            source={{ uri: pinData.item.image[0] }}
+            source={{ uri: image[0] }}
           />
           <View style={styles.textContainer}>
             <Text style={styles.timeText}>
-              남은시간: {pinData.item.remain}
+              {remainTime}
             </Text>
             <View style={styles.bodyContainer}>
-              {pinData.item.tags.map((tag) => {
+              {tags.map((tag) => {
                 return <Text style={styles.tagsText}>{tag}</Text>
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{pinData.item.text.slice(0, 15) + "..."}</Text>
+              <Text style={styles.text}>{text.slice(0, 15) + "..."}</Text>
             </View>
           </View>
         </View>

@@ -26,7 +26,6 @@ export default function SlideModal() {
         onBackButtonPress={handleModalVisible}
         onBackdropPress={handleModalVisible}
       >
-        <MorePageCard />
       </Modal>
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FlatList, View, StyleSheet, SafeAreaView } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -9,38 +9,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCurrentPin } from "../features/currentPinSlice";
 import { selectUser } from "../features/userSlice";
 
-export default function MorePageScreen({ route }) {
+export default function MorePageScreen({ navigation, route }) {
   const { id: userId, email } = useSelector(selectUser);
   const [pinsData, setPinsData] = useState([]);
-  const dispatch = useDispatch();
+  const { title } = route.params;
+  const isCreatedPins = title === "내가 생성한 핀";
+  const isSavedPins = title === "내가 저장한 핀";
 
   function renderItem(pinData) {
-    dispatch(addCurrentPin(pinData));
-    return <MorePageCard title={title} />;
+    if (isCreatedPins) {
+      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
+    }
 
-    if (pinData.active) {
+    if (isSavedPins && pinData.item.active) {
+      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
     }
   }
 
-  const { title } = route.params;
+  const getMyPins = useCallback(async () => {
+    try {
+      const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
+
+      if (title === "내가 생성한 핀") {
+        return setPinsData(myCreatedPins);
+      }
+
+      if (title === "내가 저장한 핀") {
+        return setPinsData(mySavedPins);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   useEffect(() => {
-    async function getMyPins() {
-      try {
-        const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
-
-        if (title === "내가 생성한 핀") {
-          setPinsData(myCreatedPins);
-        }
-
-        if (title === "내가 저장한 핀") {
-          setPinsData(mySavedPins);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
     getMyPins();
   }, []);
 

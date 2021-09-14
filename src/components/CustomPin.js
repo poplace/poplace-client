@@ -12,8 +12,8 @@ export default function CustomPin() {
   const { pinsList } = useSelector(selectPinsList);
 
   function handlePopSlideModal(pin) {
-    dispatch(turnOnOffModal());
     dispatch(addCurrentPin(pin));
+    dispatch(turnOnOffModal());
   }
 
   return (

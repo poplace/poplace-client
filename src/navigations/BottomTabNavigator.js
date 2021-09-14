@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/core";
 
 import HomeScreen from "../screens/HomeScreen";
 import MyPageScreen from "../screens/MyPageScreen";

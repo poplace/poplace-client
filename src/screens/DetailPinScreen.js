@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
+import { selectCurrentPin } from '../features/currentPinSlice';
+import { MESSAGE } from "../constants/shared";
 
-export default function DetailPinScreen({ navigation, route }) {
+export default function DetailPinScreen({ navigation }) {
   const { id: userId } = useSelector(selectUser);
   const {
     pinId,
@@ -18,7 +20,7 @@ export default function DetailPinScreen({ navigation, route }) {
     text,
     creator,
     savedUser,
-  } = route.params.data;
+  } = useSelector(selectCurrentPin);
   const isCreator = userId === creator;
   const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);
@@ -29,24 +31,20 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          setRemainTime(null);
-
-          return navigation.goBack();
+          return setRemainTime(MESSAGE.pinTimeOver);
         }
 
-        return setRemainTime(timeInfo);
+        return setRemainTime(`남은시간 ${timeInfo}`);
       }
 
       if (isCreator && !savedAt) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          setRemainTime(null);
-
-          return navigation.goBack();
+          return setRemainTime(MESSAGE.pinTimeOver);
         }
 
-        return setRemainTime(timeInfo);
+        return setRemainTime(`남은시간 ${timeInfo}`);
       }
 
       if (isSavedUser) {
@@ -56,12 +54,12 @@ export default function DetailPinScreen({ navigation, route }) {
           return navigation.goBack();
         }
 
-        return setRemainTime(timeInfo);
+        return setRemainTime(`남은시간 ${timeInfo}`);
       }
 
       const timeInfo = getDate(createdAt);
 
-      setRemainTime(timeInfo);
+      setRemainTime(`남은시간 ${timeInfo}`);
     }, 1000);
 
     return () => {
@@ -71,7 +69,7 @@ export default function DetailPinScreen({ navigation, route }) {
 
   async function handleSavePin() {
     try {
-      const result = await savePinData(pinId);
+      const result = await savePinData(pinId, userId);
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");
@@ -87,12 +85,12 @@ export default function DetailPinScreen({ navigation, route }) {
       <Image
         style={styles.image}
         source={{
-          uri: image,
+          uri: image[0],
         }}
       />
       <View style={styles.timeContainer}>
         <View style={styles.time}>
-          <Text style={styles.timeText}>남은시간: {remainTime}</Text>
+          <Text style={styles.timeText}>{remainTime}</Text>
         </View>
         {!isCreator && !isSavedUser &&
           <TouchableOpacity

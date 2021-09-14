@@ -5,6 +5,7 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
 import { getPinsList } from "../features/pinsListSlice";
+import { ERROR_MESSAGE } from "../constants/utils";
 import CustomPin from "./CustomPin";
 
 export default function GoogleMap() {
@@ -18,9 +19,8 @@ export default function GoogleMap() {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== "granted") {
-        const alertMessage = "위치정보 활용 동의가 필요합니다";
 
-        Alert.alert("알림", alertMessage, [
+        Alert.alert("알림", ERROR_MESSAGE.locationAccess, [
           { text: "취소" },
           { text: "확인", onPress: () => setIsLocationServiceEnable(false) },
         ]);
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
   getPinDataButton: {
     position: "absolute",
     width: 170,
-    height: 40,
+    height: 100,
     backgroundColor: "white",
     borderRadius: 20,
-    top: 12,
+    top: 40,
     right: 120,
     alignSelf: "flex-end",
     alignItems: "center",

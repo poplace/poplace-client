@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import MorePageScreen from "../screens/MorePageScreen";
+import SettingScreen from "../screens/SettingScreen";
 import DetailPinScreen from "../screens/DetailPinScreen";
 
 const Stack = createNativeStackNavigator();
@@ -12,6 +13,7 @@ export default function MainNavigator() {
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="Bottom" component={BottomTabNavigator} />
       <Stack.Screen options={{ headerShown: true }} name="더보기" component={MorePageScreen} />
+      <Stack.Screen options={{ headerShown: true }} name="Setting" component={SettingScreen} />
       <Stack.Screen options={{ headerShown: true }} name="상세페이지" component={DetailPinScreen} />
     </Stack.Navigator>
   );

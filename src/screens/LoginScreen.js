@@ -55,7 +55,7 @@ export default function LoginScreen({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <Text style={styles.errorMessage}>{errorMessage}</Text>
-        <CustomButton style={styles.button} text="구글로 로그인 하기" handleButton={handleGoogleLogin} />
+        <CustomButton style={styles.button} text="구글로 시작하기" handleButton={handleGoogleLogin} />
       </View>
     </View>
   );

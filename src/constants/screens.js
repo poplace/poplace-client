@@ -3,3 +3,10 @@ export const ERROR_MESSAGE = {
   cameraAccess: "카메라 접근 권한이 필요합니다.",
   locationAccess: "위치정보 활용 동의가 필요합니다",
 };
+
+export const ALERT_MESSAGE = {
+  accept: "확인",
+  title: "알림",
+  logout: "로그아웃 되었습니다",
+  deleteAccount: "계정이 정상적으로 삭제 되었습니다",
+};

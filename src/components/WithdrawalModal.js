@@ -1,21 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+
 import { color } from "../config/globalStyles";
-
 import ModalContainer from "./shared/ModalContainer";
+import { ALERT_MESSAGE } from "../constants/screens";
 
-export default function WithdrawalModal() {
-  const [isVisible, setIsVisible] = useState(true);
-  function handleModal() {
-    setIsVisible((state) => !state);
-  }
+export default function WithdrawalModal({ isVisibleModal, handleVisibleModal, userId }) {
+  async function handleWithdrawal() {
+    try {
+      await axios.delete(`${API_SERVER_URL}/users/delete`, { data: { userId } });
 
-  function handleWithdrawal() {
-    console.log("탈퇴하기");
+      dispatch(logoutUser());
+
+      Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
+        text: ALERT_MESSAGE.accept,
+        onPress: () => navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }]
+        }),
+      }]);
+
+      navigation.navigate("Login");
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   return (
-    <Modal visible={isVisible} transparent={true} onRequestClose={handleModal}>
+    <Modal visible={isVisibleModal} transparent={true}>
       <ModalContainer>
         <View style={styles.container}>
           <Text style={styles.titleImoji}>⚠️</Text>
@@ -28,7 +40,7 @@ export default function WithdrawalModal() {
           >
             <Text style={styles.withdrawalText}>탈퇴하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.closeButton} onPress={handleModal}>
+          <TouchableOpacity style={styles.closeButton} onPress={handleVisibleModal}>
             <Image source={require("../assets/closeButton.png")} />
           </TouchableOpacity>
         </View>

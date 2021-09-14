@@ -3,16 +3,16 @@ import React, { useEffect } from "react";
 import { Button, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../screens/HomeScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import NewPinScreen from "../screens/NewPinScreen";
+import SettingScreen from "../screens/SettingScreen";
 import CustomBottomTabBarButton from "../components/CustomBottomTabBarButton";
 import { color, verticalScale } from "../config/globalStyles";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
-
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator({ navigation, route }) {

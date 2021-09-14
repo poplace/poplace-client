@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { View, Text, Image, StyleSheet } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-import { signinUser } from "../features/userSlice";
+import { signinUser, selectUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 import { color, moderateScale, verticalScale } from "../config/globalStyles";
@@ -11,12 +11,15 @@ import CustomButton from "../components/shared/CustomButton";
 
 export default function LoginScreen({ navigation }) {
   const isSuccess = useSelector((state) => state.user.status === "success");
+  const { isOriginalMember } = useSelector(selectUser);
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (isSuccess) {
-      navigation.replace("bottom");
+      isOriginalMember
+        ? navigation.replace("MainNavigator")
+        : navigation.replace("NewAccountNavigator");
     }
   }, [isSuccess]);
 

@@ -6,6 +6,7 @@ import { API_SERVER_URL } from "@env";
 import * as Location from "expo-location";
 import Textarea from "react-native-textarea";
 import TagInput from "react-native-tags-input";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
 import { selectUser } from "../features/userSlice";
@@ -74,27 +75,22 @@ export default function NewPinScreen({ navigation }) {
       data.append("creator", id);
       data.append("tags", stringifiedTags);
       data.append("coords", stringifiedCoords);
-      console.log(data);
-      await axios.post(
-        `${API_SERVER_URL}/pins`,
-        data,
-        {
-          text,
-          creator: id,
-          tags: stringifiedTags,
-          coords: stringifiedCoords,
-        },
-        {
-          validateStatus: (status) => status < 500,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
 
-      navigation.navigate("Bottom");
+      const token = await SecureStore.getItemAsync("token");
+
+      await axios.post(
+        `${API_SERVER_URL}/pins`, data, {
+        text,
+        creator: id,
+        tags: stringifiedTags,
+        coords: stringifiedCoords,
+        validateStatus: (state) => state < 500,
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      });
+
+      navigation.replace("MainNavigator");
     } catch (err) {
       console.log(err);
     }

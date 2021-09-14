@@ -33,11 +33,6 @@ export default function SettingScreen({ navigation }) {
     dispatch(logoutUser());
     alert('로그아웃 되었습니다.');
     navigation.navigate("Login");
-    //dispatch 로 로그아웃시킨다
-    //서버로 가서 현재 사용자의 User 모델에서 삭제한다
-    //현재 사용자가 만든 핀들을 지운다
-    //완료되면 응답을 보내준다
-    //스택을 지워주며 계정생성화면으로 리디렉트 시킨다.
   }
   return (
     <View style={styles.container}>

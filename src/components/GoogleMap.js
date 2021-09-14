@@ -69,9 +69,6 @@ export default function GoogleMap() {
         loadingEnabled={true}
         region={location}
         showsUserLocation
-        mapPadding={{
-          top: 27,
-        }}
         onRegionChangeComplete={handleMapViewCoordinate}
       >
         <CustomPin />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -11,18 +11,6 @@ import { color, horizontalScale, moderateScale, verticalScale } from "../config/
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator({ navigation, route }) {
-  // const [keyboardVisible, setKeyboardVisible] = useState(false);
-
-  // useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", setKeyboardVisible(false));
-  //   const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", setKeyboardVisible(true));
-
-  //   return () => {
-  //     keyboardDidShowListener.remove();
-  //     keyboardDidHideListener.remove();
-  //   }
-  // }, []);
-
   return (
     <Tab.Navigator
       screenOptions={{

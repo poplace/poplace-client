@@ -6,7 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import CustomButton from "../components/shared/CustomButton";
 import openImagePicker from "../api/openImagePicker";
 import { addImage } from "../features/userSlice";
-import { color } from "../config/globalStyles";
+import { color, verticalScale } from "../config/globalStyles";
 
 export default function NewProfileImageScreen({ navigation }) {
   const [profileImageUri, setProfileImageUri] = useState("");
@@ -17,7 +17,6 @@ export default function NewProfileImageScreen({ navigation }) {
     const imageResult = await openImagePicker();
 
     if (imageResult) {
-      console.log("⏱", imageResult);
       dispatch(addImage(imageResult));
       setProfileImageUri(imageResult);
       setHasProfile(true);
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     fontSize: 16,
+    bottom: verticalScale(15),
     color: color.poplaceLight,
   },
 });

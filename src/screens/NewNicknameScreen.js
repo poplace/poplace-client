@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
 import CustomButton from "../components/shared/CustomButton";
@@ -45,23 +46,18 @@ export default function NewNicknameScreen({ navigation }) {
     data.append("email", email);
     data.append("nickname", finalNickname);
 
+    const token = await SecureStore.getItemAsync("token");
+
     try {
-      const result = await axios.post(
-        `${API_SERVER_URL}/users/signup`,
-        data,
-        {
-          email,
-          nickname: finalNickname,
+      const result = await axios.post(`${API_SERVER_URL}/users/signup`, data, {
+        email,
+        nickname: finalNickname,
+        validateStatus: (status) => status < 500,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
-        {
-          validateStatus: (status) => status < 500,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      });
 
       if (result.data.code === 400) {
         setIsError(true);

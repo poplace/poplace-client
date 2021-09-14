@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 
 import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
-import { color } from "../config/globalStyles";
+import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 import { selectCurrentPin } from '../features/currentPinSlice';
 import { MESSAGE } from "../constants/shared";
@@ -92,6 +92,8 @@ export default function DetailPinScreen({ navigation }) {
         <View style={styles.time}>
           <Text style={styles.timeText}>{remainTime}</Text>
         </View>
+      </View>
+      <View style={styles.buttonContainer}>
         {!isCreator && !isSavedUser &&
           <TouchableOpacity
             text="저장하기"
@@ -99,14 +101,14 @@ export default function DetailPinScreen({ navigation }) {
             onPress={handleSavePin}
           >
             <Text style={styles.buttonText}>저장하기</Text>
-          </TouchableOpacity>
-        }
+          </TouchableOpacity>}
       </View>
-      <View style={styles.tagContainer}></View>
-      {tags.map((tag) => <Text style={styles.tag}>#{tag}</Text>)}
-      <View style={styles.textContainer}>
+      <View style={styles.tagContainer}>
+        {tags.map((tag) => <Text style={styles.tag}>{tag}</Text>)}
+      </View>
+      <ScrollView style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>
-      </View>
+      </ScrollView>
     </View>
   )
 }
@@ -116,55 +118,81 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: color.poplaceWhite,
   },
   image: {
-    flex: 1,
+    flex: 2,
     width: "100%",
-    borderWidth: 1,
   },
   timeContainer: {
-    flex: 0.2,
+    marginTop: verticalScale(15),
+    marginBottom: verticalScale(5),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "80%",
-    borderColor: color.poplaceGrayColor,
-    borderBottomWidth: 1,
   },
   time: {
     justifyContent: "center",
   },
   timeText: {
-    color: color.poplacelightColor,
+    fontSize: moderateScale(18),
+    fontWeight: "700",
+    color: color.poplaceDark,
+  },
+  buttonContainer: {
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
-    backgroundColor: color.poplaceRedColor,
-    borderRadius: 15,
-    marginHorizontal: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    color: color.poplaceWhite,
+    fontWeight: "700",
+    backgroundColor: color.poplaceRed,
+    borderRadius: moderateScale(50),
+    marginHorizontal: horizontalScale(5),
+    marginVertical: verticalScale(10),
+    paddingVertical: verticalScale(8),
+    paddingHorizontal: horizontalScale(20),
   },
   buttonText: {
-    color: color.poplaceWhiteColor,
+    color: color.poplaceWhite,
+    fontSize: moderateScale(15),
+    fontWeight: "700",
+  },
+  tagContainer: {
+    flexDirection: "row",
+    width: "85%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: verticalScale(5),
+    padding: verticalScale(8),
+    borderBottomColor: color.poplaceMiddleGray,
+    borderTopColor: color.poplaceMiddleGray,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
+  tag: {
+    color: color.poplaceRed,
+    fontWeight: "700",
+    backgroundColor: color.poplaceWhite,
+    borderRadius: moderateScale(50),
+    marginHorizontal: horizontalScale(5),
+    marginVertical: verticalScale(10),
+    paddingVertical: verticalScale(5),
+    paddingHorizontal: horizontalScale(10),
+    shadowColor: "#000000",
+    shadowOpacity: 0.01,
+    elevation: 2,
   },
   textContainer: {
     flex: 0.8,
     width: "80%",
   },
   text: {
-    color: color.poplacelightColor,
-  },
-  tagContainer: {
-    flexWrap: "wrap",
-    marginTop: 10,
-  },
-  tag: {
-    color: color.poplaceWhiteColor,
-    fontWeight: "700",
-    backgroundColor: color.poplaceRedColor,
-    borderRadius: 15,
-    marginHorizontal: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    color: color.poplaceLight,
+    fontSize: moderateScale(16),
+    marginVertical: verticalScale(10),
+    lineHeight: verticalScale(20),
   },
 });

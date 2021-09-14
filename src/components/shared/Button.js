@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { color } from "../../config/globalStyles";
 
 export default function Button({ text, handleButton }) {
   return (
@@ -15,13 +16,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: "30%",
     paddingVertical: "2.5%",
     borderRadius: 50,
-    backgroundColor: "#f78582",
+    backgroundColor: color.poplaceRed,
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 4,
   },
   buttonText: {
-    color: "#ffffff",
+    color: color.poplaceWhite,
     fontSize: 24,
     fontWeight: "700",
   },

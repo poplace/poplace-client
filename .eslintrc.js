@@ -34,7 +34,7 @@ module.exports = {
     "eol-last": ["warn", "always"],
     "arrow-parens": ["warn", "always"],
     "func-style": ["warn", "declaration"],
-    "comma-dangle": ["warn", "always-multiline"],
+    "comma-dangle": ["warn", "ignore"],
     "linebreak-style": ["warn", "unix"],
     "no-unused-vars": [
       "warn",

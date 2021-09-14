@@ -1,46 +1,56 @@
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import React from "react";
-import { Button } from "react-native";
+import { StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import React, { useEffect } from "react";
+import { Button,View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
-import Main from "../screens/Main";
-import MyPage from "../screens/MyPage";
-import NewPin from "../screens/NewPin";
+import HomeScreen from "../screens/HomeScreen";
+import MyPageScreen from "../screens/MyPageScreen";
+import NewPinScreen from "../screens/NewPinScreen";
+import SettingScreen from "../screens/SettingScreen";
 import CustomBottomTabBarButton from "../components/CustomBottomTabBarButton";
+import { color, verticalScale } from "../config/globalStyles";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigation() {
+export default function BottomTabNavigator({ navigation, route }) {
+
+
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
-        name="Main"
-        component={Main}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           tabBarIcon: () => <Ionicons name="home-outline" size={32} color="white" />,
         }}
       />
       <Tab.Screen
         name="핀 생성하기"
-        component={NewPin}
+        component={NewPinScreen}
         options={{
+          headerShown: true,
           tabBarIcon: () => <AntDesign name="plus" size={32} color="white" />,
           tabBarButton: (props) => <CustomBottomTabBarButton {...props} />,
           headerLeft: () => (
-            <Button title="뒤로"/>
+            <Button title="뒤로" />
           ),
         }}
       />
       <Tab.Screen
-        name="MyPage"
-        component={MyPage}
+        name="MyPageScreen"
+        component={MyPageScreen}
         options={{
+          headerShown: true,
           tabBarIcon: () => <Ionicons name="person-outline" size={32} color="white" />,
           title: "마이페이지",
           headerTitleAlign: "center",
@@ -53,7 +63,7 @@ export default function BottomTabNavigation() {
             <TouchableOpacity
               style={styles.settingContainer}
               activeOpacity={1}
-              onPress={() => console.log("설정페이지로..")}>
+              onPress={() => navigation.navigate("Setting")}>
               <Ionicons name="settings-sharp" size={26} color="#766162" />
             </TouchableOpacity>
           ),
@@ -65,10 +75,12 @@ export default function BottomTabNavigation() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 70,
-    backgroundColor: "#F78582",
+    position: "absolute",
+    height: verticalScale(70),
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    backgroundColor: color.poplaceRed,
+    borderTopWidth: 0,
   },
   settingContainer: {
     flex: 1,

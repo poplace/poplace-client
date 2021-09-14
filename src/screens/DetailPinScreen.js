@@ -31,7 +31,7 @@ export default function DetailPinScreen({ navigation }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          return setRemainTime(MESSAGE.pinTimeOver);
         }
 
         return setRemainTime(`남은시간 ${timeInfo}`);
@@ -41,7 +41,7 @@ export default function DetailPinScreen({ navigation }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          return setRemainTime(MESSAGE.pinTimeOver);
         }
 
         return setRemainTime(`남은시간 ${timeInfo}`);

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { API_SERVER_URL } from "@env";
-import axios from "axios";
-
 import { useSelector } from "react-redux";
+
 import { color, verticalScale } from "../config/globalStyles";
 import { selectUser } from "../features/userSlice";
 import MyPinList from "../components/shared/MyPinList";
 import MyPageProfile from "../components/MyPageProfile";
+import fetchMyPins from "../api/fetchMyPins";
 
 export default function MyPageScreen({ navigation }) {
   const [myCreatedPins, setMyCreatedPins] = useState([]);
@@ -15,21 +14,9 @@ export default function MyPageScreen({ navigation }) {
   const { id: userId, email } = useSelector(selectUser);
 
   useEffect(() => {
-    async function fetchMyPins() {
+    async function getMyPins() {
       try {
-        const response = await axios.get(`${API_SERVER_URL}/pins/${userId}`, {
-          params: {
-            email,
-          },
-          validateStatus: (state) => state < 500,
-        });
-
-        if (response.data.code === 400) {
-          console.log(response.data.code);
-          return;
-        }
-
-        const { myCreatedPins, mySavedPins } = response.data;
+        const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
         setMyCreatedPins(myCreatedPins);
         setMySavedPins(mySavedPins);
@@ -38,7 +25,7 @@ export default function MyPageScreen({ navigation }) {
       }
     }
 
-    fetchMyPins();
+    getMyPins();
   }, []);
 
   return (

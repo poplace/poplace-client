@@ -19,14 +19,16 @@ export default function CustomPin() {
   return (
     <View>
       {pinsList.map((pin) => {
-        if (pin._id) {
-          const [longitude, latitude] = pin.position.coordinates;
-          const imgUri = pin.image[0];
+        const { _id: id, active, image, position } = pin;
+
+        if (id && active) {
+          const [longitude, latitude] = position.coordinates;
+          const imgUri = image[0];
 
           return (
-            <View key={pin._id}>
+            <View key={id}>
               <Marker
-                key={pin._id}
+                key={id}
                 coordinate={{ longitude, latitude }}
                 style={styles.pinContainer}
                 onPress={() => handlePopSlideModal(pin)}

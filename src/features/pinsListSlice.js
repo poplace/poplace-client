@@ -1,9 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_SERVER_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 export const getPinsList = createAsyncThunk("pin/getPinsList", async (location) => {
-  const response = await axios.get(`${API_SERVER_URL}/pins`, { params: location });
+  const token = await SecureStore.getItemAsync("token");
+
+  const response = await axios.get(`${API_SERVER_URL}/pins`, {
+    params: location,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
 
   return response.data;
 });
@@ -35,15 +43,11 @@ const pinsListSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getPinsList.pending]: (state) => {
-      if (state.status === "idle") {
-        state.status = "pending";
-      }
+      state.status = "pending";
     },
     [getPinsList.fulfilled]: (state, action) => {
-      if (state.status === "pending") {
-        state.pinsList = action.payload.pinsList;
-        state.status = "success";
-      }
+      state.pinsList = action.payload.pinsList;
+      state.status = "success";
     },
     [getPinsList.rejected]: (state, action) => {
       state.error = action.error;

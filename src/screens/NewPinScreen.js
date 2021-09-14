@@ -7,6 +7,7 @@ import * as Location from "expo-location";
 import Textarea from "react-native-textarea";
 import TagInput from "react-native-tags-input";
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 import { selectUser } from "../features/userSlice";
 import validateTag from "../utils/validateTag";
@@ -56,6 +57,7 @@ export default function NewPinScreen({ navigation }) {
     };
 
     try {
+      const token = await SecureStore.getItemAsync("token");
       const currentLocation = await Location.getCurrentPositionAsync({});
       const data = new FormData();
       const {
@@ -79,13 +81,9 @@ export default function NewPinScreen({ navigation }) {
           creator: id,
           tags: stringifiedTags,
           coords: stringifiedCoords,
-        },
-        {
           validateStatus: (status) => status < 500,
-        },
-        {
           headers: {
-            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
         },
       );

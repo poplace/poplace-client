@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import SwitchToggle from "react-native-switch-toggle";
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import { logoutUser, selectUser } from "../features/userSlice";
 import { verticalScale, horizontalScale, color } from "../config/globalStyles";
-import { API_SERVER_URL } from "@env";
+import WithdrawalModal from "../components/WithdrawalModal";
 
 export default function SettingScreen({ navigation }) {
   const [toggleOn, setToggleOn] = useState(true);
   const { id } = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
 
   function handleChangeNickname() {
     navigation.replace("NewNicknameScreen");
@@ -19,26 +20,14 @@ export default function SettingScreen({ navigation }) {
 
   function handleLogout() {
     dispatch(logoutUser());
-    alert('로그아웃 되었습니다.')
+    alert("로그아웃 되었습니다.")
     navigation.navigate("Login");
   }
 
-  async function deleteAccount() {
-    try {
-      await axios.delete(`${API_SERVER_URL}/users/delete`, { data: { id } });
-
-    } catch (err) {
-      alert(err.message);
-    }
-    dispatch(logoutUser());
-    alert('로그아웃 되었습니다.');
-    navigation.navigate("Login");
-    //dispatch 로 로그아웃시킨다
-    //서버로 가서 현재 사용자의 User 모델에서 삭제한다
-    //현재 사용자가 만든 핀들을 지운다
-    //완료되면 응답을 보내준다
-    //스택을 지워주며 계정생성화면으로 리디렉트 시킨다.
+  function handleVisibleModal() {
+    setIsVisibleModal((state) => !state);
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.contentBox}>
@@ -56,14 +45,22 @@ export default function SettingScreen({ navigation }) {
       </View>
       <TouchableOpacity style={styles.contentBox} onPress={handleChangeNickname}>
         <Text style={styles.text}>닉네임 변경</Text>
-        <Text>{">"}</Text>
+        <Icon name="chevron-right" color={color.poplaceDark} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentBox} onPress={handleLogout}>
         <Text style={styles.text}>로그아웃</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.contentBox} onPress={deleteAccount}>
-        <Text style={styles.text}>탈퇴하기</Text>
+      <TouchableOpacity
+        style={styles.contentBox}
+        onPress={handleVisibleModal}
+      >
+        <Text style={styles.withDrawalText}>탈퇴하기</Text>
       </TouchableOpacity>
+      <WithdrawalModal
+        isVisibleModal={isVisibleModal}
+        handleVisibleModal={handleVisibleModal}
+        userId={id}
+      />
     </View>
   );
 }
@@ -71,16 +68,18 @@ export default function SettingScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: "1%",
+    alignItems: "center",
+    paddingTop: "5%",
     backgroundColor: "white",
   },
   contentBox: {
-    position: "relative",
+    flexDirection: "row",
     height: verticalScale(70),
     width: horizontalScale(315),
-    margin: 10,
+    paddingRight: 7,
     borderRadius: 10,
-    justifyContent: "center",
+    alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: "white",
     borderBottomWidth: 0.1,
     borderColor: color.poplaceGrayColor,
@@ -89,6 +88,13 @@ const styles = StyleSheet.create({
     left: 10,
     fontSize: 18,
     fontWeight: "bold",
+    color: color.poplaceDark,
+  },
+  withDrawalText: {
+    left: 10,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: color.poplaceMiddleGray,
   },
   toggleContainer: {
     height: verticalScale(28),

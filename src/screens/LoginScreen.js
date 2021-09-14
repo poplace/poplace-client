@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
 
   useEffect(() => {
     if (isSuccess) {
-      navigation.replace("MainNavigator");
+      navigation.replace("bottom");
     }
   }, [isSuccess]);
 

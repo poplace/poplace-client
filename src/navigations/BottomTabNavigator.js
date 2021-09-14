@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
-import { Button } from "react-native";
+import React, { useEffect } from "react";
+import { Button, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
@@ -10,9 +10,12 @@ import NewPinScreen from "../screens/NewPinScreen";
 import CustomBottomTabBarButton from "../components/CustomBottomTabBarButton";
 import { color, verticalScale } from "../config/globalStyles";
 
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
+
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({ navigation, route }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -57,7 +60,7 @@ export default function BottomTabNavigator() {
             <TouchableOpacity
               style={styles.settingContainer}
               activeOpacity={1}
-              onPress={() => console.log("설정페이지로..")}>
+              onPress={() => navigation.navigate("Setting")}>
               <Ionicons name="settings-sharp" size={26} color="#766162" />
             </TouchableOpacity>
           ),

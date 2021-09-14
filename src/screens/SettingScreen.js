@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import SwitchToggle from "react-native-switch-toggle";
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios";
 
+import { ALERT_MESSAGE } from "../constants/screens";
 import { logoutUser, selectUser } from "../features/userSlice";
 import { verticalScale, horizontalScale, color } from "../config/globalStyles";
-import { API_SERVER_URL } from "@env";
+import asyncDeleteAccount from "../api/deleteAccount";
 
 export default function SettingScreen({ navigation }) {
   const [toggleOn, setToggleOn] = useState(true);
@@ -14,30 +15,33 @@ export default function SettingScreen({ navigation }) {
   const dispatch = useDispatch();
 
   function handleChangeNickname() {
-    navigation.replace("NewNicknameScreen");
+    navigation.navigate("NewNicknameScreen");
   }
 
   function handleLogout() {
     dispatch(logoutUser());
-    alert('로그아웃 되었습니다.')
-    navigation.navigate("Login");
+
+    Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.logout, [{
+      text: ALERT_MESSAGE.accept,
+      onPress: () => navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }]
+      }),
+    }]);
   }
 
-  async function deleteAccount() {
-    try {
-      await axios.delete(`${API_SERVER_URL}/users/delete`, { data: { id } });
+  function deleteAccount() {
+    asyncDeleteAccount(id);
 
-    } catch (err) {
-      alert(err.message);
-    }
     dispatch(logoutUser());
-    alert('로그아웃 되었습니다.');
-    navigation.navigate("Login");
-    //dispatch 로 로그아웃시킨다
-    //서버로 가서 현재 사용자의 User 모델에서 삭제한다
-    //현재 사용자가 만든 핀들을 지운다
-    //완료되면 응답을 보내준다
-    //스택을 지워주며 계정생성화면으로 리디렉트 시킨다.
+
+    Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
+      text: ALERT_MESSAGE.accept,
+      onPress: () => navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }]
+      }),
+    }])
   }
   return (
     <View style={styles.container}>
@@ -56,13 +60,12 @@ export default function SettingScreen({ navigation }) {
       </View>
       <TouchableOpacity style={styles.contentBox} onPress={handleChangeNickname}>
         <Text style={styles.text}>닉네임 변경</Text>
-        <Text>{">"}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentBox} onPress={handleLogout}>
         <Text style={styles.text}>로그아웃</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentBox} onPress={deleteAccount}>
-        <Text style={styles.text}>탈퇴하기</Text>
+        <Text style={[styles.text, styles.deleteAccount]}>탈퇴하기</Text>
       </TouchableOpacity>
     </View>
   );
@@ -89,6 +92,9 @@ const styles = StyleSheet.create({
     left: 10,
     fontSize: 18,
     fontWeight: "bold",
+  },
+  deleteAccount: {
+    color: "gray",
   },
   toggleContainer: {
     height: verticalScale(28),

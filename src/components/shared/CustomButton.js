@@ -16,14 +16,6 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(8),
     borderRadius: 50,
     backgroundColor: color.poplaceRed,
-    shadowColor: color.poplaceGray,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4.65,
-    elevation: 3,
   },
   buttonText: {
     color: color.poplaceWhite,

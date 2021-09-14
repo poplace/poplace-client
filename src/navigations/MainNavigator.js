@@ -3,10 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import MorePageScreen from "../screens/MorePageScreen";
-
 const Stack = createNativeStackNavigator();
 
-export default function MainNavigator() {
+export default function MainNavigator({ navigation }) {
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="Bottom" component={BottomTabNavigator} />

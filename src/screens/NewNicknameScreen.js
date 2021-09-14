@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
 import axios from "axios";
 
-import Button from "../components/shared/Button";
+import CustomButton from "../components/shared/CustomButton";
 import generateNickname from "../utils/nicknameGenerator";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
@@ -96,7 +96,7 @@ export default function NewNicknameScreen({ navigation }) {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button text="완료" handleButton={fetchProfile} />
+        <CustomButton text="완료" handleButton={fetchProfile} />
       </View>
     </>
   );

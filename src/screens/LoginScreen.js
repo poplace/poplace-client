@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import { signinUser } from "../features/userSlice";
 import loginWithGoogle from "../utils/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
+import { color, moderateScale, verticalScale } from "../config/globalStyles";
+import CustomButton from "../components/shared/CustomButton";
 
 export default function LoginScreen({ navigation }) {
   const isSuccess = useSelector((state) => state.user.status === "success");
@@ -43,11 +45,15 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.splashImage}>Popplace</Text>
-      <Text style={styles.errorMessage}>{errorMessage}</Text>
-      <TouchableOpacity onPress={handleGoogleLogin} style={styles.button}>
-        <Text style={styles.buttonText}>signin with Google</Text>
-      </TouchableOpacity>
+      <Image
+        style={styles.logo}
+        source={require("../assets/poplace.png")} />
+      <Image source={require("../assets/villige.png")} />
+
+      <View style={styles.buttonContainer}>
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
+        <CustomButton style={styles.button} text="구글로 로그인 하기" handleButton={handleGoogleLogin} />
+      </View>
     </View>
   );
 }
@@ -57,34 +63,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#fff9f6",
   },
-  splashImage: {
-    marginTop: "6%",
-    width: "76%",
-    height: "60%",
-    borderWidth: 1,
-    color: "#000000",
-    fontSize: 34,
-    fontWeight: "700",
+  logo: {
+    position: "absolute",
+    top: verticalScale(160),
   },
-  button: {
-    marginTop: "10%",
-    width: "76%",
-    height: "10.8%",
-    borderColor: "#f78582",
-    backgroundColor: "#f78582",
-    borderRadius: 32,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 28,
-    fontWeight: "700",
-    lineHeight: 65,
-    textAlign: "center",
+  buttonContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: verticalScale(40),
   },
   errorMessage: {
-    marginTop: "5%",
-    color: "red",
-    fontSize: 15,
+    marginBottom: verticalScale(10),
+    color: color.poplaceErrorRed,
+    fontSize: moderateScale(15),
   },
 });

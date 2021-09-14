@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";

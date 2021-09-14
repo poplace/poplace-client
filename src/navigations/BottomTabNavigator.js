@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";

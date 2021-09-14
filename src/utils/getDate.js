@@ -15,5 +15,5 @@ export default function getDate(time) {
     return false;
   }
 
-  return dayjs.duration(86400000 - difference).format(`HH시간mm분ss초`);
+  return dayjs.duration(remainTime).format(`HH시간mm분ss초`);
 }

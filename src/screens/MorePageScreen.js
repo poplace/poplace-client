@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FlatList, View, StyleSheet, SafeAreaView } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
 
 import { color, verticalScale } from "../config/globalStyles";
 import MorePageCard from "../components/MorePageCard";
 import fetchMyPins from "../api/fetchMyPins";
-import { useDispatch, useSelector } from "react-redux";
-import { addCurrentPin } from "../features/currentPinSlice";
+import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 
 export default function MorePageScreen({ navigation, route }) {

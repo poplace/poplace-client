@@ -1,1 +1,1 @@
-export const DAY = 86400000;
+export const DAY = 86400 * 1000;

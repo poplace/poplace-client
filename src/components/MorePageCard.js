@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import getDate from "../utils/getDate";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
-import { addCurrentPin, selectCurrentPin } from "../features/currentPinSlice";
+import { addCurrentPin } from "../features/currentPinSlice";
 import { MESSAGE } from "../constants/shared";
 
 export default function MorePageCard({ navigation, pinData, title }) {
@@ -17,13 +17,13 @@ export default function MorePageCard({ navigation, pinData, title }) {
   } = pinData;
   const [isVisible, setIsVisible] = useState(true);
   const [remainTime, setRemainTime] = useState(null);
-  const isCreatedPins = title === "내가 생성한 핀";
-  const isSavedPins = title === "내가 저장한 핀";
+  const isCreatedPin = title === "내가 생성한 핀";
+  const isSavedPin = title === "내가 저장한 핀";
   const dispatch = useDispatch();
 
   useEffect(() => {
     const id = setInterval(() => {
-      if (isCreatedPins) {
+      if (isCreatedPin) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
@@ -34,7 +34,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
         return setRemainTime(`남은시간 ${timeInfo}`);
       }
 
-      if (isSavedPins) {
+      if (isSavedPin) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {

@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import React, { useEffect } from "react";
-import { Button,View } from "react-native";
+import { Button, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 

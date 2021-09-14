@@ -4,7 +4,6 @@ import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectModalOn } from "../features/modalVisibleSlice";
-import { selectCurrentPin } from "../features/currentPinSlice";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { color, width, height, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
 import getDate from "../utils/getDate";
@@ -14,7 +13,6 @@ export default function SlideModal() {
   const modalVisibleStatus = useSelector(selectModalOn);
   const currentPinInfo = useSelector(selectCurrentPin);
   const dispatch = useDispatch();
-  console.log(currentPinInfo);
 
   function handleModalVisible() {
     dispatch(turnOnOffModal());

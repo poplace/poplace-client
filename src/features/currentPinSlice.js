@@ -5,11 +5,12 @@ const initialState = {
   creator: null,
   image: [],
   text: null,
-  tag: [],
-  viewedUsers: [],
+  tags: [],
   savedUser: null,
+  createdAt: null,
   saveAt: null,
   location: null,
+  active: null,
 };
 
 const currentPinSlice = createSlice({

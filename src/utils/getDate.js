@@ -9,10 +9,11 @@ export default function getDate(time) {
   const currentTime = dayjs(new Date());
 
   const difference = currentTime.diff(targetTime);
+  const remainTime = DAY - difference;
 
-  if (difference >= DAY) {
+  if (remainTime <= 0) {
     return false;
   }
 
-  return dayjs.duration(difference).format(`HH시간mm분ss초`);
+  return dayjs.duration(remainTime).format(`HH시간mm분ss초`);
 }

@@ -21,7 +21,7 @@ const initialState = {
       position: {
         coordinates: [null, null],
       },
-      tag: [],
+      tags: [],
       text: null,
     },
   ],

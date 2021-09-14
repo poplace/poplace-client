@@ -19,7 +19,6 @@ export default function GoogleMap() {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== "granted") {
-
         Alert.alert("알림", ERROR_MESSAGE.locationAccess, [
           { text: "취소" },
           { text: "확인", onPress: () => setIsLocationServiceEnable(false) },

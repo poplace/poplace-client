@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, Keyboard } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
@@ -10,7 +10,7 @@ import { color, horizontalScale, moderateScale, verticalScale } from "../config/
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({ navigation, route }) {
   // const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   // useEffect(() => {
@@ -77,7 +77,7 @@ export default function BottomTabNavigator() {
             <TouchableOpacity
               style={styles.settingContainer}
               activeOpacity={1}
-              onPress={() => console.log("설정페이지로..")}>
+              onPress={() => navigation.navigate("Setting")}>
               <Ionicons name="settings-sharp" size={26} color={color.poplaceLight} />
             </TouchableOpacity>
           ),

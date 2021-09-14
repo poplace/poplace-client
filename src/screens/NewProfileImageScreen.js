@@ -17,6 +17,7 @@ export default function NewProfileImageScreen({ navigation }) {
     const imageResult = await openImagePicker();
 
     if (imageResult) {
+      console.log("⏱", imageResult);
       dispatch(addImage(imageResult));
       setProfileImageUri(imageResult);
       setHasProfile(true);

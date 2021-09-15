@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import SwitchToggle from "react-native-switch-toggle";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
 import WithdrawalModal from "../components/WithdrawalModal";
 import { ALERT_MESSAGE } from "../constants/screens";
@@ -71,7 +71,7 @@ export default function SettingScreen({ navigation }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

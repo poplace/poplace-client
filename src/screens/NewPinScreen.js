@@ -61,7 +61,6 @@ export default function NewPinScreen({ navigation }) {
     };
 
     try {
-      const token = await SecureStore.getItemAsync("token");
       const currentLocation = await Location.getCurrentPositionAsync({});
       const data = new FormData();
       const {

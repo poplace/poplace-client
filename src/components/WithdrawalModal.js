@@ -26,7 +26,7 @@ export default function WithdrawalModal({
         text: ALERT_MESSAGE.accept,
         onPress: () => navigation.reset({
           index: 0,
-          routes: [{ name: "Login" }]
+          routes: [{ name: "Login" }],
         }),
       }]);
     } catch (err) {

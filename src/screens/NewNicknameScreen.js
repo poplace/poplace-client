@@ -46,9 +46,11 @@ export default function NewNicknameScreen({ navigation }) {
     data.append("email", email);
     data.append("nickname", finalNickname);
 
-    const token = await SecureStore.getItemAsync("token");
-
     try {
+      const token = await SecureStore.getItemAsync("token");
+
+      await SecureStore.setItemAsync("nickname", finalNickname);
+
       const result = await axios.post(`${API_SERVER_URL}/users/signup`, data, {
         email,
         nickname: finalNickname,

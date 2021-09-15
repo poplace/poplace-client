@@ -14,7 +14,7 @@ export default function MainNavigator({ navigation }) {
       <Stack.Screen options={{ headerShown: false }} name="Bottom" component={BottomTabNavigator} />
       <Stack.Screen options={{ headerShown: true }} name="더보기" component={MorePageScreen} />
       <Stack.Screen options={{ headerShown: true }} name="상세페이지" component={DetailPinScreen} />
-      <Stack.Screen options={{ headerShown: true }} name="setting" component={SettingScreen} />
+      <Stack.Screen options={{ headerShown: true }} name="Setting" component={SettingScreen} />
     </Stack.Navigator>
   );
 }

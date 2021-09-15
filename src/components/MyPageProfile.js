@@ -8,8 +8,7 @@ import openImagePicker from "../api/openImagePicker";
 import { color, horizontalScale, verticalScale, moderateScale } from "../config/globalStyles";
 
 export default function MyPageProfile() {
-  const image = useSelector(selectUser).image;
-  const nickname = useSelector(selectUser).nickname;
+  const { image, nickname } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   async function changeImagePicker() {

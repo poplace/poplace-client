@@ -9,10 +9,10 @@ import { ERROR_MESSAGE } from "../constants/utils";
 import CustomPin from "./CustomPin";
 import {
   color,
+  height,
   horizontalScale,
   verticalScale,
-  windowHeight,
-  windowWidth,
+  width,
 } from "../config/globalStyles";
 
 export default function GoogleMap() {
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   map: {
-    height: windowHeight,
-    width: windowWidth,
+    height: height,
+    width: width,
   },
   getPinDataButton: {
     top: verticalScale(40),

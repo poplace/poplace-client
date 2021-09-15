@@ -6,6 +6,8 @@ import { API_SERVER_URL } from "@env";
 export const signinUser = createAsyncThunk("user/signinUserStatus", async (user) => {
   const { email } = user;
 
+  await SecureStore.setItemAsync("email", email);
+
   const response = await axios.post(`${API_SERVER_URL}/users/login`, { email });
 
   const { id, token, isOriginalMember, image, pushAlarmStatus, nickname } = response.data;
@@ -43,6 +45,8 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: () => {
       SecureStore.deleteItemAsync("token");
+      SecureStore.deleteItemAsync("email");
+      SecureStore.deleteItemAsync("nickname");
 
       return initialState;
     },
@@ -59,15 +63,11 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [signinUser.pending]: (state) => {
-      if (state.status === "idle") {
-        state.status = "pending";
-      }
+      state.status = "pending";
     },
     [signinUser.fulfilled]: (state, action) => {
-      if (state.status === "pending") {
-        state.info = action.payload.info;
-        state.status = "success";
-      }
+      state.status = "success";
+      state.info = action.payload.info;
     },
     [signinUser.rejected]: (state, action) => {
       state.error = action.error;

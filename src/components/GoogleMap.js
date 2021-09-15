@@ -4,7 +4,7 @@ import { StyleSheet, View, Alert, TouchableOpacity, Text } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
-import { getPinsList } from "../features/pinsListSlice";
+import { getPinsList, initPinsList } from "../features/pinsListSlice";
 import { ERROR_MESSAGE } from "../constants/utils";
 import CustomPin from "./CustomPin";
 import {
@@ -14,12 +14,14 @@ import {
   windowHeight,
   windowWidth,
 } from "../config/globalStyles";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function GoogleMap() {
   const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
   const mapViewCoordinateRef = useRef();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     (async () => {
@@ -27,7 +29,6 @@ export default function GoogleMap() {
 
       if (status !== "granted") {
         Alert.alert("알림", ERROR_MESSAGE.locationAccess, [
-          { text: "취소" },
           { text: "확인", onPress: () => setIsLocationServiceEnable(false) },
         ]);
         return;
@@ -51,7 +52,11 @@ export default function GoogleMap() {
     if (location !== null) {
       dispatch(getPinsList(location));
     }
-  }, [location]);
+
+    return () => {
+      dispatch(initPinsList());
+    }
+  }, [location, isFocused]);
 
   function handleGetPinsData() {
     dispatch(getPinsList(mapViewCoordinateRef.current));

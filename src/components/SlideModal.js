@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,6 +12,7 @@ import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
 
 export default function SlideModal() {
+  const navigation = useNavigation();
   const [remainTime, setRemainTime] = useState(null);
   const modalVisibleStatus = useSelector(selectModalOn);
   const { id: userId } = useSelector(selectUser);
@@ -50,8 +52,12 @@ export default function SlideModal() {
       const result = await savePinData(pinId, userId);
 
       if (result.success === "ok") {
-        alert("핀이 저장 되었습니다!");
-        return navigation.replace("HomeScreen");
+        Alert.alert("알림", "핀이 저장 되었습니다!", [
+          { text: "확인", onPress: () => {
+            dispatch(turnOnOffModal());
+            return navigation.replace("MainNavigator");
+          }},
+        ]);
       }
     } catch (err) {
       console.log(err);

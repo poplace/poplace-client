@@ -58,7 +58,7 @@ export default function MorePageScreen({ navigation, route }) {
     <SafeAreaView style={styles.container}>
       {isPinsData && <EmptyMorePage title={title} />}
       <FlatList data={pinsData}
-        keyExtractor={(pinData) => pinData._id}
+        keyExtractor={(pin) => pin._id}
         ListHeaderComponent={<View style={{ width: "100%", height: verticalScale(12) }} />}
         ListFooterComponent={<View style={{ width: "100%", height: verticalScale(12) }} />}
         renderItem={renderItem} />

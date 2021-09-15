@@ -26,6 +26,11 @@ export default function MyPageScreen({ navigation }) {
     }
 
     getMyPins();
+
+    return () => {
+      setMyCreatedPins(null);
+      setMySavedPins(null);
+    }
   }, []);
 
   return (

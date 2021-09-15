@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-na
 
 import { color } from "../config/globalStyles";
 import ModalContainer from "./shared/ModalContainer";
+import { ALERT_MESSAGE } from "../constants/screens";
 
 export default function WithdrawalModal({ isVisibleModal, handleVisibleModal, userId }) {
   async function handleWithdrawal() {
@@ -10,7 +11,15 @@ export default function WithdrawalModal({ isVisibleModal, handleVisibleModal, us
       await axios.delete(`${API_SERVER_URL}/users/delete`, { data: { userId } });
 
       dispatch(logoutUser());
-      alert("탈퇴 되셧습니다");
+
+      Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
+        text: ALERT_MESSAGE.accept,
+        onPress: () => navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }]
+        }),
+      }]);
+
       navigation.navigate("Login");
     } catch (err) {
       alert(err.message);

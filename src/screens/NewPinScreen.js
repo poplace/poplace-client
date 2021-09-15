@@ -1,26 +1,31 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Button } from "react-native";
+import { StyleSheet, Image, View, TouchableOpacity, ScrollView, KeyboardAvoidingView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { API_SERVER_URL } from "@env";
 import * as Location from "expo-location";
 import Textarea from "react-native-textarea";
 import TagInput from "react-native-tags-input";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
 import { selectUser } from "../features/userSlice";
 import validateTag from "../utils/validateTag";
 import validatePinData from "../utils/validatePinData";
 import openImagePicker from "../api/openImagePicker";
+import CustomButton from "../components/shared/CustomButton";
+import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 
 export default function NewPinScreen({ navigation }) {
   const { id } = useSelector(selectUser);
+  const [text, setText] = useState(null);
+  const [imageUri, setImageUri] = useState(null);
+  const [hasImage, setHasImage] = useState(false);
+
   const [tags, setTags] = useState({
     tag: "",
     tagsArray: [],
   });
-  const [text, setText] = useState(null);
-  const [imageUri, setImageUri] = useState(null);
 
   function handleUpdateTag(tags) {
     const isValid = validateTag(tags);
@@ -70,25 +75,22 @@ export default function NewPinScreen({ navigation }) {
       data.append("creator", id);
       data.append("tags", stringifiedTags);
       data.append("coords", stringifiedCoords);
-      console.log(data);
+
+      const token = await SecureStore.getItemAsync("token");
+
       await axios.post(
-        `${API_SERVER_URL}/pins`,
-        data,
-        {
-          text,
-          creator: id,
-          tags: stringifiedTags,
-          coords: stringifiedCoords,
-        },
-        {
-          validateStatus: (status) => status < 500,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+        `${API_SERVER_URL}/pins`, data, {
+        text,
+        creator: id,
+        tags: stringifiedTags,
+        coords: stringifiedCoords,
+        validateStatus: (state) => state < 500,
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      });
+
+      navigation.replace("MainNavigator");
     } catch (err) {
       console.log(err);
     }
@@ -99,97 +101,165 @@ export default function NewPinScreen({ navigation }) {
 
     if (imageResult) {
       setImageUri(imageResult);
+      setHasImage(true);
     }
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
-      <View style={styles.addingImageContainer}>
-        <View style={styles.addingImageStroke}>
-          <TouchableOpacity
-            style={styles.addingImage}
-            onPress={handlerImagePicker}
-            activeOpacity={1}
-          >
-            <FontAwesome name="camera" size={40} color="#766162" />
-            <Text style={styles.addingImageText}>1</Text>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.keyboardViewContainer} behavior="height" enabled>
+        <ScrollView>
+          <View style={styles.addingImageContainer}>
+            <View style={styles.addingImageStroke}>
+              <TouchableOpacity
+                style={styles.addingImageStroke}
+                onPress={handlerImagePicker}
+                activeOpacity={1}
+              >
+                {hasImage ? (
+                  <Image style={styles.image} source={{ uri: imageUri }} />
+                ) : (
+                  <FontAwesome name="camera" size={40} color={color.poplaceLight} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.tagContainer}>
+            <TagInput
+              style={styles.tag}
+              updateState={handleUpdateTag}
+              placeholder="태그"
+              tags={tags}
+              keysForTag={"enter"}
+              inputContainerStyle={{ marginLeft: 0 }}
+              tagStyle={styles.tagButton}
+              tagTextStyle={{ color: color.poplaceRed }}
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Textarea
+              style={styles.textArea}
+              onChangeText={handleTextAreaInput}
+              placeholder="여기에 장소에 대한 느낌을 적어주세요."
+              value={text}
+              multiline={true}
+              textAlignVertical="top"
+              numberOfLines={40}
+              color={color.poplaceLight}
+              fontSize={moderateScale(20)}
+            />
+          </View>
+        </ScrollView>
+        <View style={styles.completionButton}>
+          <CustomButton text="생성하기" handleButton={handleSubmitData} />
         </View>
-      </View>
-      <Button title="완료" onPress={handleSubmitData} />
-      <View style={styles.tagContainer}>
-        <Text style={styles.tagTitle}>#tag</Text>
-        <TagInput
-          style={styles.tag}
-          updateState={handleUpdateTag}
-          placeholder="태그를 입력하고 enter를 눌러주세요"
-          tags={tags}
-          keysForTag={"enter"}
-        />
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>여기에 장소에 대한 느낌을 적어주세요.</Text>
-      </View>
-      <Textarea style={styles.textInput} onChangeText={handleTextAreaInput}></Textarea>
-    </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: color.poplaceWhite,
+  },
+  keyboardViewContainer: {
+    alignItems: "center",
+    backgroundColor: color.poplaceWhite,
+    width: "100%",
+    height: "87%",
+  },
   addingImageContainer: {
     justifyContent: "center",
-    marginTop: 10,
-    width: "80%",
-    height: "20%",
+    alignItems: "center",
+    marginTop: verticalScale(10),
+    width: "100%",
+    height: verticalScale(130),
     paddingBottom: 10,
-    borderColor: "#d3cdcd",
+    borderColor: color.poplaceMiddleGray,
     borderBottomWidth: 1,
   },
   addingImage: {
     alignItems: "center",
     justifyContent: "center",
   },
-  addingImageText: {
-    color: "#766162",
-  },
-  addingImageStroke: {
-    borderColor: "#766162",
-    borderWidth: 1,
+  image: {
     borderRadius: 10,
-    width: "30%",
-    height: 99,
+    width: horizontalScale(100),
+    height: verticalScale(100),
     alignItems: "center",
     justifyContent: "center",
   },
+  addingImageStroke: {
+    backgroundColor: color.poplaceWhite,
+    borderColor: color.poplaceLight,
+    borderRadius: 10,
+    width: horizontalScale(100),
+    height: verticalScale(100),
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 0,
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 4,
+  },
   tagContainer: {
-    flex: 0.2,
-    marginTop: 10,
-    width: "80%",
-    borderColor: "#d3cdcd",
+    paddingVertical: verticalScale(20),
+    width: "100%",
+    borderColor: color.poplaceMiddleGray,
     borderBottomWidth: 1,
   },
   tag: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#d3cdcd",
-    width: "100%",
+    paddingHorizontal: horizontalScale(10),
+    borderRadius: 5,
+    fontSize: moderateScale(20),
+    borderColor: color.poplaceMiddleGray,
+  },
+  tagButton: {
+    marginLeft: 0,
+    backgroundColor: color.poplaceWhite,
+    borderWidth: 0,
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 1,
   },
   tagTitle: {
-    margin: 10,
-    color: "#766162",
+    marginVertical: verticalScale(10),
+    color: color.poplaceDark,
   },
   textContainer: {
-    width: "80%",
-    height: "5%",
-    paddingTop: 10,
+    paddingHorizontal: horizontalScale(20),
+    width: "100%",
+    height: verticalScale(300),
+  },
+  textArea: {
+    top: verticalScale(20),
+    height: verticalScale(300),
   },
   text: {
-    color: "#766162",
+    color: color.poplaceLight,
   },
   textInput: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "85%",
+    height: "80%",
     marginTop: 10,
     borderWidth: 1,
-    height: "200%",
-    borderColor: "#766162",
+    borderColor: color.poplaceLight,
+  },
+  completionButton: {
+    zIndex: 3,
+    position: "absolute",
+    width: "90%",
+    height: verticalScale(80),
+    backgroundColor: color.poplaceWhite,
+    paddingHorizontal: horizontalScale(20),
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 0,
+    borderTopWidth: 1,
+    borderTopColor: color.poplaceMiddleGray,
   },
 });

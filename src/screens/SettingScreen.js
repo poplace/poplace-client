@@ -29,8 +29,6 @@ export default function SettingScreen({ navigation }) {
         routes: [{ name: "Login" }]
       }),
     }]);
-
-    navigation.navigate("Login");
   }
 
   function handleVisibleModal() {
@@ -69,6 +67,7 @@ export default function SettingScreen({ navigation }) {
         isVisibleModal={isVisibleModal}
         handleVisibleModal={handleVisibleModal}
         userId={id}
+        navigation={navigation}
       />
     </View>
   );

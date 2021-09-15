@@ -1,26 +1,34 @@
 import React from "react";
+import { useDispatch } from "react-redux"
 import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
 
 import { color } from "../config/globalStyles";
 import ModalContainer from "./shared/ModalContainer";
+import deleteAccount from "../api/deleteAccount";
+import { logoutUser } from "../features/userSlice";
 import { ALERT_MESSAGE } from "../constants/screens";
 
-export default function WithdrawalModal({ isVisibleModal, handleVisibleModal, userId }) {
+export default function WithdrawalModal({
+  isVisibleModal,
+  handleVisibleModal,
+  userId,
+  navigation,
+}) {
+  const dispatch = useDispatch();
+
   async function handleWithdrawal() {
     try {
-      await axios.delete(`${API_SERVER_URL}/users/delete`, { data: { userId } });
-
       dispatch(logoutUser());
+
+      await deleteAccount(userId);
 
       Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
         text: ALERT_MESSAGE.accept,
         onPress: () => navigation.reset({
           index: 0,
-          routes: [{ name: "Login" }]
+          routes: [{ name: "Login" }],
         }),
       }]);
-
-      navigation.navigate("Login");
     } catch (err) {
       alert(err.message);
     }

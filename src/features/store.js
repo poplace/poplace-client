@@ -15,7 +15,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => {
     if (process.env.NODE_ENV !== "production") {
-      return getDefaultMiddleware({ serializableCheck: false });
+      return getDefaultMiddleware({ serializableCheck: false }).concat(logger);
     }
 
     return getDefaultMiddleware();

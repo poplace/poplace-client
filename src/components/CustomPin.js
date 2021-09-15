@@ -10,6 +10,7 @@ import { selectPinsList } from "../features/pinsListSlice";
 export default function CustomPin() {
   const dispatch = useDispatch();
   const { pinsList } = useSelector(selectPinsList);
+  const isSuccess = useSelector((state) => state.pinsList.status === "success");
 
   function handlePopSlideModal(pin) {
     dispatch(addCurrentPin(pin));
@@ -18,15 +19,17 @@ export default function CustomPin() {
 
   return (
     <View>
-      {pinsList.map((pin) => {
-        if (pin._id) {
-          const [longitude, latitude] = pin.position.coordinates;
-          const imgUri = pin.image[0];
+      {isSuccess && pinsList.map((pin) => {
+        const { _id: id, active, image, position, savedUser } = pin;
+
+        if (id && active && !savedUser) {
+          const [longitude, latitude] = position.coordinates;
+          const imgUri = image[0];
 
           return (
-            <View key={pin._id}>
+            <View key={id}>
               <Marker
-                key={pin._id}
+                key={id}
                 coordinate={{ longitude, latitude }}
                 style={styles.pinContainer}
                 onPress={() => handlePopSlideModal(pin)}

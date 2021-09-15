@@ -10,7 +10,7 @@ import { color, horizontalScale, moderateScale, verticalScale } from "../config/
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator({ navigation, route }) {
+export default function BottomTabNavigator({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={{

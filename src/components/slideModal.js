@@ -3,38 +3,60 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectModalOn } from "../features/modalVisibleSlice";
-import { turnOnOffModal } from "../features/modalVisibleSlice";
+import { selectModalOn, turnOnOffModal } from "../features/modalVisibleSlice";
+import { selectCurrentPin } from "../features/currentPinSlice";
+import { selectUser } from "../features/userSlice";
 import { color, width, height, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
+import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
 
 export default function SlideModal() {
   const [remainTime, setRemainTime] = useState(null);
   const modalVisibleStatus = useSelector(selectModalOn);
-  const currentPinInfo = useSelector(selectCurrentPin);
+  const { id: userId } = useSelector(selectUser);
+  const {
+    _id: pinId,
+    image,
+    tags,
+    createdAt,
+    text,
+    creator,
+  } = useSelector(selectCurrentPin);
   const dispatch = useDispatch();
+  const isCreator = userId === creator;
 
   function handleModalVisible() {
     dispatch(turnOnOffModal());
   }
-
-  const { image, tag, text, createdAt } = currentPinInfo;
 
   useEffect(() => {
     const id = setInterval(() => {
       const timeInfo = getDate(createdAt);
 
       if (!timeInfo) {
-        setRemainTime("시간이 초과 되었습니다");
-        return;
+        return setRemainTime("시간이 초과 되었습니다");
       }
 
       return setRemainTime(`남은시간 ${timeInfo}`);
     }, 1000);
+
     return () => {
       clearInterval(id);
     };
   }, [createdAt]);
+
+  async function handleSavePin() {
+    try {
+      const result = await savePinData(pinId, userId);
+
+      if (result.success === "ok") {
+        alert("핀이 저장 되었습니다!");
+        return navigation.replace("HomeScreen");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <View style={styles.modalContainer}>
@@ -56,7 +78,7 @@ export default function SlideModal() {
 
             <View style={styles.test}>
               <View style={styles.bodyContainer}>
-                {tag.map((text, index) => {
+                {tags.map((text, index) => {
                   return <Text key={index} style={styles.tagsText}>{text}</Text>
                 })}
               </View>
@@ -70,9 +92,12 @@ export default function SlideModal() {
               source={{ uri: image[0] }}
             />
           </View>
-          <TouchableOpacity style={styles.saveButton}>
+          {!isCreator && <TouchableOpacity
+            style={styles.saveButton}
+            onPress={handleSavePin}
+          >
             <Text style={styles.saveButtonText}>저장하기</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       </Modal>
     </View>

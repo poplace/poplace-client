@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pinId: null,
+  _id: null,
   creator: null,
   image: [],
   text: null,

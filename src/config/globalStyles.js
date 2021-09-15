@@ -1,8 +1,6 @@
 import { Dimensions } from "react-native";
 
 export const { width, height } = Dimensions.get("screen");
-export const windowHeight = Dimensions.get("window").height;
-export const windowWidth = Dimensions.get("window").width;
 
 const guideScale = Math.sqrt(width * height);
 const scale = Math.sqrt(width * height) / guideScale;

@@ -11,15 +11,17 @@ import CustomButton from "../components/shared/CustomButton";
 
 export default function LoginScreen({ navigation }) {
   const isSuccess = useSelector((state) => state.user.status === "success");
-  const { isOriginalMember } = useSelector(selectUser);
-  const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
+  const { isOriginalMember, nickname } = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess) {
-      isOriginalMember
-        ? navigation.replace("MainNavigator")
-        : navigation.replace("NewAccountNavigator");
+      if (!isOriginalMember || !nickname) {
+        return navigation.replace("NewAccountNavigator");
+      }
+
+      return navigation.replace("MainNavigator");
     }
   }, [isSuccess]);
 

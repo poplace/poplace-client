@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux"
-import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity, Modal, Alert } from "react-native";
 
 import { color } from "../config/globalStyles";
 import ModalContainer from "./shared/ModalContainer";

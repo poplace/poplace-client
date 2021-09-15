@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectModalOn, turnOnOffModal } from "../features/modalVisibleSlice";

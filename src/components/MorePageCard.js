@@ -9,6 +9,7 @@ import { MESSAGE } from "../constants/shared";
 
 export default function MorePageCard({ navigation, pinData, title }) {
   const {
+    _id,
     image,
     tags,
     createdAt,
@@ -76,8 +77,8 @@ export default function MorePageCard({ navigation, pinData, title }) {
               {remainTime}
             </Text>
             <View style={styles.bodyContainer}>
-              {tags.map((tag) => {
-                return <Text style={styles.tagsText}>{tag}</Text>
+              {tags.map((tag, index) => {
+                return <Text key={`${_id}${index}`} style={styles.tagsText}>{tag}</Text>
               })}
             </View>
             <View style={styles.textBox}>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Modal from "react-native-modal";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectModalOn, turnOnOffModal } from "../features/modalVisibleSlice";
@@ -29,7 +29,7 @@ export default function SlideModal({ navigation }) {
     dispatch(turnOnOffModal());
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => {
       const timeInfo = getDate(createdAt);
 
@@ -68,7 +68,7 @@ export default function SlideModal({ navigation }) {
         onBackdropPress={handleModalVisible}
         swipeDirection="up"
         swipeThreshold={540}
-        onSwipeComplete={() => { navigation.navigate("상세페이지")}}
+        onSwipeComplete={() => { navigation.navigate("상세페이지") }}
       >
         <View style={styles.modal}>
           <View style={styles.textContainer}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { StyleSheet, View, Alert, TouchableOpacity, Text } from "react-native";
 import MapView from "react-native-maps";

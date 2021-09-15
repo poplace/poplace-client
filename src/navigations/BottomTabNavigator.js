@@ -7,8 +7,6 @@ import HomeScreen from "../screens/HomeScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import NewPinScreen from "../screens/NewPinScreen";
 import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 

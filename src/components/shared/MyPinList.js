@@ -6,7 +6,7 @@ import MyPinListPreview from "../shared/MyPinListPreview";
 
 export default function MyPinList({ title, pins, navigation }) {
   function showMyPinDetail() {
-    navigation.navigate("더보기", { title, navigation });
+    navigation.navigate("더보기", { title });
   }
 
   return (
@@ -17,7 +17,7 @@ export default function MyPinList({ title, pins, navigation }) {
           더보기 {">"}
         </Text>
       </View>
-      <MyPinListPreview pins={pins} navigation={navigation}/>
+      <MyPinListPreview pins={pins} navigation={navigation} />
     </>
   );
 }

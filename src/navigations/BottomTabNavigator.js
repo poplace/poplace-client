@@ -7,7 +7,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import MyPageScreen from "../screens/MyPageScreen";
 import NewPinScreen from "../screens/NewPinScreen";
-import SettingScreen from "../screens/SettingScreen";
+import SettingScreen from "../screens/SettingScreen"
 import CustomBottomTabBarButton from "../components/CustomBottomTabBarButton";
 import { color, verticalScale } from "../config/globalStyles";
 

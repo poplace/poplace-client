@@ -11,8 +11,7 @@ import { color, width, height, verticalScale, horizontalScale, moderateScale } f
 import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
 
-export default function SlideModal() {
-  const navigation = useNavigation();
+export default function SlideModal({ navigation }) {
   const [remainTime, setRemainTime] = useState(null);
   const modalVisibleStatus = useSelector(selectModalOn);
   const { id: userId } = useSelector(selectUser);
@@ -72,6 +71,9 @@ export default function SlideModal() {
         backdropOpacity={0}
         onBackButtonPress={handleModalVisible}
         onBackdropPress={handleModalVisible}
+        swipeDirection="up"
+        swipeThreshold={540}
+        onSwipeComplete={() => { navigation.navigate("상세페이지") }}
       >
         <View style={styles.modal}>
           <View style={styles.textContainer}>
@@ -119,8 +121,9 @@ const styles = StyleSheet.create({
   modal: {
     position: "absolute",
     flex: 1,
+    top: 500,
     width: horizontalScale(320),
-    height: verticalScale(200),
+    height: verticalScale(1000),
     backgroundColor: "white",
     alignItems: "center",
     bottom: -21,

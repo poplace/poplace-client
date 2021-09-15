@@ -28,8 +28,10 @@ export default function MyPageScreen({ navigation }) {
   useEffect(() => {
     getMyPins();
 
-    setMyCreatedPins([]);
-    setMySavedPins([]);
+    return () => {
+      setMyCreatedPins([]);
+      setMySavedPins([]);
+    }
   }, [userId, email]);
 
   const handleRefresh = useCallback(() => {
@@ -49,7 +51,7 @@ export default function MyPageScreen({ navigation }) {
             onRefresh={handleRefresh}
           />
         }>
-        <MyPageProfile style={styles.profile}/>
+        <MyPageProfile style={styles.profile} />
         <View style={styles.pinContainer}>
           <MyPinList
             title="내가 생성한 핀"

@@ -11,8 +11,8 @@ import {
   color,
   horizontalScale,
   verticalScale,
-  windowHeight,
-  windowWidth,
+  height,
+  width,
 } from "../config/globalStyles";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -20,6 +20,12 @@ export default function GoogleMap() {
   const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
   const mapViewCoordinateRef = useRef();
+  const defaultLocation = useRef({
+    latitudeDelta: 0.015,
+    longitudeDelta: 0.0121,
+    longitude: 127.0617409,
+    latitude: 37.5072438,
+  });
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -71,7 +77,7 @@ export default function GoogleMap() {
       <MapView
         style={styles.map}
         loadingEnabled={true}
-        region={location}
+        region={location || defaultLocation.current}
         showsUserLocation
         onRegionChangeComplete={handleMapViewCoordinate}
       >
@@ -92,8 +98,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   map: {
-    height: windowHeight,
-    width: windowWidth,
+    height: height,
+    width: width,
   },
   getPinDataButton: {
     top: verticalScale(40),

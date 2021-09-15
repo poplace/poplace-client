@@ -1,31 +1,87 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
+import getDate from "../utils/getDate";
 
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
+import { addCurrentPin } from "../features/currentPinSlice";
+import { MESSAGE } from "../constants/shared";
 
-export default function MorePageCard({ pinsData }) {
+export default function MorePageCard({ navigation, pinData, title }) {
+  const {
+    image,
+    tags,
+    createdAt,
+    savedAt,
+    text,
+  } = pinData;
+  const [isVisible, setIsVisible] = useState(true);
+  const [remainTime, setRemainTime] = useState(null);
+  const isCreatedPin = title === "내가 생성한 핀";
+  const isSavedPin = title === "내가 저장한 핀";
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (isCreatedPin) {
+        const timeInfo = getDate(createdAt);
+
+        if (!timeInfo) {
+          setRemainTime(MESSAGE.pinTimeOver);
+          return;
+        }
+
+        return setRemainTime(`남은시간 ${timeInfo}`);
+      }
+
+      if (isSavedPin) {
+        const timeInfo = getDate(savedAt);
+
+        if (!timeInfo) {
+          setRemainTime(MESSAGE.pinTimeOver);
+          setIsVisible(false);
+          return;
+        }
+
+        return setRemainTime(`남은시간 ${timeInfo}`);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+
+  function showMyPinDetail() {
+    dispatch(addCurrentPin(pinData));
+    navigation.navigate("상세페이지", { title });
+  }
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => { console.log("상세페이지로..") }}>
+      onPress={showMyPinDetail}>
       <View style={styles.container}>
         <View style={styles.listContainer}>
           <Image
             style={styles.previewContainer}
-            source={{ uri: pinsData.item.image[0] }}
+            source={{ uri: image[0] }}
           />
           <View style={styles.textContainer}>
             <Text style={styles.timeText}>
-              남은시간: {pinsData.item.remain}
+              {remainTime}
             </Text>
             <View style={styles.bodyContainer}>
-              {pinsData.item.tags.map((tag) => {
+              {tags.map((tag) => {
                 return <Text style={styles.tagsText}>{tag}</Text>
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{pinsData.item.text.slice(0, 15) + "..."}</Text>
+              <Text style={styles.text}>{text.slice(0, 15) + "..."}</Text>
             </View>
           </View>
         </View>

@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pinId: null,
+  _id: null,
   creator: null,
   image: [],
   text: null,
-  tag: [],
-  viewedUsers: [],
+  tags: [],
   savedUser: null,
+  createdAt: null,
   saveAt: null,
   location: null,
+  active: null,
 };
 
 const currentPinSlice = createSlice({

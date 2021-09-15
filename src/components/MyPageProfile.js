@@ -9,6 +9,7 @@ import { color, horizontalScale, verticalScale, moderateScale } from "../config/
 
 export default function MyPageProfile() {
   const image = useSelector(selectUser).image;
+  const nickname = useSelector(selectUser).nickname;
   const dispatch = useDispatch();
 
   async function changeImagePicker() {
@@ -31,7 +32,7 @@ export default function MyPageProfile() {
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>정적인아이디</Text>
+      <Text style={styles.title}>{nickname}</Text>
       <View style={styles.titleUnderLine}></View>
     </View>
   );

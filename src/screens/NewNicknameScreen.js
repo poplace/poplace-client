@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
-import Button from "../components/shared/Button";
+import CustomButton from "../components/shared/CustomButton";
 import generateNickname from "../utils/nicknameGenerator";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
@@ -45,23 +46,18 @@ export default function NewNicknameScreen({ navigation }) {
     data.append("email", email);
     data.append("nickname", finalNickname);
 
+    const token = await SecureStore.getItemAsync("token");
+
     try {
-      const result = await axios.post(
-        `${API_SERVER_URL}/users/signup`,
-        data,
-        {
-          email,
-          nickname: finalNickname,
+      const result = await axios.post(`${API_SERVER_URL}/users/signup`, data, {
+        email,
+        nickname: finalNickname,
+        validateStatus: (status) => status < 500,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
-        {
-          validateStatus: (status) => status < 500,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      });
 
       if (result.data.code === 400) {
         setIsError(true);
@@ -96,7 +92,7 @@ export default function NewNicknameScreen({ navigation }) {
         <Text style={styles.title}>닉네임을{"\n"}입력해주세요</Text>
       </View>
       <View style={styles.nextButtonContainer}>
-        <Button text="완료" handleButton={fetchProfile} />
+        <CustomButton text="완료" handleButton={fetchProfile} />
       </View>
     </>
   );

@@ -3,13 +3,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import SwitchToggle from "react-native-switch-toggle";
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios";
 
 import WithdrawalModal from "../components/WithdrawalModal";
 import { ALERT_MESSAGE } from "../constants/screens";
 import { logoutUser, selectUser } from "../features/userSlice";
 import { verticalScale, horizontalScale, color } from "../config/globalStyles";
-import asyncDeleteAccount from "../api/deleteAccount";
 
 export default function SettingScreen({ navigation }) {
   const [toggleOn, setToggleOn] = useState(true);
@@ -24,14 +22,6 @@ export default function SettingScreen({ navigation }) {
   function handleLogout() {
     dispatch(logoutUser());
 
-    alert("로그아웃 되었습니다.")
-    navigation.navigate("Login");
-  }
-
-  function handleVisibleModal() {
-    setIsVisibleModal((state) => !state);
-  }
-
     Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.logout, [{
       text: ALERT_MESSAGE.accept,
       onPress: () => navigation.reset({
@@ -41,18 +31,8 @@ export default function SettingScreen({ navigation }) {
     }]);
   }
 
-  function deleteAccount() {
-    asyncDeleteAccount(id);
-
-    dispatch(logoutUser());
-
-    Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
-      text: ALERT_MESSAGE.accept,
-      onPress: () => navigation.reset({
-        index: 0,
-        routes: [{ name: "Login" }]
-      }),
-    }])
+  function handleVisibleModal() {
+    setIsVisibleModal((state) => !state);
   }
 
   return (
@@ -87,6 +67,7 @@ export default function SettingScreen({ navigation }) {
         isVisibleModal={isVisibleModal}
         handleVisibleModal={handleVisibleModal}
         userId={id}
+        navigation={navigation}
       />
     </View>
   );

@@ -72,7 +72,6 @@ export default function NewPinScreen({ navigation }) {
       data.append("creator", id);
       data.append("tags", stringifiedTags);
       data.append("coords", stringifiedCoords);
-      console.log(data);
       await axios.post(
         `${API_SERVER_URL}/pins`,
         data,

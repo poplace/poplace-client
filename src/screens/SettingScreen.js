@@ -16,7 +16,7 @@ export default function SettingScreen({ navigation }) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
   function handleChangeNickname() {
-    navigation.replace("NewNicknameScreen");
+    navigation.navigate("NewAccountNavigator", { "screen": "NewNicknameScreen" });
   }
 
   function handleLogout() {

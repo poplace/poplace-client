@@ -104,7 +104,7 @@ export default function DetailPinScreen({ navigation }) {
           </TouchableOpacity>}
       </View>
       <View style={styles.tagContainer}>
-        {tags.map((tag) => <Text style={styles.tag}>{tag}</Text>)}
+        {tags.map((tag, index) => <Text key={`${pinId}${index}`} style={styles.tag}>{tag}</Text>)}
       </View>
       <ScrollView style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>

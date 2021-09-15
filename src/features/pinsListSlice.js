@@ -40,7 +40,11 @@ const initialState = {
 const pinsListSlice = createSlice({
   name: "pinsList",
   initialState,
-  reducers: {},
+  reducers: {
+    initPinsList: (state, action) => {
+      return initialState;
+    },
+  },
   extraReducers: {
     [getPinsList.pending]: (state) => {
       state.status = "pending";
@@ -57,5 +61,7 @@ const pinsListSlice = createSlice({
 });
 
 export default pinsListSlice.reducer;
+
+export const { initPinsList } = pinsListSlice.actions;
 
 export const selectPinsList = (state) => state.pinsList;

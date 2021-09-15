@@ -1,24 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { StyleSheet, View, Alert, TouchableOpacity, Text } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
-import { getPinsList } from "../features/pinsListSlice";
+import { getPinsList, initPinsList } from "../features/pinsListSlice";
 import { ERROR_MESSAGE } from "../constants/utils";
 import CustomPin from "./CustomPin";
 import {
   color,
   horizontalScale,
   verticalScale,
-  windowHeight,
-  windowWidth,
+  height,
+  width,
 } from "../config/globalStyles";
 
 export default function GoogleMap() {
   const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
   const mapViewCoordinateRef = useRef();
+  const defaultLocation = useRef({
+    latitudeDelta: 0.015,
+    longitudeDelta: 0.0121,
+    longitude: 127.0617409,
+    latitude: 37.5072438,
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +33,6 @@ export default function GoogleMap() {
 
       if (status !== "granted") {
         Alert.alert("알림", ERROR_MESSAGE.locationAccess, [
-          { text: "취소" },
           { text: "확인", onPress: () => setIsLocationServiceEnable(false) },
         ]);
         return;
@@ -51,6 +56,9 @@ export default function GoogleMap() {
     if (location !== null) {
       dispatch(getPinsList(location));
     }
+    return () => {
+      dispatch(initPinsList());
+    }
   }, [location]);
 
   function handleGetPinsData() {
@@ -66,7 +74,7 @@ export default function GoogleMap() {
       <MapView
         style={styles.map}
         loadingEnabled={true}
-        region={location}
+        region={location || defaultLocation.current}
         showsUserLocation
         onRegionChangeComplete={handleMapViewCoordinate}
       >
@@ -87,8 +95,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   map: {
-    height: windowHeight,
-    width: windowWidth,
+    height: height,
+    width: width,
   },
   getPinDataButton: {
     top: verticalScale(40),

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectModalOn, turnOnOffModal } from "../features/modalVisibleSlice";
@@ -10,7 +10,7 @@ import { color, width, height, verticalScale, horizontalScale, moderateScale } f
 import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
 
-export default function SlideModal() {
+export default function SlideModal({ navigation }) {
   const [remainTime, setRemainTime] = useState(null);
   const modalVisibleStatus = useSelector(selectModalOn);
   const { id: userId } = useSelector(selectUser);
@@ -29,7 +29,7 @@ export default function SlideModal() {
     dispatch(turnOnOffModal());
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const id = setInterval(() => {
       const timeInfo = getDate(createdAt);
 
@@ -66,6 +66,9 @@ export default function SlideModal() {
         backdropOpacity={0}
         onBackButtonPress={handleModalVisible}
         onBackdropPress={handleModalVisible}
+        swipeDirection="up"
+        swipeThreshold={540}
+        onSwipeComplete={() => { navigation.navigate("상세페이지")}}
       >
         <View style={styles.modal}>
           <View style={styles.textContainer}>
@@ -113,8 +116,9 @@ const styles = StyleSheet.create({
   modal: {
     position: "absolute",
     flex: 1,
+    top: 500,
     width: horizontalScale(320),
-    height: verticalScale(200),
+    height: verticalScale(1000),
     backgroundColor: "white",
     alignItems: "center",
     bottom: -21,

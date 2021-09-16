@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_SERVER_URL } from "@env";
@@ -8,6 +9,7 @@ export const getPinsList = createAsyncThunk("pin/getPinsList", async (location) 
 
   const response = await axios.get(`${API_SERVER_URL}/pins`, {
     params: location,
+    validateStatus: (status) => status < 500,
     headers: {
       Authorization: "Bearer " + token,
     },

@@ -51,7 +51,7 @@ export default function SlideModal({ navigation }) {
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");
-        return navigation.replace("HomeScreen");
+        return navigation.replace("Bottom", {"screen": "HomeScreen"});
       }
     } catch (err) {
       console.log(err);

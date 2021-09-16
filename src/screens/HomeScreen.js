@@ -8,7 +8,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View>
       <GoogleMap />
-      <SlideModal navigation={navigation}/>
+      <SlideModal navigation={navigation} />
     </View>
   );
 }

@@ -46,90 +46,107 @@ export default function SlideModal({ navigation }) {
   }, [createdAt]);
 
   async function handleSavePin() {
-    try {
-      const result = await savePinData(pinId, userId);
+    const result = await savePinData(pinId, userId);
 
-      if (result.success === "ok") {
-        alert("핀이 저장 되었습니다!");
-        return navigation.replace("HomeScreen");
-      }
-    } catch (err) {
-      console.log(err);
+    if (result.success === "OK") {
+      alert("핀이 저장 되었습니다!");
+
+      return navigation.replace("Bottom", { "screen": "HomeScreen" });
     }
   }
 
   return (
-    <View style={styles.modalContainer}>
-      <Modal
-        isVisible={modalVisibleStatus}
-        animationType="slide"
-        backdropOpacity={0}
-        onBackButtonPress={handleModalVisible}
-        onBackdropPress={handleModalVisible}
-        swipeDirection="up"
-        swipeThreshold={540}
-        onSwipeComplete={() => { navigation.navigate("상세페이지") }}
-      >
-        <View style={styles.modal}>
-          <View style={styles.textContainer}>
-            <Text style={styles.timeText}>
-              {remainTime}
-            </Text>
-          </View>
-
-          <View style={styles.listContainer}>
-
-            <View style={styles.test}>
-              <View style={styles.bodyContainer}>
-                {tags.map((text, index) => {
-                  return <Text key={index} style={styles.tagsText}>{text}</Text>
-                })}
-              </View>
-              <View style={styles.textBox}>
-                <Text style={styles.text}>{text}</Text>
-              </View>
-            </View>
-
-            <Image
-              style={styles.previewContainer}
-              source={{ uri: image[0] }}
-            />
-          </View>
-          {!isCreator && <TouchableOpacity
-            style={styles.saveButton}
-            onPress={handleSavePin}
-          >
-            <Text style={styles.saveButtonText}>저장하기</Text>
-          </TouchableOpacity>}
+    <Modal
+      style={styles.modalContainer}
+      isVisible={modalVisibleStatus}
+      animationType="slide"
+      backdropOpacity={0}
+      onBackButtonPress={handleModalVisible}
+      onBackdropPress={handleModalVisible}
+      swipeDirection="up"
+      swipeThreshold={540}
+      onSwipeComplete={() => { navigation.navigate("상세페이지") }}
+    >
+      <View style={styles.modal}>
+        <View style={styles.picker} />
+        <View style={styles.timeTextContainer}>
+          <Text style={styles.timeText}>
+            {remainTime}
+          </Text>
         </View>
-      </Modal>
-    </View>
+        <View style={styles.listContainer}>
+          <View style={styles.bodyContainer}>
+            <View style={styles.tagContainer}>
+              {tags.map((text, index) => {
+                if (index === 2) {
+                  return;
+                }
+
+                return <Text key={`${pinId}${index}`} style={styles.tagsText}>{text}</Text>;
+              })}
+            </View>
+            <View style={styles.tagContainer}>
+              {tags.map((text, index) => {
+                if (index === 2) {
+                  return <Text key={`${pinId}${index}`} style={styles.tagsText}>{text}</Text>;
+                }
+
+                return;
+              })}
+            </View>
+            <View style={styles.textBox}>
+              <Text style={styles.text}>{text?.slice(0, 15) + "..."}</Text>
+            </View>
+          </View>
+          <Image
+            style={styles.previewContainer}
+            source={{ uri: image[0] }}
+          />
+        </View>
+        {!isCreator && <TouchableOpacity
+          style={styles.saveButton}
+          onPress={handleSavePin}
+        >
+          <Text style={styles.saveButtonText}>저장하기</Text>
+        </TouchableOpacity>}
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   modalContainer: {
-    width,
-    height,
     flex: 1,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    left: verticalScale(-16),
+    shadowColor: color.poplaceDark,
   },
   modal: {
+    width: "100%",
+    height: "150%",
     position: "absolute",
     flex: 1,
-    top: 500,
-    width: horizontalScale(320),
-    height: verticalScale(1000),
-    backgroundColor: "white",
+    bottom: verticalScale(-740),
+    backgroundColor: color.poplaceWhite,
     alignItems: "center",
-    bottom: -21,
-    marginLeft: moderateScale(-10),
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    borderTopLeftRadius: moderateScale(40),
+    borderTopRightRadius: moderateScale(40),
+    shadowColor: color.poplaceDark,
+    shadowOpacity: 0.01,
+    elevation: 20,
   },
-  test: {
-    width: horizontalScale(160),
-    height: verticalScale(110),
-
+  picker: {
+    marginTop: verticalScale(10),
+    borderRadius: moderateScale(30),
+    width: "20%",
+    height: verticalScale(4),
+    backgroundColor: color.poplaceLight,
+    justifyContent: "center",
+    alignItems: "center",
   },
   listContainer: {
     width: horizontalScale(280),
@@ -145,35 +162,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 15,
   },
-  textContainer: {
+  timeTextContainer: {
     top: 2,
-    marginLeft: verticalScale(10),
-    padding: moderateScale(20),
+    marginTop: verticalScale(10),
+    marginBottom: verticalScale(15),
   },
   timeText: {
     fontSize: moderateScale(15),
     color: color.poplaceDark,
     fontWeight: "bold",
-    textTransform: "capitalize",
   },
   bodyContainer: {
+    width: horizontalScale(180),
+    height: verticalScale(110),
+  },
+  tagContainer: {
     flexDirection: "row",
-    marginTop: verticalScale(5),
+    marginTop: verticalScale(3),
   },
   tagsText: {
-    color: color.poplaceWhite,
-    backgroundColor: color.poplaceRed,
-    fontSize: moderateScale(11),
+    color: color.poplaceRed,
+    backgroundColor: color.poplaceWhite,
+    fontSize: moderateScale(9),
     textAlign: "center",
     fontWeight: "700",
     borderRadius: 30,
-    marginRight: horizontalScale(5),
+    marginRight: horizontalScale(8),
+    marginVertical: verticalScale(2),
     paddingVertical: verticalScale(4),
     paddingHorizontal: moderateScale(12),
+    shadowColor: color.poplaceDark,
+    shadowOpacity: 0.01,
+    elevation: 2,
   },
   textBox: {
-    bottom: moderateScale(6),
-    position: "absolute",
+    top: verticalScale(5),
     width: horizontalScale(170),
   },
   text: {
@@ -182,16 +205,15 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(13),
   },
   saveButton: {
-    top: 10,
+    bottom: -15,
     backgroundColor: color.poplaceRed,
     textAlign: "center",
-    fontWeight: "700",
     borderRadius: 30,
-    marginRight: horizontalScale(5),
     paddingVertical: verticalScale(8),
     paddingHorizontal: moderateScale(24),
   },
   saveButtonText: {
+    fontWeight: "700",
     color: color.poplaceWhite,
     fontSize: moderateScale(12),
   },

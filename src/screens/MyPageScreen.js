@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -15,14 +15,10 @@ export default function MyPageScreen({ navigation }) {
 
   useEffect(() => {
     async function getMyPins() {
-      try {
-        const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
+      const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
-        setMyCreatedPins(myCreatedPins);
-        setMySavedPins(mySavedPins);
-      } catch (err) {
-        console.log(err);
-      }
+      setMyCreatedPins(myCreatedPins);
+      setMySavedPins(mySavedPins);
     }
 
     getMyPins();

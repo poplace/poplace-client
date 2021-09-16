@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addCurrentPin } from "../../features/currentPinSlice";
 
 export default function MyPinListPreview({ navigation, pins }) {
-  const hasPins = Boolean(pins.length);
+  const hasPins = Boolean(pins?.length);
   const dispatch = useDispatch();
 
   function handleClickDetailPin(pin) {

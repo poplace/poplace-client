@@ -11,8 +11,8 @@ import {
   color,
   horizontalScale,
   verticalScale,
-  height,
   width,
+  height,
 } from "../config/globalStyles";
 
 export default function GoogleMap() {
@@ -85,8 +85,8 @@ export default function GoogleMap() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        loadingEnabled={true}
-        region={location || defaultLocation.current}
+        loadingEnabled
+        region={location || defaultLocation}
         showsUserLocation
         onRegionChangeComplete={handleMapViewCoordinate}
       >

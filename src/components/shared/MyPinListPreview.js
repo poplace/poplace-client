@@ -12,7 +12,7 @@ export default function MyPinListPreview({ navigation, pins }) {
 
   function handleClickDetailPin(pin) {
     dispatch(addCurrentPin(pin));
-    navigation.navigate("상세페이지");
+    navigation.navigate("DetailPin");
   }
 
   return (

@@ -9,8 +9,8 @@ const Stack = createNativeStackNavigator();
 export default function NewAccountNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="NewProfileImageScreen" component={NewProfileImageScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="NewNicknameScreen" component={NewNicknameScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="NewProfileImageScreen" component={NewProfileImageScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="NewNicknameScreen" component={NewNicknameScreen} />
     </Stack.Navigator>
   );
 }

@@ -44,10 +44,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: () => {
-      SecureStore.deleteItemAsync("token");
-      SecureStore.deleteItemAsync("email");
-      SecureStore.deleteItemAsync("nickname");
-
       return initialState;
     },
     addImage: (state, action) => {

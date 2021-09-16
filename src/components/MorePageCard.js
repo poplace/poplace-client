@@ -55,7 +55,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
 
   function showMyPinDetail() {
     dispatch(addCurrentPin(pinData));
-    navigation.navigate("상세페이지", { title });
+    navigation.navigate("DetailPin", { title });
   }
 
   if (!isVisible) {

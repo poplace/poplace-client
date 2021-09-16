@@ -51,7 +51,7 @@ export default function SlideModal({ navigation }) {
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");
-        return navigation.replace("HomeScreen");
+        return navigation.replace("Bottom", {"screen": "HomeScreen"});
       }
     } catch (err) {
       console.log(err);
@@ -68,7 +68,7 @@ export default function SlideModal({ navigation }) {
         onBackdropPress={handleModalVisible}
         swipeDirection="up"
         swipeThreshold={540}
-        onSwipeComplete={() => { navigation.navigate("상세페이지") }}
+        onSwipeComplete={() => { navigation.push("상세페이지") }} //이걸 navigate로 하면 안돼
       >
         <View style={styles.modal}>
           <View style={styles.textContainer}>

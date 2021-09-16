@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from "react-native";
 import { useSelector } from "react-redux";
 
 import getDate from "../utils/getDate";
@@ -73,7 +73,7 @@ export default function DetailPinScreen({ navigation }) {
 
       if (result.success === "ok") {
         alert("핀이 저장 되었습니다!");
-        return navigation.replace("HomeScreen");
+        return navigation.replace("Bottom", {"screen": "HomeScreen"});
       }
     } catch (err) {
       console.log(err);

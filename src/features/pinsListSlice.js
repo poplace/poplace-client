@@ -1,19 +1,21 @@
+import { Alert } from "react-native";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_SERVER_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 
 export const getPinsList = createAsyncThunk("pin/getPinsList", async (location) => {
-  const token = await SecureStore.getItemAsync("token");
+    const token = await SecureStore.getItemAsync("token");
 
-  const response = await axios.get(`${API_SERVER_URL}/pins`, {
-    params: location,
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+    const response = await axios.get(`${API_SERVER_URL}/pins`, {
+      params: location,
+      validateStatus: (status) => status < 500,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
 
-  return response.data;
+    return response.data;
 });
 
 const initialState = {

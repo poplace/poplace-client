@@ -34,12 +34,11 @@ export default function LoginScreen({ navigation }) {
       await SecureStore.deleteItemAsync("token");
 
       const result = await loginWithGoogle();
+      const user = result.user;
 
-      if (!result.user) {
+      if (!user) {
         return handleErrorMessage(ERROR_MESSAGE.cancelLogin);
       }
-
-      const user = result.user;
 
       dispatch(signinUser(user));
       handleErrorMessage("");

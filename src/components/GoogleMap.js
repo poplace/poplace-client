@@ -5,7 +5,7 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
 import { getPinsList, initPinsList } from "../features/pinsListSlice";
-import { ERROR_MESSAGE } from "../constants/utils";
+import { ALERT_MESSAGE, ERROR_MESSAGE } from "../constants/screens";
 import CustomPin from "./CustomPin";
 import {
   color,
@@ -17,9 +17,9 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 
 export default function GoogleMap() {
-  const [location, setLocation] = useState(null);
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
   const mapViewCoordinateRef = useRef();
+  const [location, setLocation] = useState(null);
   const defaultLocation = useRef({
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
@@ -31,26 +31,36 @@ export default function GoogleMap() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (status !== "granted") {
-        Alert.alert("알림", ERROR_MESSAGE.locationAccess, [
-          { text: "확인", onPress: () => setIsLocationServiceEnable(false) },
+        if (status !== "granted") {
+          Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.locationAccess, [
+            { text: ALERT_MESSAGE.accept, onPress: () => setIsLocationServiceEnable(false) },
+          ]);
+
+          return;
+        }
+
+        const currentLocation = await Location.getCurrentPositionAsync({});
+        const {
+          coords: { longitude, latitude },
+        } = currentLocation;
+
+        setLocation({
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+          longitude,
+          latitude,
+        });
+      } catch (err) {
+        Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.failedGetLocation, [
+          { text: ALERT_MESSAGE.accept },
         ]);
+
         return;
-      }
+       }
 
-      const currentLocation = await Location.getCurrentPositionAsync({});
-      const {
-        coords: { longitude, latitude },
-      } = currentLocation;
-
-      setLocation({
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-        longitude,
-        latitude,
-      });
     })();
   }, [isLocationServiceEnable]);
 
@@ -68,8 +78,8 @@ export default function GoogleMap() {
     dispatch(getPinsList(mapViewCoordinateRef.current));
   }
 
-  function handleMapViewCoordinate(e) {
-    mapViewCoordinateRef.current = e;
+  function handleMapViewCoordinate(currentCoords) {
+    mapViewCoordinateRef.current = currentCoords;
   }
 
   return (

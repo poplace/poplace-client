@@ -1,16 +1,24 @@
-import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Image, Alert } from "react-native";
 import { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { addCurrentPin } from "../features/currentPinSlice";
 import { selectPinsList } from "../features/pinsListSlice";
+import { ALERT_MESSAGE, ERROR_MESSAGE } from "../constants/screens";
 
 export default function CustomPin() {
   const dispatch = useDispatch();
   const { pinsList } = useSelector(selectPinsList);
   const isSuccess = useSelector((state) => state.pinsList.status === "success");
+  const isError = useSelector((state) => state.pinsList.status === "failed");
+
+  if (isError) {
+    Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.server, [
+      { text: ALERT_MESSAGE.accept },
+    ]);
+  }
 
   function handlePopSlideModal(pin) {
     dispatch(addCurrentPin(pin));

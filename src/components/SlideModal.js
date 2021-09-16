@@ -99,7 +99,7 @@ export default function SlideModal({ navigation }) {
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{text.slice(0, 15) + "..."}</Text>
+              <Text style={styles.text}>{text?.slice(0, 15) + "..."}</Text>
             </View>
           </View>
           <Image

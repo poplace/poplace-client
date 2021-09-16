@@ -82,7 +82,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{text.slice(0, 12) + "..."}</Text>
+              <Text style={styles.text}>{text?.slice(0, 12) + "..."}</Text>
             </View>
           </View>
         </View>

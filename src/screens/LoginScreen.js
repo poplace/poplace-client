@@ -1,50 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import { signinUser, selectUser } from "../features/userSlice";
-import loginWithGoogle from "../utils/loginWithGoogle";
+import loginWithGoogle from "../api/loginWithGoogle";
 import { ERROR_MESSAGE } from "../constants/screens";
 import { color, moderateScale, verticalScale } from "../config/globalStyles";
 import CustomButton from "../components/shared/CustomButton";
 
 export default function LoginScreen({ navigation }) {
-  const isSuccess = useSelector((state) => state.user.status === "success");
+  const isAuthorized = useSelector((state) => state.user.status === "success");
   const [errorMessage, setErrorMessage] = useState("");
   const { isOriginalMember, nickname } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isAuthorized) {
       if (!isOriginalMember || !nickname) {
         return navigation.replace("NewAccountNavigator");
       }
 
       return navigation.replace("MainNavigator");
     }
-  }, [isSuccess]);
+  }, [isAuthorized]);
 
   function handleErrorMessage(message) {
     setErrorMessage(message);
   }
 
   async function handleGoogleLogin() {
-    try {
-      await SecureStore.deleteItemAsync("token");
+    await SecureStore.deleteItemAsync("token");
 
-      const result = await loginWithGoogle();
-      const user = result.user;
+    const { success, user } = await loginWithGoogle();
 
-      if (!user) {
-        return handleErrorMessage(ERROR_MESSAGE.cancelLogin);
-      }
-
-      dispatch(signinUser(user));
-      handleErrorMessage("");
-    } catch (err) {
-      alert(err.message);
+    if (!success) {
+      Alert.alert("알림", ERROR_MESSAGE.cancelLogin, [
+        { text: "확인", onPress: () => {
+          return setErrorMessage(ERROR_MESSAGE.cancelLogin);
+        }},
+      ]);
     }
+
+    handleErrorMessage("");
+    dispatch(signinUser(user));
   }
 
   return (

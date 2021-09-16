@@ -12,11 +12,10 @@ export default async function loginWithGoogle() {
     if (result.type === "success") {
       const { email } = result.user;
 
-      return { user: { email } };
+      return { success: true, user: { email } };
     }
 
-    return { cancelled: true };
   } catch (err) {
-    alert(err.message);
+    return { success: false };
   }
 }

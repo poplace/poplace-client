@@ -14,6 +14,7 @@ import {
   width,
   height,
 } from "../config/globalStyles";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function GoogleMap() {
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
@@ -26,6 +27,7 @@ export default function GoogleMap() {
     latitude: 37.5072438,
   });
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     (async () => {
@@ -70,8 +72,7 @@ export default function GoogleMap() {
     return () => {
       dispatch(initPinsList());
     }
-
-  }, [location]);
+  }, [location, isFocused]);
 
   function handleGetPinsData() {
     dispatch(getPinsList(mapViewCoordinateRef.current));

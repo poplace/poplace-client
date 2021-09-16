@@ -7,7 +7,7 @@ const modalVisibleSlice = createSlice({
   initialState,
   reducers: {
     turnOnOffModal: (state, action) => {
-      return !state;
+      return action.payload;
     },
   },
 });

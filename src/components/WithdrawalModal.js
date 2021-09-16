@@ -17,11 +17,11 @@ export default function WithdrawalModal({
   const dispatch = useDispatch();
 
   async function handleWithdrawal() {
-    try {
-      dispatch(logoutUser());
+    dispatch(logoutUser());
 
-      await deleteAccount(userId);
+    const result = await deleteAccount(userId);
 
+    if (result.success) {
       Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
         text: ALERT_MESSAGE.accept,
         onPress: () => navigation.reset({
@@ -29,8 +29,6 @@ export default function WithdrawalModal({
           routes: [{ name: "Login" }],
         }),
       }]);
-    } catch (err) {
-      alert(err.message);
     }
   }
 

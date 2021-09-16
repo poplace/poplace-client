@@ -82,7 +82,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
               })}
             </View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{text.slice(0, 15) + "..."}</Text>
+              <Text style={styles.text}>{text?.slice(0, 12) + "..."}</Text>
             </View>
           </View>
         </View>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   tagsText: {
     color: color.poplaceWhite,
     backgroundColor: color.poplaceRed,
-    fontSize: moderateScale(10),
+    fontSize: moderateScale(8),
     textAlign: "center",
     fontWeight: "700",
     borderRadius: 30,

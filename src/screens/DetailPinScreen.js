@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from "react-native";
-import { useSelector } from "react-redux";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
 import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
 import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
+import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { selectCurrentPin } from '../features/currentPinSlice';
 import { MESSAGE } from "../constants/shared";
 
-export default function DetailPinScreen({ navigation }) {
+export default function DetailPinScreen({ navigation, path }) {
   const { id: userId } = useSelector(selectUser);
   const {
-    pinId,
+    _id: pinId,
     image,
     tags,
     createdAt,
@@ -24,9 +25,27 @@ export default function DetailPinScreen({ navigation }) {
   const isCreator = userId === creator;
   const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);
+  const dispatch = useDispatch();
+  const isFromMainPage = path === "Main";
 
   useEffect(() => {
     const id = setInterval(() => {
+      if (isFromMainPage) {
+        const timeInfo = getDate(createdAt);
+
+        if (!timeInfo) {
+          Alert.alert("알림", "시간이 다 되었습니다", [
+            {
+              text: "확인", onPress: () => {
+                return navigation.replace("Bottom", { "screen": "HomeScreen" });
+              }
+            },
+          ]);
+        }
+
+        return setRemainTime(`남은시간 ${timeInfo}`);
+      }
+
       if (isCreator && savedAt) {
         const timeInfo = getDate(savedAt);
 
@@ -51,7 +70,13 @@ export default function DetailPinScreen({ navigation }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          return navigation.goBack();
+          Alert.alert("알림", "시간이 다 되었습니다", [
+            {
+              text: "확인", onPress: () => {
+                return navigation.replace("Bottom", { "screen": "HomeScreen" });
+              }
+            },
+          ]);
         }
 
         return setRemainTime(`남은시간 ${timeInfo}`);
@@ -68,15 +93,17 @@ export default function DetailPinScreen({ navigation }) {
   }, []);
 
   async function handleSavePin() {
-    try {
-      const result = await savePinData(pinId, userId);
+    const result = await savePinData(pinId, userId);
 
-      if (result.success === "ok") {
-        alert("핀이 저장 되었습니다!");
-        return navigation.replace("Bottom", {"screen": "HomeScreen"});
-      }
-    } catch (err) {
-      console.log(err);
+    if (result.success) {
+      Alert.alert("알림", "핀이 저장 되었습니다!", [
+        {
+          text: "확인", onPress: () => {
+            dispatch(turnOnOffModal(false));
+            return navigation.replace("Bottom", { "screen": "HomeScreen" });
+          }
+        },
+      ]);
     }
   }
 

@@ -13,40 +13,28 @@ export default function MorePageScreen({ navigation, route }) {
   const [pinsData, setPinsData] = useState([]);
   const [isPinsData, setIsPinsData] = useState(false);
   const { title } = route.params;
-  const isCreatedPins = title === "내가 생성한 핀";
-  const isSavedPins = title === "내가 저장한 핀";
 
   function renderItem(pinData) {
-    if (isCreatedPins) {
-      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
-    }
-
-    if (isSavedPins && pinData.item.active) {
-      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
-    }
+    return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
   }
 
   const getMyPins = useCallback(async () => {
-    try {
-      const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
+    const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
-      if (title === "내가 생성한 핀") {
-        if (myCreatedPins.length === 0) {
-          setIsPinsData(true);
-        }
-
-        return setPinsData(myCreatedPins);
+    if (title === "내가 생성한 핀") {
+      if (myCreatedPins.length === 0) {
+        setIsPinsData(true);
       }
 
-      if (title === "내가 저장한 핀") {
-        if (mySavedPins.length === 0) {
-          setIsPinsData(true);
-        }
+      return setPinsData(myCreatedPins);
+    }
 
-        return setPinsData(mySavedPins);
+    if (title === "내가 저장한 핀") {
+      if (mySavedPins.length === 0) {
+        setIsPinsData(true);
       }
-    } catch (err) {
-      console.log(err);
+
+      return setPinsData(mySavedPins);
     }
   }, []);
 

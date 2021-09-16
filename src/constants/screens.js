@@ -5,6 +5,7 @@ export const ERROR_MESSAGE = {
   cancelSavePin: "핀이 저장되지 않았습니다 다시 시도해주세요",
   cancelDeleteAccount: "탈퇴가 되지 않았습니다 다시 시도해주세요",
   cancelNewPin: "핀이 생성되지 않았습니다 다시 시도해주세요",
+  server: "일시적인 오류가 발생했어요.\n잠시 후 다시 시도해주세요.",
 };
 
 export const ALERT_MESSAGE = {

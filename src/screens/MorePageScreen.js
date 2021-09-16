@@ -19,26 +19,22 @@ export default function MorePageScreen({ navigation, route }) {
   }
 
   const getMyPins = useCallback(async () => {
-    try {
-      const { myCreatedPins, mySavedPins } = fetchMyPins(userId, email);
+    const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
-      if (title === "내가 생성한 핀") {
-        if (myCreatedPins.length === 0) {
-          setIsPinsData(true);
-        }
-
-        return setPinsData(myCreatedPins);
+    if (title === "내가 생성한 핀") {
+      if (myCreatedPins.length === 0) {
+        setIsPinsData(true);
       }
 
-      if (title === "내가 저장한 핀") {
-        if (mySavedPins.length === 0) {
-          setIsPinsData(true);
-        }
+      return setPinsData(myCreatedPins);
+    }
 
-        return setPinsData(mySavedPins);
+    if (title === "내가 저장한 핀") {
+      if (mySavedPins.length === 0) {
+        setIsPinsData(true);
       }
-    } catch (err) {
-      console.log(err);
+
+      return setPinsData(mySavedPins);
     }
   }, []);
 

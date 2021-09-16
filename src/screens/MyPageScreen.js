@@ -15,14 +15,10 @@ export default function MyPageScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function getMyPins() {
-    try {
-      const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
+    const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
-      setMyCreatedPins(myCreatedPins);
-      setMySavedPins(mySavedPins);
-    } catch (err) {
-      console.log(err);
-    }
+    setMyCreatedPins(myCreatedPins);
+    setMySavedPins(mySavedPins);
   }
 
   useEffect(() => {

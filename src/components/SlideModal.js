@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,9 +9,10 @@ import { selectUser } from "../features/userSlice";
 import { color, width, height, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
+import { MESSAGE } from "../constants/shared";
 
 export default function SlideModal({ navigation }) {
-  const [remainTime, setRemainTime] = useState(null);
+  const [remainTime, setRemainTime] = useState([]);
   const modalVisibleStatus = useSelector(selectModalOn);
   const { id: userId } = useSelector(selectUser);
   const {
@@ -25,9 +25,16 @@ export default function SlideModal({ navigation }) {
   } = useSelector(selectCurrentPin);
   const dispatch = useDispatch();
   const isCreator = userId === creator;
+  const isTimeOver = remainTime === MESSAGE.pinTimeOver;
 
   function handleModalVisible() {
-    dispatch(turnOnOffModal());
+    dispatch(turnOnOffModal(false));
+  }
+
+  function showDetailPinScreen() {
+    dispatch(turnOnOffModal(false));
+
+    navigation.navigate("상세페이지", { path: "Main" });
   }
 
   useEffect(() => {
@@ -35,10 +42,11 @@ export default function SlideModal({ navigation }) {
       const timeInfo = getDate(createdAt);
 
       if (!timeInfo) {
-        return setRemainTime("시간이 초과 되었습니다");
+        setRemainTime(MESSAGE.pinTimeOver);
+        return;
       }
 
-      return setRemainTime(`남은시간 ${timeInfo}`);
+      setRemainTime(`남은시간 ${timeInfo}`);
     }, 1000);
 
     return () => {
@@ -47,20 +55,22 @@ export default function SlideModal({ navigation }) {
   }, [createdAt]);
 
   async function handleSavePin() {
-    try {
-      const result = await savePinData(pinId, userId);
+    const result = await savePinData(pinId, userId);
 
-      if (result.success === "ok") {
-        Alert.alert("알림", "핀이 저장 되었습니다!", [
-          { text: "확인", onPress: () => {
-            dispatch(turnOnOffModal());
-            return navigation.replace("MainNavigator");
-          }},
-        ]);
-      }
-    } catch (err) {
-      console.log(err);
+    if (result.success) {
+      Alert.alert("알림", "핀이 저장 되었습니다!", [
+        {
+          text: "확인", onPress: () => {
+            dispatch(turnOnOffModal(false));
+            return navigation.replace("Bottom", { "screen": "HomeScreen" });
+          }
+        },
+      ]);
     }
+  }
+
+  if (remainTime.includes(NaN)) {
+    return null;
   }
 
   return (
@@ -73,7 +83,7 @@ export default function SlideModal({ navigation }) {
         onBackdropPress={handleModalVisible}
         swipeDirection="up"
         swipeThreshold={540}
-        onSwipeComplete={() => { navigation.navigate("상세페이지") }}
+        onSwipeComplete={showDetailPinScreen}
       >
         <View style={styles.modal}>
           <View style={styles.textContainer}>
@@ -100,12 +110,13 @@ export default function SlideModal({ navigation }) {
               source={{ uri: image[0] }}
             />
           </View>
-          {!isCreator && <TouchableOpacity
-            style={styles.saveButton}
-            onPress={handleSavePin}
-          >
-            <Text style={styles.saveButtonText}>저장하기</Text>
-          </TouchableOpacity>}
+          {!isCreator && !isTimeOver &&
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={handleSavePin}
+            >
+              <Text style={styles.saveButtonText}>저장하기</Text>
+            </TouchableOpacity>}
         </View>
       </Modal>
     </View>

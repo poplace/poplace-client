@@ -2,18 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { StyleSheet, Image, View, TouchableOpacity, ScrollView, KeyboardAvoidingView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { API_SERVER_URL } from "@env";
-import * as Location from "expo-location";
 import Textarea from "react-native-textarea";
 import TagInput from "react-native-tags-input";
-import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 
 import { selectUser } from "../features/userSlice";
 import validateTag from "../utils/validateTag";
 import validatePinData from "../utils/validatePinData";
 import openImagePicker from "../api/openImagePicker";
 import CustomButton from "../components/shared/CustomButton";
+import makeNewPin from "../api/makeNewPin";
 import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 
 export default function NewPinScreen({ navigation }) {
@@ -60,39 +57,12 @@ export default function NewPinScreen({ navigation }) {
       type: "multipart/form-data",
     };
 
-    try {
-      const currentLocation = await Location.getCurrentPositionAsync({});
-      const data = new FormData();
-      const {
-        coords: { longitude, latitude },
-      } = currentLocation;
+    const data = { tags, photo, text, id };
+    const result = await makeNewPin(data);
 
-      const stringifiedTags = JSON.stringify(tags.tagsArray);
-      const stringifiedCoords = JSON.stringify([longitude, latitude]);
-
-      data.append("photo", photo);
-      data.append("text", text);
-      data.append("creator", id);
-      data.append("tags", stringifiedTags);
-      data.append("coords", stringifiedCoords);
-
-      const token = await SecureStore.getItemAsync("token");
-
-      await axios.post(
-        `${API_SERVER_URL}/pins`, data, {
-        text,
-        creator: id,
-        tags: stringifiedTags,
-        coords: stringifiedCoords,
-        validateStatus: (state) => state < 500,
-        headers: {
-          Authorization: "Bearer " + token,
-        }
-      });
-
+    if (result.success) {
       navigation.replace("MainNavigator");
-    } catch (err) {
-      console.log(err);
+      return;
     }
   }
 
@@ -119,8 +89,8 @@ export default function NewPinScreen({ navigation }) {
                 {hasImage ? (
                   <Image style={styles.image} source={{ uri: imageUri }} />
                 ) : (
-                  <FontAwesome name="camera" size={40} color={color.poplaceLight} />
-                )}
+                    <FontAwesome name="camera" size={40} color={color.poplaceLight} />
+                  )}
               </TouchableOpacity>
             </View>
           </View>

@@ -13,17 +13,9 @@ export default function MorePageScreen({ navigation, route }) {
   const [pinsData, setPinsData] = useState([]);
   const [isPinsData, setIsPinsData] = useState(false);
   const { title } = route.params;
-  const isCreatedPins = title === "내가 생성한 핀";
-  const isSavedPins = title === "내가 저장한 핀";
 
   function renderItem(pinData) {
-    if (isCreatedPins) {
-      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
-    }
-
-    if (isSavedPins && pinData.item.active) {
-      return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
-    }
+    return <MorePageCard title={title} pinData={pinData.item} navigation={navigation} />;
   }
 
   const getMyPins = useCallback(async () => {

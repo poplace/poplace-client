@@ -7,7 +7,6 @@ import { DAY } from "../constants/utils";
 export default function getDate(time) {
   const targetTime = dayjs(time);
   const currentTime = dayjs(new Date());
-
   const difference = currentTime.diff(targetTime);
   const remainTime = DAY - difference;
 

@@ -2,6 +2,8 @@ import axios from "axios";
 import { API_SERVER_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 
+import { ERROR_MESSAGE } from "../constants/screens";
+
 export default async function deleteAccount(id) {
   try {
     const token = await SecureStore.getItemAsync("token");
@@ -16,6 +18,6 @@ export default async function deleteAccount(id) {
 
     return { success: true };
   } catch (err) {
-    alert(err.message);
+    alert(ERROR_MESSAGE.cancelDeleteAccount);
   }
 }

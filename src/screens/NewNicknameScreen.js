@@ -8,8 +8,10 @@ import axios from "axios";
 
 import CustomButton from "../components/shared/CustomButton";
 import generateNickname from "../utils/nicknameGenerator";
+import validateNickname from "../utils/validateNickname";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
+import { ERROR_MESSAGE } from "../constants/screens";
 
 export default function NewNicknameScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
@@ -30,6 +32,14 @@ export default function NewNicknameScreen({ navigation }) {
   async function fetchProfile() {
     const finalNickname = nickname || recommendedNickname;
     const finalImage = image || DEFAULT_IMAGE;
+    const nicknameValidation = validateNickname(finalNickname);
+
+    if (!nicknameValidation.isValid) {
+      setIsError(true);
+      setErrorMessage(nicknameValidation.message);
+
+      return;
+    }
 
     dispatch(addNickname(finalNickname));
     dispatch(addImage(finalImage));
@@ -69,7 +79,10 @@ export default function NewNicknameScreen({ navigation }) {
 
       navigation.replace("MainNavigator");
     } catch (err) {
-      console.log(err);
+      setIsError(true);
+      setErrorMessage(ERROR_MESSAGE.server);
+
+      return;
     }
   }
 
@@ -150,7 +163,7 @@ const errorStyles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   errorText: {
-    textAlign: "left",
+    textAlign: "center",
     color: color.poplaceErrorRed,
   },
 });

@@ -62,8 +62,8 @@ const pinsListSlice = createSlice({
   },
 });
 
-export default pinsListSlice.reducer;
-
 export const { initPinsList } = pinsListSlice.actions;
+
+export default pinsListSlice.reducer;
 
 export const selectPinsList = (state) => state.pinsList;

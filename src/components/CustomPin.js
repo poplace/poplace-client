@@ -22,7 +22,7 @@ export default function CustomPin() {
 
   function handlePopSlideModal(pin) {
     dispatch(addCurrentPin(pin));
-    dispatch(turnOnOffModal());
+    dispatch(turnOnOffModal(true));
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView, RefreshControl } from "react-native";
 import { useSelector } from "react-redux";
 
 import { color, verticalScale } from "../config/globalStyles";
@@ -12,42 +12,55 @@ export default function MyPageScreen({ navigation }) {
   const [myCreatedPins, setMyCreatedPins] = useState([]);
   const [mySavedPins, setMySavedPins] = useState([]);
   const { id: userId, email } = useSelector(selectUser);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function getMyPins() {
+    const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
+
+    setMyCreatedPins(myCreatedPins);
+    setMySavedPins(mySavedPins);
+  }
 
   useEffect(() => {
-    async function getMyPins() {
-      try {
-        const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
-
-        setMyCreatedPins(myCreatedPins);
-        setMySavedPins(mySavedPins);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
     getMyPins();
 
     return () => {
-      setMyCreatedPins(null);
-      setMySavedPins(null);
+      setMyCreatedPins([]);
+      setMySavedPins([]);
     }
-  }, []);
+  }, [userId, email]);
+
+  const handleRefresh = useCallback(() => {
+    setRefreshing(true);
+    getMyPins();
+
+    setTimeout(() => setRefreshing(false), 1000);
+  }, [refreshing]);
 
   return (
     <View style={styles.container}>
-      <MyPageProfile />
-      <View style={styles.listContainer}>
-        <MyPinList
-          title="내가 생성한 핀"
-          pins={myCreatedPins}
-          navigation={navigation}
-        />
-        <MyPinList
-          title="내가 저장한 핀"
-          pins={mySavedPins}
-          navigation={navigation}
-        />
-      </View>
+      <ScrollView
+        style={styles.listContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+          />
+        }>
+        <MyPageProfile style={styles.profile} />
+        <View style={styles.pinContainer}>
+          <MyPinList
+            title="내가 생성한 핀"
+            pins={myCreatedPins}
+            navigation={navigation}
+          />
+          <MyPinList
+            title="내가 저장한 핀"
+            pins={mySavedPins}
+            navigation={navigation}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -59,7 +72,10 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: verticalScale(340),
-    paddingLeft: "7%",
     bottom: "1%",
+  },
+  pinContainer: {
+    paddingLeft: "7%",
+    marginBottom: verticalScale(100),
   },
 });

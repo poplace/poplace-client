@@ -46,16 +46,12 @@ export default function SlideModal({ navigation }) {
   }, [createdAt]);
 
   async function handleSavePin() {
-    try {
-      const result = await savePinData(pinId, userId);
+    const result = await savePinData(pinId, userId);
 
-      if (result.success === "ok") {
-        alert("핀이 저장 되었습니다!");
+    if (result.success === "OK") {
+      alert("핀이 저장 되었습니다!");
 
-        return navigation.replace("Bottom", { "screen": "HomeScreen" });
-      }
-    } catch (err) {
-      console.log(err);
+      return navigation.replace("Bottom", { "screen": "HomeScreen" });
     }
   }
 

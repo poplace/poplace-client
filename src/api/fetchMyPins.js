@@ -1,6 +1,8 @@
 import { API_SERVER_URL } from "@env";
-import axios from "axios";
 import * as SecureStore from "expo-secure-store";
+import axios from "axios";
+
+import { ERROR_MESSAGE } from "../constants/screens";
 
 export default async function fetchMyPins(userId, email) {
   try {
@@ -17,7 +19,7 @@ export default async function fetchMyPins(userId, email) {
     });
 
     if (response.data.code === 400) {
-      console.log(response.data.code);
+      alert(response.data.message);
       return;
     }
 
@@ -25,6 +27,7 @@ export default async function fetchMyPins(userId, email) {
 
     return { myCreatedPins, mySavedPins };
   } catch (err) {
-    console.log(err);
+    alert(ERROR_MESSAGE.server);
+    return;
   }
 }

@@ -9,7 +9,7 @@ import { selectUser } from "../features/userSlice";
 import { color, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
-import { MESSAGE } from "../constants/shared";
+import { ALERT } from "../constants";
 
 export default function SlideModal({ navigation }) {
   const [remainTime, setRemainTime] = useState([]);
@@ -25,7 +25,7 @@ export default function SlideModal({ navigation }) {
   } = useSelector(selectCurrentPin);
   const dispatch = useDispatch();
   const isCreator = userId === creator;
-  const isTimeOver = remainTime === MESSAGE.pinTimeOver;
+  const isTimeOver = remainTime === ALERT.pinTimeOver;
 
   function handleModalVisible() {
     dispatch(turnOnOffModal(false));
@@ -42,7 +42,7 @@ export default function SlideModal({ navigation }) {
       const timeInfo = getDate(createdAt);
 
       if (!timeInfo) {
-        setRemainTime(MESSAGE.pinTimeOver);
+        setRemainTime(ALERT.pinTimeOver);
         return;
       }
 
@@ -58,9 +58,9 @@ export default function SlideModal({ navigation }) {
     const result = await savePinData(pinId, userId);
 
     if (result.success) {
-      Alert.alert("알림", "핀이 저장 되었습니다!", [
+      Alert.alert(ALERT.notice, ALERT.savePin, [
         {
-          text: "확인", onPress: () => {
+          text: ALERT.accept, onPress: () => {
             dispatch(turnOnOffModal(false));
             return navigation.replace("Bottom", { "screen": "HomeScreen" });
           }

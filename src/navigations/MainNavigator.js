@@ -7,7 +7,6 @@ import MorePageScreen from "../screens/MorePageScreen";
 import DetailPinScreen from "../screens/DetailPinScreen";
 import SettingScreen from "../screens/SettingScreen";
 import { color } from "../config/globalStyles";
-import { ThemeProvider } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 

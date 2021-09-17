@@ -11,7 +11,7 @@ import generateNickname from "../utils/nicknameGenerator";
 import validateNickname from "../utils/validateNickname";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
-import { ERROR_MESSAGE } from "../constants/screens";
+import { ERROR } from "../constants";
 
 export default function NewNicknameScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
@@ -84,7 +84,7 @@ export default function NewNicknameScreen({ navigation }) {
       navigation.replace("MainNavigator");
     } catch (err) {
       setIsError(true);
-      setErrorMessage(ERROR_MESSAGE.server);
+      setErrorMessage(ERROR.server);
 
       return;
     }

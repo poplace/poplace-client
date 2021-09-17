@@ -6,14 +6,14 @@ import * as Location from "expo-location";
 import { useIsFocused } from "@react-navigation/native";
 
 import { getPinsList, initPinsList } from "../features/pinsListSlice";
-import { ALERT_MESSAGE, ERROR_MESSAGE } from "../constants/screens";
+import { ALERT, ERROR } from "../constants";
 import CustomPin from "./CustomPin";
 import {
   color,
   horizontalScale,
   verticalScale,
-  height,
   width,
+  height,
 } from "../config/globalStyles";
 
 export default function GoogleMap() {
@@ -35,8 +35,8 @@ export default function GoogleMap() {
         const { status } = await Location.requestForegroundPermissionsAsync();
 
         if (status !== "granted") {
-          Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.locationAccess, [
-            { text: ALERT_MESSAGE.accept, onPress: () => setIsLocationServiceEnable(false) },
+          Alert.alert(ALERT.notice, ERROR.locationAccess, [
+            { text: ALERT.accept, onPress: () => setIsLocationServiceEnable(false) },
           ]);
 
           return;
@@ -55,8 +55,8 @@ export default function GoogleMap() {
         });
 
       } catch (err) {
-        Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.failedGetLocation, [
-          { text: ALERT_MESSAGE.accept },
+        Alert.alert(ALERT.notice, ERROR.failedGetLocation, [
+          { text: ALERT.accept },
         ]);
 
         return;

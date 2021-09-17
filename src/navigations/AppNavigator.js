@@ -7,7 +7,7 @@ import MainNavigator from "./MainNavigator";
 import NewAccountNavigator from "./NewAccountNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import { selectUser, signinUser } from "../features/userSlice";
-import { ALERT_MESSAGE, ERROR_MESSAGE } from "../constants/screens";
+import { ERROR } from "../constants/index";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,17 +24,18 @@ export default function AppNavigator({ navigation }) {
       await dispatch(signinUser({ email }));
 
       if (isError) {
-        Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.server, [
-          { text: ALERT_MESSAGE.accept },
-        ]);
+        alert(ERROR.server);
+        return;
       }
 
       if (nickname) {
-        return navigation.replace("MainNavigator");
+        navigation.replace("MainNavigator");
+        return;
       }
 
       if (email) {
-        return navigation.replace("NewAccountNavigator");
+        navigation.replace("NewAccountNavigator");
+        return;
       }
     }
 

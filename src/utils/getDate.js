@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
-import { DAY } from "../constants/utils";
+import { DAY } from "../constants/index";
 
 export default function getDate(time) {
   const targetTime = dayjs(time);

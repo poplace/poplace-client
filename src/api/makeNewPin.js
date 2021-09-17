@@ -3,7 +3,7 @@ import { API_SERVER_URL } from "@env";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-import { ERROR_MESSAGE } from "../constants/screens";
+import { ERROR } from "../constants/index";
 
 export default async function makeNewPin({ tags, photo, text, id }) {
   try {
@@ -43,6 +43,6 @@ export default async function makeNewPin({ tags, photo, text, id }) {
 
     return { success: true };
   } catch (err) {
-    alert(ERROR_MESSAGE.cancelNewPin);
+    alert(ERROR.cancelNewPin);
   }
 }

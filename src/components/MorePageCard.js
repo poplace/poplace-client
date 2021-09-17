@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import getDate from "../utils/getDate";
 
+import getDate from "../utils/getDate";
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
 import { addCurrentPin } from "../features/currentPinSlice";
-import { MESSAGE } from "../constants/shared";
+import { ALERT } from "../constants/index";
 
 export default function MorePageCard({ navigation, pinData, title }) {
   const {
@@ -28,7 +28,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(ALERT.pinTimeOver);
           return;
         }
 
@@ -39,7 +39,7 @@ export default function MorePageCard({ navigation, pinData, title }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(ALERT.pinTimeOver);
           setIsVisible(false);
           return;
         }

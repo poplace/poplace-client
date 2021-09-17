@@ -6,7 +6,7 @@ import { color } from "../config/globalStyles";
 import ModalContainer from "./shared/ModalContainer";
 import deleteAccount from "../api/deleteAccount";
 import { logoutUser } from "../features/userSlice";
-import { ALERT_MESSAGE } from "../constants/screens";
+import { ALERT } from "../constants/index";
 
 export default function WithdrawalModal({
   isVisibleModal,
@@ -22,8 +22,8 @@ export default function WithdrawalModal({
     const result = await deleteAccount(userId);
 
     if (result.success) {
-      Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.deleteAccount, [{
-        text: ALERT_MESSAGE.accept,
+      Alert.alert(ALERT.title, ALERT.deleteAccount, [{
+        text: ALERT.accept,
         onPress: () => navigation.reset({
           index: 0,
           routes: [{ name: "Login" }],

@@ -5,7 +5,7 @@ import * as SecureStore from "expo-secure-store";
 
 import { signinUser, selectUser } from "../features/userSlice";
 import loginWithGoogle from "../api/loginWithGoogle";
-import { ERROR_MESSAGE } from "../constants/screens";
+import { ERROR, ALERT } from "../constants/index";
 import { color, moderateScale, verticalScale } from "../config/globalStyles";
 import CustomButton from "../components/shared/CustomButton";
 
@@ -35,9 +35,9 @@ export default function LoginScreen({ navigation }) {
     const { success, user } = await loginWithGoogle();
 
     if (!success) {
-      Alert.alert("알림", ERROR_MESSAGE.cancelLogin, [
-        { text: "확인", onPress: () => {
-          return setErrorMessage(ERROR_MESSAGE.cancelLogin);
+      Alert.alert(ALERT.title, ERROR.cancelLogin, [
+        { text: ALERT.accept, onPress: () => {
+          return setErrorMessage(ERROR.cancelLogin);
         }},
       ]);
     }

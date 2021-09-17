@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { API_SERVER_URL, DEFAULT_IMAGE } from "@env";
+import { API_SERVER_URL, DEFAULT_IMAGE_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
@@ -23,6 +23,10 @@ export default function NewNicknameScreen({ navigation }) {
 
   useEffect(() => {
     setRecommendedNickname(generateNickname());
+
+    return () => {
+      setRecommendedNickname("");
+    };
   }, []);
 
   function clearText() {
@@ -31,7 +35,7 @@ export default function NewNicknameScreen({ navigation }) {
 
   async function fetchProfile() {
     const finalNickname = nickname || recommendedNickname;
-    const finalImage = image || DEFAULT_IMAGE;
+    const finalImage = image || DEFAULT_IMAGE_URL;
     const nicknameValidation = validateNickname(finalNickname);
 
     if (!nicknameValidation.isValid) {

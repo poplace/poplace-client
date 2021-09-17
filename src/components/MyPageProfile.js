@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { DEFAULT_IMAGE } from "@env";
+import { DEFAULT_IMAGE_URL } from "@env";
 import { selectUser, addImage } from "../features/userSlice";
 import openImagePicker from "../api/openImagePicker";
 import { color, horizontalScale, verticalScale, moderateScale } from "../config/globalStyles";
@@ -26,7 +26,7 @@ export default function MyPageProfile() {
           <Image
             style={styles.profile}
             source={{
-              uri: image || DEFAULT_IMAGE,
+              uri: image || DEFAULT_IMAGE_URL,
             }}
           />
         </TouchableOpacity>

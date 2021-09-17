@@ -15,6 +15,10 @@ export default function MyPageScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function getMyPins() {
+    if (!userId || !email) {
+      return;
+    }
+
     const { myCreatedPins, mySavedPins } = await fetchMyPins(userId, email);
 
     setMyCreatedPins(myCreatedPins);
@@ -27,7 +31,7 @@ export default function MyPageScreen({ navigation }) {
     return () => {
       setMyCreatedPins([]);
       setMySavedPins([]);
-    }
+    };
   }, [userId, email]);
 
   const handleRefresh = useCallback(() => {

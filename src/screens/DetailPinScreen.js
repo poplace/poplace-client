@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import getDate from "../utils/getDate";
@@ -10,7 +10,7 @@ import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { selectCurrentPin } from '../features/currentPinSlice';
 import { MESSAGE } from "../constants/shared";
 
-export default function DetailPinScreen({ navigation, path }) {
+export default function DetailPinScreen({ navigation, route }) {
   const { id: userId } = useSelector(selectUser);
   const {
     _id: pinId,
@@ -26,7 +26,8 @@ export default function DetailPinScreen({ navigation, path }) {
   const isSavedUser = userId === savedUser;
   const [remainTime, setRemainTime] = useState(null);
   const dispatch = useDispatch();
-  const isFromMainPage = path === "Main";
+
+  const isFromMainPage = route.params?.path === "Main";
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -37,33 +38,39 @@ export default function DetailPinScreen({ navigation, path }) {
           Alert.alert("알림", "시간이 다 되었습니다", [
             {
               text: "확인", onPress: () => {
-                return navigation.replace("Bottom", { "screen": "HomeScreen" });
+                return navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
               }
             },
           ]);
+          return;
         }
 
-        return setRemainTime(`남은시간 ${timeInfo}`);
+        setRemainTime(`남은시간 ${timeInfo}`);
+        return;
       }
 
       if (isCreator && savedAt) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          return setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(MESSAGE.pinTimeOver);
+          return;
         }
 
-        return setRemainTime(`남은시간 ${timeInfo}`);
+        setRemainTime(`남은시간 ${timeInfo}`);
+        return;
       }
 
       if (isCreator && !savedAt) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          return setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(MESSAGE.pinTimeOver);
+          return;
         }
 
-        return setRemainTime(`남은시간 ${timeInfo}`);
+        setRemainTime(`남은시간 ${timeInfo}`);
+        return;
       }
 
       if (isSavedUser) {
@@ -77,9 +84,12 @@ export default function DetailPinScreen({ navigation, path }) {
               }
             },
           ]);
+
+          return;
         }
 
-        return setRemainTime(`남은시간 ${timeInfo}`);
+        setRemainTime(`남은시간 ${timeInfo}`);
+        return;
       }
 
       const timeInfo = getDate(createdAt);

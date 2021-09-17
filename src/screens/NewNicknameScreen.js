@@ -23,6 +23,10 @@ export default function NewNicknameScreen({ navigation }) {
 
   useEffect(() => {
     setRecommendedNickname(generateNickname());
+
+    return () => {
+      setRecommendedNickname("");
+    };
   }, []);
 
   function clearText() {

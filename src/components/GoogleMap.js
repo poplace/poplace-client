@@ -62,6 +62,10 @@ export default function GoogleMap() {
        }
 
     })();
+
+    return () => {
+      setLocation([]);
+    };
   }, [isLocationServiceEnable]);
 
   useEffect(() => {
@@ -71,7 +75,7 @@ export default function GoogleMap() {
 
     return () => {
       dispatch(initPinsList());
-    }
+    };
   }, [location, isFocused]);
 
   function handleGetPinsData() {
@@ -86,7 +90,6 @@ export default function GoogleMap() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        loadingEnabled={true}
         region={location || defaultLocation.current}
         showsUserLocation
         onRegionChangeComplete={handleMapViewCoordinate}

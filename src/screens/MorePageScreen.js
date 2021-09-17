@@ -40,6 +40,10 @@ export default function MorePageScreen({ navigation, route }) {
 
   useEffect(() => {
     getMyPins();
+
+    return () => {
+      setPinsData([]);
+    };
   }, []);
 
   return (

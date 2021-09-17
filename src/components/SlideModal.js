@@ -83,7 +83,7 @@ export default function SlideModal({ navigation }) {
       onBackdropPress={handleModalVisible}
       swipeDirection="up"
       swipeThreshold={540}
-      onSwipeComplete={() => { navigation.navigate("상세페이지") }}
+      onSwipeComplete={showDetailPinScreen}
     >
       <View style={styles.modal}>
         <View style={styles.picker} />

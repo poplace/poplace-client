@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_SERVER_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 
-import { ERROR_MESSAGE } from "../constants/screens";
+import { ERROR } from "../constants";
 
 export default async function savePinData(pinId, userId) {
   try {
@@ -21,6 +21,6 @@ export default async function savePinData(pinId, userId) {
 
     return { success: true };
   } catch (err) {
-    alert(ERROR_MESSAGE.cancelSavePin);
+    alert(ERROR.cancelSavePin);
   }
 }

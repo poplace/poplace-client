@@ -1,12 +1,12 @@
 import * as ImagePicker from "expo-image-picker";
 
-import { ERROR_MESSAGE } from "../constants/screens";
+import { ERROR } from "../constants";
 
 export default async function openImagePicker() {
   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
   if (permissionResult.granted === false) {
-    alert(ERROR_MESSAGE.cameraAccess);
+    alert(ERROR.cameraAccess);
 
     return;
   }

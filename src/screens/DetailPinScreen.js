@@ -8,7 +8,7 @@ import { color, horizontalScale, moderateScale, verticalScale } from "../config/
 import savePinData from "../api/savePinData";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { selectCurrentPin } from '../features/currentPinSlice';
-import { MESSAGE } from "../constants/shared";
+import { ALERT } from "../constants";
 
 export default function DetailPinScreen({ navigation, route }) {
   const { id: userId } = useSelector(selectUser);
@@ -35,9 +35,9 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          Alert.alert("알림", "시간이 다 되었습니다", [
+          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
             {
-              text: "확인", onPress: () => {
+              text: ALERT.accept, onPress: () => {
                 return navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
               }
             },
@@ -53,7 +53,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(ALERT.pinTimeOver);
           return;
         }
 
@@ -65,7 +65,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          setRemainTime(MESSAGE.pinTimeOver);
+          setRemainTime(ALERT.pinTimeOver);
           return;
         }
 
@@ -77,9 +77,9 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          Alert.alert("알림", "시간이 다 되었습니다", [
+          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
             {
-              text: "확인", onPress: () => {
+              text: ALERT.accept, onPress: () => {
                 return navigation.replace("Bottom", { "screen": "HomeScreen" });
               }
             },
@@ -106,9 +106,9 @@ export default function DetailPinScreen({ navigation, route }) {
     const result = await savePinData(pinId, userId);
 
     if (result.success) {
-      Alert.alert("알림", "핀이 저장 되었습니다!", [
+      Alert.alert(ALERT.notice, ALERT.savePin, [
         {
-          text: "확인", onPress: () => {
+          text: ALERT.accept, onPress: () => {
             dispatch(turnOnOffModal(false));
             return navigation.replace("Bottom", { "screen": "HomeScreen" });
           }

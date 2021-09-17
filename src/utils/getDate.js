@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
-import { PIN_COUNT } from "../constants/utils";
+import { PIN_COUNT } from "../constants";
 
 export default function getDate(time) {
   const targetTime = dayjs(time);

@@ -1,5 +1,6 @@
 import * as Google from "expo-google-app-auth";
-import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
+import getEnvVars from "../config/environment";
+const { IOS_CLIENT_ID, ANDROID_CLIENT_ID } = getEnvVars();
 
 export default async function loginWithGoogle() {
   try {

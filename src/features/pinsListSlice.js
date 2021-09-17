@@ -1,8 +1,9 @@
-import { Alert } from "react-native";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_SERVER_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
+
+import getEnvVars from "../config/environment";
+const { API_SERVER_URL } = getEnvVars();
 
 export const getPinsList = createAsyncThunk("pin/getPinsList", async (location) => {
   const token = await SecureStore.getItemAsync("token");
@@ -24,6 +25,7 @@ const initialState = {
       _id: null,
       createAt: null,
       creator: null,
+      active: null,
       dist: {
         calculated: null,
       },

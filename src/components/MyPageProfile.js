@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { DEFAULT_IMAGE_URL } from "@env";
+import getEnvVars from "../config/environment";
+const { DEFAULT_IMAGE_URL } = getEnvVars();
 import { selectUser, addImage } from "../features/userSlice";
 import openImagePicker from "../api/openImagePicker";
 import { color, horizontalScale, verticalScale, moderateScale } from "../config/globalStyles";

@@ -35,13 +35,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
-            {
-              text: ALERT.accept, onPress: () => {
-                return navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
-              }
-            },
-          ]);
+          navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
           return;
         }
 
@@ -77,13 +71,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
-            {
-              text: ALERT.accept, onPress: () => {
-                return navigation.replace("Bottom", { "screen": "HomeScreen" });
-              }
-            },
-          ]);
+          navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
 
           return;
         }
@@ -141,7 +129,7 @@ export default function DetailPinScreen({ navigation, route }) {
           </TouchableOpacity>}
       </View>
       <View style={styles.tagContainer}>
-        {tags.map((tag, index) => <Text key={`${pinId}${index}`} style={styles.tag}>{tag}</Text>)}
+        {tags?.map((tag, index) => <Text key={`${pinId}${index}`} style={styles.tag}>{tag}</Text>)}
       </View>
       <ScrollView style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>

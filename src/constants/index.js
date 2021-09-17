@@ -18,4 +18,4 @@ export const ALERT = {
   pinTimeOver: "시간이 다된 핀입니다",
 };
 
-export const DAY = 1800 * 1000;
+export const PIN_COUNT = 30 * 1000;

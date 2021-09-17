@@ -27,7 +27,7 @@ export default function CustomPin() {
 
   return (
     <View>
-      {isSuccess && pinsList.map((pin) => {
+      {isSuccess && pinsList?.map((pin) => {
         const { _id: id, active, image, position, savedUser } = pin;
 
         if (id && active && !savedUser) {

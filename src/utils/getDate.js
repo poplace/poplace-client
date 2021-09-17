@@ -2,13 +2,13 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
-import { DAY } from "../constants/utils";
+import { PIN_COUNT } from "../constants/utils";
 
 export default function getDate(time) {
   const targetTime = dayjs(time);
   const currentTime = dayjs(new Date());
   const difference = currentTime.diff(targetTime);
-  const remainTime = DAY - difference;
+  const remainTime = PIN_COUNT - difference;
 
   if (remainTime <= 0) {
     return false;

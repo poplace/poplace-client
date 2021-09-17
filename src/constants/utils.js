@@ -1,1 +1,1 @@
-export const DAY = 86400 * 1000;
+export const PIN_COUNT = 30 * 1000;

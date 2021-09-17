@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, Button } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import getDate from "../utils/getDate";

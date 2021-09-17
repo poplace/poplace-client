@@ -31,7 +31,7 @@ export default function MyPageScreen({ navigation }) {
     return () => {
       setMyCreatedPins([]);
       setMySavedPins([]);
-    }
+    };
   }, [userId, email]);
 
   const handleRefresh = useCallback(() => {

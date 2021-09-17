@@ -34,7 +34,7 @@ export default function SlideModal({ navigation }) {
   function showDetailPinScreen() {
     dispatch(turnOnOffModal(false));
 
-    navigation.navigate("상세페이지", { path: "Main" });
+    navigation.navigate("DetailPin", { path: "Main" });
   }
 
   useEffect(() => {

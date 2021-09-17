@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { StyleSheet, View, Alert, TouchableOpacity, Text } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
+import { useIsFocused } from "@react-navigation/native";
 
 import { getPinsList, initPinsList } from "../features/pinsListSlice";
 import { ALERT_MESSAGE, ERROR_MESSAGE } from "../constants/screens";
@@ -14,7 +15,6 @@ import {
   height,
   width,
 } from "../config/globalStyles";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function GoogleMap() {
   const [isLocationServiceEnable, setIsLocationServiceEnable] = useState(true);
@@ -53,13 +53,14 @@ export default function GoogleMap() {
           longitude,
           latitude,
         });
+
       } catch (err) {
         Alert.alert(ALERT_MESSAGE.title, ERROR_MESSAGE.failedGetLocation, [
           { text: ALERT_MESSAGE.accept },
         ]);
 
         return;
-       }
+      }
 
     })();
 
@@ -85,7 +86,6 @@ export default function GoogleMap() {
   function handleMapViewCoordinate(currentCoords) {
     mapViewCoordinateRef.current = currentCoords;
   }
-
   return (
     <View style={styles.container}>
       <MapView

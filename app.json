@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "poplace",
-    "slug": "poplace",
+    "name": "Poplace",
+    "slug": "Poplace",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -18,16 +18,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cute.poplace",
-      "buildNumber": "1.0.0"
+      "bundleIdentifier": "com.cute.poplace"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.cute.poplace",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": ["CAMERA", "ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

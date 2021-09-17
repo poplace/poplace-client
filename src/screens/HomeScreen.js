@@ -1,14 +1,14 @@
 import React from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 
 import GoogleMap from "../components/GoogleMap";
 import SlideModal from "../components/SlideModal";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View>
+    <SafeAreaView>
       <GoogleMap />
       <SlideModal navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 }

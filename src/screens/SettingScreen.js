@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
-import SwitchToggle from "react-native-switch-toggle";
+import * as SecureStore from "expo-secure-store";
 import { useDispatch, useSelector } from "react-redux";
 
 import WithdrawalModal from "../components/WithdrawalModal";
@@ -19,7 +19,11 @@ export default function SettingScreen({ navigation }) {
     navigation.navigate("NewAccountNavigator", { "screen": "NewNicknameScreen" });
   }
 
-  function handleLogout() {
+  async function handleLogout() {
+    await SecureStore.deleteItemAsync("token");
+    await SecureStore.deleteItemAsync("email");
+    await SecureStore.deleteItemAsync("nickname");
+
     dispatch(logoutUser());
 
     Alert.alert(ALERT_MESSAGE.title, ALERT_MESSAGE.logout, [{
@@ -37,19 +41,6 @@ export default function SettingScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentBox}>
-        <Text style={styles.text}>푸시 알림</Text>
-        <SwitchToggle
-          switchOn={toggleOn}
-          onPress={() => setToggleOn(!toggleOn)}
-          circleColorOff={color.poplaceRed}
-          circleColorOn={color.poplaceRed}
-          backgroundColorOn="white"
-          backgroundColorOff={color.poplaceMiddleGray}
-          containerStyle={styles.toggleContainer}
-          circleStyle={styles.toggleCircle}
-        ></SwitchToggle>
-      </View>
       <TouchableOpacity style={styles.contentBox} onPress={handleChangeNickname}>
         <Text style={styles.text}>닉네임 변경</Text>
         <Icon name="chevron-right" color={color.poplaceDark} />

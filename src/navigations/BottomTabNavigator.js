@@ -20,7 +20,6 @@ export default function BottomTabNavigator({ navigation }) {
           null
         ],
         headerShown: false,
-        tabBarStyle: styles.tabBar,
         tabBarShowLabel: false,
       }}
       options={{
@@ -45,11 +44,7 @@ export default function BottomTabNavigator({ navigation }) {
           tabBarIcon: () => <AntDesign name="plus" size={28} color={color.poplaceRed} />,
           title: "핀 생성하기",
           headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "#453536",
-            textAlign: "center",
-            fontWeight: "700",
-          },
+          headerTitleStyle: styles.headerTitle,
         }}
       />
       <Tab.Screen
@@ -89,6 +84,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     right: "10%",
+  },
+  headerTitle: {
+    color: color.poplaceDark,
+    textAlign: "center",
+    fontWeight: "700",
   },
   completionButton: {
     fontSize: 20,

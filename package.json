@@ -44,7 +44,8 @@
     "react-redux": "^7.2.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "smartsocket": "^1.1.22"
+    "smartsocket": "^1.1.22",
+    "expo-permissions": "~12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -11,7 +11,7 @@ export const ERROR = {
 
 export const ALERT = {
   accept: "확인",
-  title: "알림",
+  notice: "알림",
   logout: "로그아웃 되었습니다",
   deleteAccount: "계정이 정상적으로 삭제 되었습니다",
   savePin: "핀이 저장되었습니다",

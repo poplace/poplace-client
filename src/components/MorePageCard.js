@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import getDate from "../utils/getDate";
 import { color, moderateScale, horizontalScale, verticalScale } from "../config/globalStyles";
 import { addCurrentPin } from "../features/currentPinSlice";
-import { ALERT } from "../constants/index";
+import { ALERT } from "../constants";
 
 export default function MorePageCard({ navigation, pinData, title }) {
   const {

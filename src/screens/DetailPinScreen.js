@@ -8,7 +8,7 @@ import { color, horizontalScale, moderateScale, verticalScale } from "../config/
 import savePinData from "../api/savePinData";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { selectCurrentPin } from '../features/currentPinSlice';
-import { ALERT } from "../constants/index";
+import { ALERT } from "../constants";
 
 export default function DetailPinScreen({ navigation, route }) {
   const { id: userId } = useSelector(selectUser);
@@ -35,7 +35,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(createdAt);
 
         if (!timeInfo) {
-          Alert.alert(ALERT.title, ALERT.pinTimeOver, [
+          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
             {
               text: ALERT.accept, onPress: () => {
                 return navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
@@ -77,7 +77,7 @@ export default function DetailPinScreen({ navigation, route }) {
         const timeInfo = getDate(savedAt);
 
         if (!timeInfo) {
-          Alert.alert(ALERT.title, ALERT.pinTimeOver, [
+          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
             {
               text: ALERT.accept, onPress: () => {
                 return navigation.replace("Bottom", { "screen": "HomeScreen" });
@@ -106,7 +106,7 @@ export default function DetailPinScreen({ navigation, route }) {
     const result = await savePinData(pinId, userId);
 
     if (result.success) {
-      Alert.alert(ALERT.title, ALERT.savePin, [
+      Alert.alert(ALERT.notice, ALERT.savePin, [
         {
           text: ALERT.accept, onPress: () => {
             dispatch(turnOnOffModal(false));

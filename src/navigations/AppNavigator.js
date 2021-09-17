@@ -7,7 +7,7 @@ import MainNavigator from "./MainNavigator";
 import NewAccountNavigator from "./NewAccountNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import { selectUser, signinUser } from "../features/userSlice";
-import { ERROR } from "../constants/index";
+import { ERROR } from "../constants";
 
 const Stack = createNativeStackNavigator();
 

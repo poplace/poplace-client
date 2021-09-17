@@ -9,7 +9,7 @@ import { selectUser } from "../features/userSlice";
 import { color, verticalScale, horizontalScale, moderateScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 import getDate from "../utils/getDate";
-import { ALERT } from "../constants/index";
+import { ALERT } from "../constants";
 
 export default function SlideModal({ navigation }) {
   const [remainTime, setRemainTime] = useState([]);
@@ -58,7 +58,7 @@ export default function SlideModal({ navigation }) {
     const result = await savePinData(pinId, userId);
 
     if (result.success) {
-      Alert.alert(ALERT.title, ALERT.savePin, [
+      Alert.alert(ALERT.notice, ALERT.savePin, [
         {
           text: ALERT.accept, onPress: () => {
             dispatch(turnOnOffModal(false));

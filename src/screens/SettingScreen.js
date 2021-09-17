@@ -5,7 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import { useDispatch, useSelector } from "react-redux";
 
 import WithdrawalModal from "../components/WithdrawalModal";
-import { ALERT } from "../constants/index";
+import { ALERT } from "../constants";
 import { logoutUser, selectUser } from "../features/userSlice";
 import { verticalScale, horizontalScale, color } from "../config/globalStyles";
 
@@ -26,7 +26,7 @@ export default function SettingScreen({ navigation }) {
 
     dispatch(logoutUser());
 
-    Alert.alert(ALERT.title, ALERT.logout, [{
+    Alert.alert(ALERT.notice, ALERT.logout, [{
       text: ALERT.accept,
       onPress: () => navigation.reset({
         index: 0,

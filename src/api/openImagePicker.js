@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 
-import { ERROR } from "../constants/index";
+import { ERROR } from "../constants";
 
 export default async function openImagePicker() {
   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();

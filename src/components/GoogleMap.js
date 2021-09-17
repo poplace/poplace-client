@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 import { useIsFocused } from "@react-navigation/native";
 
 import { getPinsList, initPinsList } from "../features/pinsListSlice";
-import { ALERT, ERROR } from "../constants/index";
+import { ALERT, ERROR } from "../constants";
 import CustomPin from "./CustomPin";
 import {
   color,
@@ -35,7 +35,7 @@ export default function GoogleMap() {
         const { status } = await Location.requestForegroundPermissionsAsync();
 
         if (status !== "granted") {
-          Alert.alert(ALERT.title, ERROR.locationAccess, [
+          Alert.alert(ALERT.notice, ERROR.locationAccess, [
             { text: ALERT.accept, onPress: () => setIsLocationServiceEnable(false) },
           ]);
 
@@ -55,7 +55,7 @@ export default function GoogleMap() {
         });
 
       } catch (err) {
-        Alert.alert(ALERT.title, ERROR.failedGetLocation, [
+        Alert.alert(ALERT.notice, ERROR.failedGetLocation, [
           { text: ALERT.accept },
         ]);
 

@@ -11,7 +11,7 @@ import generateNickname from "../utils/nicknameGenerator";
 import validateNickname from "../utils/validateNickname";
 import { addNickname, addImage, selectUser } from "../features/userSlice";
 import { color } from "../config/globalStyles";
-import { ERROR } from "../constants/index";
+import { ERROR } from "../constants";
 
 export default function NewNicknameScreen({ navigation }) {
   const [nickname, setNickname] = useState("");

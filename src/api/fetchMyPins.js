@@ -2,7 +2,7 @@ import { API_SERVER_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
-import { ERROR } from "../constants/index";
+import { ERROR } from "../constants";
 
 export default async function fetchMyPins(userId, email) {
   try {

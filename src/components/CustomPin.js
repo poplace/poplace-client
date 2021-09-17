@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
 import { addCurrentPin } from "../features/currentPinSlice";
 import { selectPinsList } from "../features/pinsListSlice";
-import { ALERT, ERROR } from "../constants/index";
+import { ALERT, ERROR } from "../constants";
 
 export default function CustomPin() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function CustomPin() {
   const isError = useSelector((state) => state.pinsList.status === "failed");
 
   if (isError) {
-    Alert.alert(ALERT.title, ERROR.server, [
+    Alert.alert(ALERT.notice, ERROR.server, [
       { text: ALERT.accept },
     ]);
   }

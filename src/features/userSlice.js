@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import { API_SERVER_URL } from "@env";
+
+import getEnvVars from "../config/environment";
+const { API_SERVER_URL } = getEnvVars();
 
 export const signinUser = createAsyncThunk("user/signinUserStatus", async (user) => {
   const { email } = user;
@@ -66,8 +68,8 @@ const userSlice = createSlice({
       state.info = action.payload.info;
     },
     [signinUser.rejected]: (state, action) => {
-      state.error = action.error;
       state.status = "failed";
+      state.error = action.error;
     },
   },
 });

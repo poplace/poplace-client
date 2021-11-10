@@ -95,7 +95,7 @@ export default function SlideModal({ navigation }) {
         <View style={styles.listContainer}>
           <View style={styles.bodyContainer}>
             <View style={styles.tagContainer}>
-              {tags.map((text, index) => {
+              {tags?.map((text, index) => {
                 if (index === 2) {
                   return;
                 }
@@ -104,7 +104,7 @@ export default function SlideModal({ navigation }) {
               })}
             </View>
             <View style={styles.tagContainer}>
-              {tags.map((text, index) => {
+              {tags?.map((text, index) => {
                 if (index === 2) {
                   return <Text key={`${pinId}${index}`} style={styles.tagsText}>{text}</Text>;
                 }

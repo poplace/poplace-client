@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { API_SERVER_URL, DEFAULT_IMAGE_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
+
+import getEnvVars from "../config/environment";
+const { API_SERVER_URL, DEFAULT_IMAGE_URL } = getEnvVars();
 
 import CustomButton from "../components/shared/CustomButton";
 import generateNickname from "../utils/nicknameGenerator";

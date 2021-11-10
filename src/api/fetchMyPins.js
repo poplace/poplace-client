@@ -1,4 +1,5 @@
-import { API_SERVER_URL } from "@env";
+import getEnvVars from "../config/environment";
+const { API_SERVER_URL } = getEnvVars();
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 

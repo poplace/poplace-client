@@ -18,7 +18,7 @@ export default function MyPinListPreview({ navigation, pins }) {
   return (
     <ScrollView horizontal style={styles.container}>
       {hasPins ?
-        pins.map((pin) => {
+        pins?.map((pin) => {
           return (
             <TouchableOpacity
               key={pin.image[0].split(".").join("").slice(-20)}

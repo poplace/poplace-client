@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from "react"
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import getDate from "../utils/getDate";
 import { selectUser } from "../features/userSlice";
-import { color, horizontalScale, moderateScale, verticalScale } from "../config/globalStyles";
 import savePinData from "../api/savePinData";
 import { turnOnOffModal } from "../features/modalVisibleSlice";
-import { selectCurrentPin } from '../features/currentPinSlice';
+import { selectCurrentPin } from "../features/currentPinSlice";
 import { ALERT } from "../constants";
+import { color } from "../style/globalStyles";
+import { moderateScale, verticalScale, horizontalScale } from "../utils/styleSize";
+import useInterval from "../hooks/useInterval";
 
 export default function DetailPinScreen({ navigation, route }) {
   const { id: userId } = useSelector(selectUser);
@@ -24,83 +25,17 @@ export default function DetailPinScreen({ navigation, route }) {
   } = useSelector(selectCurrentPin);
   const isCreator = userId === creator;
   const isSavedUser = userId === savedUser;
-  const [remainTime, setRemainTime] = useState(null);
+  const isFromMainPage = route.params?.path === "Main";
   const dispatch = useDispatch();
 
-  const isFromMainPage = route.params?.path === "Main";
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (isFromMainPage) {
-        const timeInfo = getDate(createdAt);
-
-        if (!timeInfo) {
-          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
-            {
-              text: ALERT.accept, onPress: () => {
-                return navigation.replace("MainNavigator", { "screen": "HomeScreen", path: "Main" });
-              }
-            },
-          ]);
-          return;
-        }
-
-        setRemainTime(`남은시간 ${timeInfo}`);
-        return;
-      }
-
-      if (isCreator && savedAt) {
-        const timeInfo = getDate(savedAt);
-
-        if (!timeInfo) {
-          setRemainTime(ALERT.pinTimeOver);
-          return;
-        }
-
-        setRemainTime(`남은시간 ${timeInfo}`);
-        return;
-      }
-
-      if (isCreator && !savedAt) {
-        const timeInfo = getDate(createdAt);
-
-        if (!timeInfo) {
-          setRemainTime(ALERT.pinTimeOver);
-          return;
-        }
-
-        setRemainTime(`남은시간 ${timeInfo}`);
-        return;
-      }
-
-      if (isSavedUser) {
-        const timeInfo = getDate(savedAt);
-
-        if (!timeInfo) {
-          Alert.alert(ALERT.notice, ALERT.pinTimeOver, [
-            {
-              text: ALERT.accept, onPress: () => {
-                return navigation.replace("Bottom", { "screen": "HomeScreen" });
-              }
-            },
-          ]);
-
-          return;
-        }
-
-        setRemainTime(`남은시간 ${timeInfo}`);
-        return;
-      }
-
-      const timeInfo = getDate(createdAt);
-
-      setRemainTime(`남은시간 ${timeInfo}`);
-    }, 1000);
-
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
+  const { remainTime } = useInterval(
+    isFromMainPage,
+    isCreator,
+    isSavedUser,
+    createdAt,
+    savedAt,
+    navigation,
+  );
 
   async function handleSavePin() {
     const result = await savePinData(pinId, userId);
@@ -141,13 +76,13 @@ export default function DetailPinScreen({ navigation, route }) {
           </TouchableOpacity>}
       </View>
       <View style={styles.tagContainer}>
-        {tags.map((tag, index) => <Text key={`${pinId}${index}`} style={styles.tag}>{tag}</Text>)}
+        {tags?.map((tag, index) => <Text key={`${pinId}${index}`} style={styles.tag}>{tag}</Text>)}
       </View>
       <ScrollView style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>
       </ScrollView>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -218,7 +153,7 @@ const styles = StyleSheet.create({
     marginVertical: verticalScale(10),
     paddingVertical: verticalScale(5),
     paddingHorizontal: horizontalScale(10),
-    shadowColor: "#000000",
+    shadowColor: color.poplaceDark,
     shadowOpacity: 0.01,
     elevation: 2,
   },
